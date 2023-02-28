@@ -1,0 +1,56 @@
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+    <p-tabView orientation="left">
+        <p-tabPanel header="General infos" class="p-fluid m-0">
+            <div class="field">
+                <label for="CompanyName"> <b>Company Name </b><span class="text-red-500">*</span></label>
+                <input type="text" pInputText
+                    [class]="addEditForm.get('companyName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                    placeholder="Company name" formControlName="companyName">
+                <p-message *ngIf="addEditForm.get('companyName')?.invalid && isSubmited" severity="error"
+                    text="Name is required"></p-message>
+            </div>
+            <div class="field">
+                <label for="IBANNumber"> <b>IBAN Number</b></label>
+                <input type="text" pInputText placeholder="IBAN Number" formControlName="ibanNumber">
+            </div>
+            <div class="field">
+                <label for="Email"> <b>Email</b> <span class="text-red-500">*</span></label>
+                <input type="text" pInputText
+                    [class]="addEditForm.get('cmpEmail')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                    placeholder="Email" formControlName="cmpEmail">
+                <p-message *ngIf="addEditForm.get('cmpEmail')?.invalid && isSubmited" severity="error"
+                    [text]="addEditForm.get('cmpEmail')?.errors ? addEditForm.get('cmpEmail')?.errors?.['required'] ? 'Email is required' : 'Email format not valid' : ''"></p-message>
+            </div>
+            <div class="field">
+                <label for="VATLegalEntity"> <b>VAT legal entity</b></label>
+                <input type="text" pInputText placeholder="VAT legal entity" formControlName="vatLegal">
+            </div>
+            <div class="field">
+                <label for="BIC/SWIFT"> <b>BIC/SWIFT</b></label>
+                <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="bic">
+            </div>
+            <div class="field">
+                <label for="Approver"> <b>Approver</b></label>
+                <input type="text" pInputText placeholder="Approver" formControlName="approver">
+            </div>
+            <div class="field">
+                <label for="VATRate"> <b>VAT rate</b></label>
+                <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
+            </div>
+            <div class="field">
+                <b class="mr-2">Is NTT data</b>
+                <p-radioButton id="isNTTData" name="groupname" class=" mr-2" [value]="true" label="Yes"
+                    formControlName="isNTTData"></p-radioButton>
+                <p-radioButton id="isNotNTTData" name="groupname" class="" [value]="false" label="No"
+                    formControlName="isNTTData"></p-radioButton>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Contract management portal" class="p-fluid m-0">
+
+        </p-tabPanel>
+    </p-tabView>
+    <div class="footer">
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>&nbsp;
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>
+    </div>
+</form>

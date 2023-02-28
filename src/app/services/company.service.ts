@@ -20,5 +20,8 @@ export class CompanyService {
   public getOne(companyId: number) : Observable<Company>{
     return this.http.get<Company>(`${this.baseUrl}/${companyId}`);
   }
-  
+
+  public addCompany(company: Company) : Observable<Company>{
+    return this.http.post<Company>(`${this.baseUrl}`,company);
+  }
 }
