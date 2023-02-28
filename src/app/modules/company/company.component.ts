@@ -68,7 +68,7 @@ export class CompanyComponent implements OnInit {
   };
   frameworkContracts = [];
   listCompany: any[] = [];
-  selectedCompany: any = {};
+  selectedCompany!: Company;
   tableOptions: any = {
     visibleCols: [],
     cols: [
@@ -115,24 +115,24 @@ export class CompanyComponent implements OnInit {
         width: '60%',
         height: '50',
         data: {
-          modal: this.modalAddEdit,
-          Company: {}
+          company: this.listCompany[0]
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getCompanies();
       });
     }
-    else if (this.selectedCompany?.id) {
+    else if (this.selectedCompany?.idCompany) {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Edit Company`,
-        width: '80%',
-        height: '95%',
+        header: `Add Company`,
+        width: '60%',
+        height: '50',
         data: {
-          company: this.selectedCompany
+          idCompany: this.selectedCompany.idCompany
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
+        this.getCompanies();
       });
     }
     else {

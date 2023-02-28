@@ -11,7 +11,7 @@ import { CompanyService } from '@services/company.service';
 import { Company } from '@models/company';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module'
 
 @Component({
@@ -38,19 +38,42 @@ export class AddEditCompanyComponent implements OnInit {
   selectedValue!: Company;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService) { }
+  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.addEditForm = new FormGroup({
-      companyName: new FormControl(null, [Validators.required]),
-      ibanNumber: new FormControl(null),
-      cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
-      vatLegal: new FormControl(null),
-      bic: new FormControl(null),
-      approver: new FormControl(null),
-      vatRate: new FormControl(null),
-      isNTTData: new FormControl(false),
-    })
+    this.id = this.config.data.idCompany;
+    if(this.id){
+      this.companyService.getOne(this.id).subscribe({
+        next: res=>{
+          this.selectedValue = res;
+          this.addEditForm = new FormGroup({
+            companyName: new FormControl(res.companyName, [Validators.required]),
+            ibanNumber: new FormControl(null),
+            cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
+            vatLegal: new FormControl(null),
+            bic: new FormControl(null),
+            approver: new FormControl(null),
+            vatRate: new FormControl(null),
+            isNTTData: new FormControl(false),
+          });
+        },
+        error: err => {
+
+        }
+      })
+    }
+    else{
+      this.addEditForm = new FormGroup({
+        companyName: new FormControl(null, [Validators.required]),
+        ibanNumber: new FormControl(null),
+        cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
+        vatLegal: new FormControl(null),
+        bic: new FormControl(null),
+        approver: new FormControl(null),
+        vatRate: new FormControl(null),
+        isNTTData: new FormControl(false),
+      });
+    }
   }
   onSubmit() {
     this.isSubmited = true;
