@@ -62,12 +62,6 @@ import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.com
 
 export class CompanyComponent implements OnInit {
 
-  advancedSearch: any = {
-    requestNumber: '',
-    status: [],
-    frameworkContract: [],
-    dtRfReceived: new Date()
-  };
   isCollapsed: any = {
     advancedSearch: false,
     list: true
@@ -96,53 +90,40 @@ export class CompanyComponent implements OnInit {
     private modalAddEdit: DynamicDialogRef) { }
 
   ngOnInit(): void {
-
     this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getCompanies();
+  }
+
+  getCompanies(): void {
+    this.tableOptions.loading = true;
 
     this.companyService.getAll().subscribe({
       next: (res) => {
         this.listCompany = res;
-        console.log(this.listCompany)
+        this.tableOptions.loading = false;
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
       }
     });
-   
-  }
-
-  search(): void {
-    this.isCollapsed.advancedSearch = true;
-    this.isCollapsed.list = false;
-    this.tableOptions.loading = true;
-    this.companyService.getAll().subscribe({
-      next: res => {
-        this.listCompany = res;
-        this.tableOptions.loading = false;
-      },
-      error: () => {
-        this.toast.add({ severity: 'error', summary: 'Search error', detail: 'An error on the server' });
-        this.tableOptions.loading = false;
-        this.isCollapsed.advancedSearch = false;
-      }
-    })
   }
 
   addEdit(action: string): void {
-    if(action == 'add'){
+    if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
         header: `Add Company`,
-        width: '80%',
-        height: '95%',
+        width: '60%',
+        height: '50',
         data: {
+          modal: this.modalAddEdit,
           Company: {}
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        console.log(res);
+        this.getCompanies();
       });
     }
-    else if(this.selectedCompany?.id){
+    else if (this.selectedCompany?.id) {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
         header: `Edit Company`,
         width: '80%',
@@ -152,13 +133,12 @@ export class CompanyComponent implements OnInit {
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        console.log(res);
       });
     }
-    else{
-      this.toast.add({ severity:'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+    else {
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
     }
-    
+
   }
 
   get globalFilterFields(): string[] {
@@ -166,8 +146,6 @@ export class CompanyComponent implements OnInit {
   }
 
   onGlobalFilter(table: Table, event: Event): void {
-    console.log(table);
-
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
@@ -175,7 +153,7 @@ export class CompanyComponent implements OnInit {
     table.clear();
   }
 
-  
-  }
+
+}
 
 

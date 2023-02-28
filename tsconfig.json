@@ -27,6 +27,7 @@
       "@layouts/*": ["src/app/layouts/*"],
       "@services/*": ["src/app/services/*"],
       "@models/*": ["src/app/models/*"],
+      "@directives/*": ["src/app/directives/*"],
     }
   },
   "angularCompilerOptions": {
