@@ -9,10 +9,11 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddEditCompanyComponent } from './modules/company/add-edit-company/add-edit-company.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
