@@ -48,13 +48,13 @@ export class AddEditCompanyComponent implements OnInit {
           this.selectedValue = res;
           this.addEditForm = new FormGroup({
             companyName: new FormControl(res.companyName, [Validators.required]),
-            ibanNumber: new FormControl(null),
-            cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
-            vatLegal: new FormControl(null),
-            bic: new FormControl(null),
-            approver: new FormControl(null),
-            vatRate: new FormControl(null),
-            isNTTData: new FormControl(false),
+            ibanNumber: new FormControl(res.bankAccount),
+            cmpEmail: new FormControl(res.cmpEmail, [Validators.required, Validators.email]),
+            vatLegal: new FormControl(res.cmpVatlegalEntity),
+            bic: new FormControl(res.cmpBicsw),
+            approver: new FormControl(res.idApproverCmp),
+            vatRate: new FormControl(res.cmpVatRate),
+            isNTTData: new FormControl(res.isEveris),
           });
         },
         error: err => {
@@ -78,26 +78,52 @@ export class AddEditCompanyComponent implements OnInit {
   onSubmit() {
     this.isSubmited = true;
     if (this.addEditForm.valid) {
-      this.companyService.addCompany(new Company(
-        this.id || 0,
-        this.addEditForm.value.companyName,
-        this.addEditForm.value.ibanNumber,
-        false,
-        this.addEditForm.value.isNTTData,
-        this.addEditForm.value.vatLegal,
-        this.addEditForm.value.bic,
-        this.addEditForm.value.vatRate,
-        this.addEditForm.value.approver,
-        this.addEditForm.value.cmpEmail)
-      ).subscribe({
-        next: () => {
-          this.toast.add({ severity: 'success', summary: "Company added successfuly" });
-          this.ref.close();
-        },
-        error: (err: any) => {
-          this.toast.add({ severity: 'error', summary: err.error });
-        }
-      });
+      if(this.id){
+        this.companyService.updateCompany(new Company(
+          this.id,
+          this.addEditForm.value.companyName,
+          this.addEditForm.value.ibanNumber,
+          false,
+          this.addEditForm.value.isNTTData,
+          this.addEditForm.value.vatLegal,
+          this.addEditForm.value.bic,
+          this.addEditForm.value.vatRate,
+          this.addEditForm.value.approver,
+          this.addEditForm.value.cmpEmail)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Company updated successfuly" });
+            this.ref.close();
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
+
+      }else{
+        
+        this.companyService.addCompany(new Company(
+          this.id || 0,
+          this.addEditForm.value.companyName,
+          this.addEditForm.value.ibanNumber,
+          false,
+          this.addEditForm.value.isNTTData,
+          this.addEditForm.value.vatLegal,
+          this.addEditForm.value.bic,
+          this.addEditForm.value.vatRate,
+          this.addEditForm.value.approver,
+          this.addEditForm.value.cmpEmail)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Company added successfuly" });
+            this.ref.close();
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
+      }
+      
     }
   }
   close() {

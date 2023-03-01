@@ -34,8 +34,12 @@
                 <input type="text" pInputText placeholder="Approver" formControlName="approver">
             </div>
             <div class="field">
+                
                 <label for="VATRate"> <b>VAT rate</b></label>
+                <div class="p-inputgroup">
                 <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
+                <span class="p-inputgroup-addon">%</span> 
+                </div>
             </div>
             <div class="field">
                 <b class="mr-2">Is NTT data</b>
@@ -50,7 +54,7 @@
         </p-tabPanel>
     </p-tabView>
     <div class="footer">
-        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>&nbsp;
-        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>&nbsp;
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
     </div>
 </form>

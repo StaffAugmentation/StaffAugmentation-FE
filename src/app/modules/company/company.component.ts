@@ -67,13 +67,13 @@ export class CompanyComponent implements OnInit {
     list: true
   };
   frameworkContracts = [];
-  listCompany: any[] = [];
+  listCompany: Company[] = [];
   selectedCompany!: Company;
   tableOptions: any = {
     visibleCols: [],
     cols: [
       { id: 'companyName', label: 'Company name' },
-      { id: 'BankAccount', label: 'IBAN Number' },
+      { id: 'bankAccount', label: 'IBAN Number' },
       { id: 'cmpEmail', label: 'Email' },
       { id: 'cmpVatlegalEntity', label: 'VAT legal entity' },
       { id: 'cmpBicsw', label: 'BIC/SW' },
@@ -87,7 +87,8 @@ export class CompanyComponent implements OnInit {
   company: Company[] = [];
   constructor(private companyService: CompanyService, private toast: MessageService,
     private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef) { }
+    private modalAddEdit: DynamicDialogRef) { 
+    }
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
@@ -108,6 +109,10 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+
+  refresh():void{
+    this.getCompanies();
+  }
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
@@ -124,11 +129,20 @@ export class CompanyComponent implements OnInit {
     }
     else if (this.selectedCompany?.idCompany) {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Add Company`,
+        header: `Edit Company`,
         width: '60%',
         height: '50',
         data: {
-          idCompany: this.selectedCompany.idCompany
+          idCompany: this.selectedCompany.idCompany,
+          companyName:this.selectedCompany.companyName,
+          bankAccount:this.selectedCompany.bankAccount,
+          cmpEmail:this.selectedCompany.cmpEmail,
+          cmpVatLegalEntity:this.selectedCompany.cmpVatlegalEntity,
+          cmpBicsw:this.selectedCompany.cmpBicsw,
+          cmpVatRate:this.selectedCompany.cmpVatRate,
+          idApproverCmp:this.selectedCompany.idApproverCmp,
+          isEveris:this.selectedCompany.isEveris,
+
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {

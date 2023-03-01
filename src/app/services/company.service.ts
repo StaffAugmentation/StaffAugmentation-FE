@@ -24,4 +24,8 @@ export class CompanyService {
   public addCompany(company: Company) : Observable<Company>{
     return this.http.post<Company>(`${this.baseUrl}`,company);
   }
+
+  public updateCompany(company: Company) : Observable<Company>{
+    return this.http.put<Company>(`${this.baseUrl}`,company);
+  }
 }
