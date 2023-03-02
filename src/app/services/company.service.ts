@@ -28,4 +28,7 @@ export class CompanyService {
   public updateCompany(company: Company) : Observable<Company>{
     return this.http.put<Company>(`${this.baseUrl}`,company);
   }
+  public deleteCompany(companyId: number) : Observable<Company>{
+    return this.http.delete<Company>(`${this.baseUrl}/${companyId}`);
+  }
 }

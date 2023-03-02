@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '@models/company';
 import { CompanyService } from '@services/company.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -17,6 +17,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @Component({
   standalone: true,
@@ -31,7 +32,8 @@ import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.com
     CalendarModule,
     TableModule,
     DynamicDialogModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ConfirmDialogModule
   ],
   animations: [
     trigger('showHide', [
@@ -167,7 +169,26 @@ export class CompanyComponent implements OnInit {
     table.clear();
   }
 
+  delete():void{
+  if (this.selectedCompany?.idCompany) {
+    if(confirm("delete company")){
+      this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
+        next: () => {
+          this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
+          this.getCompanies();
+        },
+        error: (err: any) => {
+          this.toast.add({ severity: 'error', summary: err.error });
+        }
+      });
+    
+    }
+    
+  }else{
+    this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+  }
 
 }
 
 
+}
