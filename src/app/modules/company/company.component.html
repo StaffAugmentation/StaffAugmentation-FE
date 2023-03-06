@@ -42,7 +42,7 @@
             <th *ngFor="let col of tableOptions.visibleCols" style="min-width: 120px;">
                 <div class="flex justify-content-between align-items-center">
                     {{col.label}}
-                    <p-columnFilter type="text" field="name" display="menu" placeholder="Search by name"></p-columnFilter>
+                    <p-columnFilter type="text" field="{{col.id}}" display="menu" placeholder="Search by {{col.label}}"></p-columnFilter>
                 </div>
             </th>
         </tr>
