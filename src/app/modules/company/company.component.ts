@@ -171,29 +171,27 @@ export class CompanyComponent implements OnInit {
   }
 
   delete():void{
-  if (this.selectedCompany?.idCompany) {
-    this.confirmationService.confirm({
-    message: 'Are you sure you want to delete '+this.selectedCompany.companyName,
-    header: 'Confirm',
-    icon:'pi pi-exclamation-triangle',
-    accept: () => {
-      this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
-        next: () => {
-          this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
-          this.getCompanies();
-        },
-        error: (err: any) => {
-          this.toast.add({ severity: 'error', summary: err.error });
+    if (this.selectedCompany?.idCompany) {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to delete '+this.selectedCompany.companyName,
+        header: 'Confirm',
+        icon:'pi pi-exclamation-triangle',
+        accept: () => {
+          this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
+            next: () => {
+              this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
+              this.getCompanies();
+            },
+            error: (err: any) => {
+              this.toast.add({ severity: 'error', summary: err.error });
+            }
+          });
         }
-      });
-    }
 
-   });  
-  }else{
-    this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      });  
+    } else{
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+    } 
   }
-  
-}
-
 
 }
