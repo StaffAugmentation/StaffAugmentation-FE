@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '@models/company';
 import { CompanyService } from '@services/company.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
-import { FileExporterService } from 'src/app/services/file-exporter.service';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +16,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.component';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   standalone: true,
@@ -35,6 +35,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     OverlayPanelModule,
     ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   animations: [
     trigger('showHide', [
       state('true', style({
@@ -89,9 +90,9 @@ export class CompanyComponent implements OnInit {
   company: Company[] = [];
   constructor(private companyService: CompanyService, private toast: MessageService,
     private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef) { 
+    private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService) { 
     }
-
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getCompanies();
@@ -171,7 +172,11 @@ export class CompanyComponent implements OnInit {
 
   delete():void{
   if (this.selectedCompany?.idCompany) {
-    if(confirm("delete company")){
+    this.confirmationService.confirm({
+    message: 'Are you sure you want to delete '+this.selectedCompany.companyName,
+    header: 'Confirm',
+    icon:'pi pi-exclamation-triangle',
+    accept: () => {
       this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
         next: () => {
           this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
@@ -181,13 +186,13 @@ export class CompanyComponent implements OnInit {
           this.toast.add({ severity: 'error', summary: err.error });
         }
       });
-    
     }
-    
+
+   });  
   }else{
     this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
   }
-
+  
 }
 
 
