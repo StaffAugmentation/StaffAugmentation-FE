@@ -12,7 +12,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

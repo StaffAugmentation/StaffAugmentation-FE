@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from '@models/company';
-import { CompanyService } from '@services/company.service';
+import { Approver } from '@models/approver';
+import { ApproverService } from '@services/approver.service';
 import { MessageService } from 'primeng/api';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -14,14 +14,15 @@ import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.component';
+import { AddEditApproverComponent } from './add-edit-approver/add-edit-approver.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
+import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
   standalone: true,
-  selector: 'app-company',
-  templateUrl: './company.component.html',
+  selector: 'app-approver',
+  templateUrl: './approver.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -61,35 +62,31 @@ import {ConfirmationService} from 'primeng/api';
     ])
   ]
 })
-
-export class CompanyComponent implements OnInit {
+export class ApproverComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listCompany: Company[] = [];
-  selectedCompany!: Company;
+  listApprover: Approver[] = [];
+  selectedApprover!: Approver;
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'companyName', label: 'Company name' },
-      { id: 'bankAccount', label: 'IBAN Number' },
-      { id: 'cmpEmail', label: 'Email' },
-      { id: 'cmpVatlegalEntity', label: 'VAT legal entity' },
-      { id: 'cmpBicsw', label: 'BIC/SW' },
-      { id: 'idApproverCmp', label: 'Approver' },
+      { id: 'appFirstName', label: 'First name' },
+      { id: 'appLastName', label: 'Last name' },
     ],
     loading: false,
     exportLoading: false
   };
   
-  Company: Company[] = [];
-  constructor(private companyService: CompanyService, private toast: MessageService,
+  Approver: Approver[] = [];
+  constructor(private approverService: ApproverService, private toast: MessageService,
     private modalService: DialogService,
     private modalAddEdit: DynamicDialogRef,
-    private confirmationService: ConfirmationService) { 
+    private confirmationService: ConfirmationService,
+    private fileExporter: FileExporterService) { 
     }
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
@@ -99,9 +96,9 @@ export class CompanyComponent implements OnInit {
   getCompanies(): void {
     this.tableOptions.loading = true;
 
-    this.companyService.getAll().subscribe({
+    this.approverService.getAll().subscribe({
       next: (res) => {
-        this.listCompany = res;
+        this.listApprover = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -115,34 +112,27 @@ export class CompanyComponent implements OnInit {
   }
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Add company`,
+      this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
+        header: `Add approver`,
         width: '60%',
         height: '50',
         data: {
-          Company: this.listCompany[0]
+          Approver: this.listApprover[0]
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getCompanies();
       });
     }
-    else if (this.selectedCompany?.idCompany) {
-      this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Edit company`,
+    else if (this.selectedApprover?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
+        header: `Edit approver`,
         width: '60%',
         height: '50',
         data: {
-          idCompany: this.selectedCompany.idCompany,
-          companyName:this.selectedCompany.companyName,
-          bankAccount:this.selectedCompany.bankAccount,
-          cmpEmail:this.selectedCompany.cmpEmail,
-          cmpVatLegalEntity:this.selectedCompany.cmpVatlegalEntity,
-          cmpBicsw:this.selectedCompany.cmpBicsw,
-          cmpVatRate:this.selectedCompany.cmpVatRate,
-          idApproverCmp:this.selectedCompany.idApproverCmp,
-          isEveris:this.selectedCompany.isEveris,
-
+          idApprover: this.selectedApprover.id,
+          ApproverName:this.selectedApprover.appFirstName,
+          bankAccount:this.selectedApprover.appLastName,
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
@@ -167,16 +157,23 @@ export class CompanyComponent implements OnInit {
     table.clear();
   }
 
+  exportExcel(): void {
+    this.tableOptions.exportLoading = true;
+    setTimeout(()=>{
+      this.fileExporter.exportExcel(this.listApprover,'Approver').finally(()=> this.tableOptions.exportLoading = false);
+    },50);
+  }
+
   delete():void{
-    if (this.selectedCompany?.idCompany) {
+    if (this.selectedApprover?.id) {
       this.confirmationService.confirm({
-        message: 'Are you sure you want to delete '+this.selectedCompany.companyName,
+        message: 'Are you sure you want to delete '+this.selectedApprover.appFirstName+' '+this.selectedApprover.appLastName,
         header: 'Confirm',
         icon:'pi pi-exclamation-triangle',
         accept: () => {
-          this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
+          this.approverService.deleteApprover(this.selectedApprover.id).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
+              this.toast.add({ severity: 'success', summary: "Approver deleted successfuly" });
               this.getCompanies();
             },
             error: (err: any) => {

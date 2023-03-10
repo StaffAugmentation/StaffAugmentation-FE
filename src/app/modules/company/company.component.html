@@ -1,5 +1,4 @@
 <div class="card">
-
 <div id="listCompany">
     <div class="flex justify-content-between mb-3">
         <div></div>
@@ -10,16 +9,15 @@
             <button (click)="delete()" pButton pRipple label="Delete" icon="pi pi-trash" class="border-white"></button>
         </span>
     </div>
-<p-table #dtCompany [value]="listCompany" dataKey="id" [rows]="250" [loading]="tableOptions.loading" 
-    [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
-    [globalFilterFields]="globalFilterFields"  
-    selectionMode="single" [(selection)]="selectedCompany" [rowsPerPageOptions]="[250,500,1000]"
+<p-table #dtCompany [value]="listCompany" selectionMode="single" [(selection)]="selectedCompany" dataKey="id" 
+    [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines" 
+    [paginator]="true" [globalFilterFields]="globalFilterFields" [rowsPerPageOptions]="[250,500,1000]"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
     scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
     <ng-template pTemplate="caption">
         <div class="w-full flex justify-content-between">
             <span class="p-input-icon-right">
-                <input (change)="onGlobalFilter(dtCompany,$event)" type="text" pInputText placeholder="Search" />
+                <input (change)="onGlobalFilter(dtCompany,$event)" type="text" pInputText placeholder="Search"/>
                 <i class="pi pi-search"></i>
             </span>
             <div>
@@ -64,4 +62,5 @@
         </tr>
     </ng-template>
 </p-table>
+</div>
 <p-confirmDialog [style]="{width: '30vw'}"></p-confirmDialog> 
