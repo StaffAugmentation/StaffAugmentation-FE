@@ -160,7 +160,14 @@ export class ApproverComponent implements OnInit {
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
     setTimeout(()=>{
-      this.fileExporter.exportExcel(this.listApprover,'Approver').finally(()=> this.tableOptions.exportLoading = false);
+      this.fileExporter.exportExcel(this.listApprover.map(approver => {
+        let appr : any = { ...approver};
+        appr['First name'] = approver.appFirstName;
+        appr['Last name'] = approver.appLastName;
+        delete appr['appFirstName'];
+        delete appr['appLastName'];
+        return appr;
+      }),'Approver').finally(()=> this.tableOptions.exportLoading = false);
     },50);
   }
 
