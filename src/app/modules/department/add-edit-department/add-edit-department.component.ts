@@ -53,7 +53,7 @@ export class AddEditDepartmentComponent implements OnInit {
       this.departmentService.addDepartment(new Department(
         this.id || 0,
         this.addEditForm.value.Id,
-        this.addEditForm.value.ValueId,)
+        this.addEditForm.value.Value,)
       ).subscribe({
         next: () => {
           this.toast.add({ severity: 'success', summary: "Department added successfuly" });

@@ -75,7 +75,7 @@ export class DepartmentComponent implements OnInit {
     cols: [
       { id: 'id', label: 'Id' },
       { id: 'valueId', label: 'Value' },
-      { id: 'State', label: 'State' },
+      { id: 'isActive', label: 'State' },
     ],
     loading: false,
     exportLoading: false

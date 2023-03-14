@@ -51,10 +51,10 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-Department>
-        <tr>
-            <td *ngFor="let col of tableOptions.visibleCols">
-                {{Department[col.id]}}
-            </td>
+        <tr [pSelectableRow]="Department">
+            <td>{{Department.id}}</td>
+            <td>{{Department.valueId}}</td>
+            <td>{{Department.isActive}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -68,3 +68,4 @@
         </tr>
     </ng-template>
 </p-table>
+

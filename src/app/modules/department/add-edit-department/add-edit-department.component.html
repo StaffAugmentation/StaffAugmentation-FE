@@ -1,14 +1,14 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <p-tabView orientation="left">
           <div class="field">
-              <label for="ValueId"> <b>ValueId</b></label>
-              <input type="text" pInputText placeholder="ValueId" formControlName="ValueId">
+              <label for="ValueId" class="mr-2"> <b>Value</b></label>
+              <input type="text" pInputText placeholder="Value" formControlName="ValueId">
           </div>
           <div class="field">
               <b class="mr-2">Is active</b>
-              <p-radioButton id="isActive" name="groupname" class=" mr-2" [value]="true" label="Yes"
-                  formControlName="isActive"></p-radioButton>
-              <p-radioButton id="isActive" name="groupname" class="" [value]="false" label="No"
+              <p-radioButton id="isActive" name="isActive" class="mr-2" [value]=true label="Yes"
+                  formControlName="isActive" ></p-radioButton>
+              <p-radioButton id="isNotActive" name="isActive" class="mr-2" [value]=false label="No"
                   formControlName="isActive"></p-radioButton>
           </div>
   </p-tabView>
