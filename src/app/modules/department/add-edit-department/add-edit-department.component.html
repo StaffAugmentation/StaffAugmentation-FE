@@ -4,9 +4,9 @@
               <div class="field">
                   <label for="ValueId"> <b>Value</b><span class="text-red-500">*</span></label>
                   <input type="text" pInputText
-                      [class]="addEditForm.get('ValueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                      [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                       placeholder="Value" formControlName="valueId">
-                  <p-message *ngIf="addEditForm.get('ValueId')?.invalid && isSubmited" severity="error"
+                  <p-message *ngIf="addEditForm.get('valueId')?.invalid && isSubmited" severity="error"
                       text="Value is required"></p-message>
               </div>
               <div class="field">

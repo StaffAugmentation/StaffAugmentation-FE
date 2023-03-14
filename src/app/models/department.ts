@@ -1,15 +1,15 @@
 export class Department{
-  Id: number;
-  ValueId: number;
+  id: number;
+  valueId: number;
   isActive: boolean;
   constructor
       (
-      Id: number,
-      ValueId: number,
+      id: number,
+      valueId: number,
       isActive: boolean,
       ){
-          this.Id=Id,
-          this.ValueId=ValueId,
+          this.id=id,
+          this.valueId=valueId,
           this.isActive=isActive
       }
 }

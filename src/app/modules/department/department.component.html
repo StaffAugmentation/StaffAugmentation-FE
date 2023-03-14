@@ -6,6 +6,7 @@
               <button (click)="addEdit('add')" pButton pRipple label="Add" icon="pi pi-plus" class="border-white"></button>
               <button (click)="addEdit('edit')" pButton pRipple label="Edit" icon="pi pi-pencil" class="border-white"></button>
               <button (click)="delete()" pButton pRipple label="Delete" icon="pi pi-trash" class="border-white"></button>
+              <button (click)="exportExcel()" pButton pRipple label="Export all" icon="pi pi-download" class="border-white p-button-warning"></button>
           </span>
       </div>
   <p-table
@@ -74,7 +75,7 @@
       </ng-template>
       <ng-template pTemplate="loadingbody">
           <tr>
-              <td colspan="8">Loading companies data. Please wait.</td>
+              <td colspan="8">Loading department data. Please wait.</td>
           </tr>
       </ng-template>
   </p-table>

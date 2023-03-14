@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { AddEditDepartmentComponent } from './add-edit-department/add-edit-department.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
   standalone: true,
@@ -74,6 +75,7 @@ export class DepartmentComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
+      { id: 'id', label: 'Id' },
       { id: 'valueId', label: 'Value' },
       { id: 'isActive', label: 'State' }
     ],
@@ -81,10 +83,11 @@ export class DepartmentComponent implements OnInit {
     exportLoading: false
   };
 
-  Company: Department[] = [];
+  Department: Department[] = [];
   constructor(private departmentService: DepartmentService, private toast: MessageService,
     private modalService: DialogService,
     private modalAddEdit: DynamicDialogRef,
+    private fileExporter: FileExporterService,
     private confirmationService: ConfirmationService) {
     }
   ngOnInit(): void {
@@ -106,9 +109,6 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
-  refresh():void{
-    this.getDepartments();
-  }
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
@@ -123,14 +123,14 @@ export class DepartmentComponent implements OnInit {
         this.getDepartments();
       });
     }
-    else if (this.selectedDepartment?.Id) {
+    else if (this.selectedDepartment?.id) {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
         header: `Edit department`,
         width: '60%',
         height: '50',
         data: {
-          id: this.selectedDepartment.Id,
-          valueId:this.selectedDepartment.ValueId,
+          id: this.selectedDepartment.id,
+          valueId:this.selectedDepartment.valueId,
           isActive:this.selectedDepartment.isActive,
         }
       });
@@ -157,13 +157,13 @@ export class DepartmentComponent implements OnInit {
   }
 
   delete():void{
-    if (this.selectedDepartment?.Id) {
+    if (this.selectedDepartment?.id) {
       this.confirmationService.confirm({
-        message: 'Are you sure you want to delete '+this.selectedDepartment.ValueId,
+        message: 'Are you sure you want to delete '+this.selectedDepartment.valueId,
         header: 'Confirm',
         icon:'pi pi-exclamation-triangle',
         accept: () => {
-          this.departmentService.deleteDepartment(this.selectedDepartment.Id).subscribe({
+          this.departmentService.deleteDepartment(this.selectedDepartment.id).subscribe({
             next: () => {
               this.toast.add({ severity: 'success', summary: "Department deleted successfuly" });
               this.getDepartments();
@@ -173,11 +173,23 @@ export class DepartmentComponent implements OnInit {
             }
           });
         }
-
       });
     } else{
       this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
     }
   }
+
+    exportExcel(): void {
+      this.tableOptions.exportLoading = true;
+      // let data = this.listBR.filter(br => br)
+        this.fileExporter.exportExcel(this.listDepartment.map(department =>{
+          let dprt : any = {...department};
+          dprt['valueId'] = department.appValue;
+          dprt['isActive'] = department.appState;
+          delete dprt['appValue'];
+          delete dprt['appState'];
+          return dprt;
+        }),'department').finally(()=> this.tableOptions.exportLoading = false);
+      }
 
 }

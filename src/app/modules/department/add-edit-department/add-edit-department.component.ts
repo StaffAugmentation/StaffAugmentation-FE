@@ -47,7 +47,7 @@ export class AddEditDepartmentComponent implements OnInit {
         next: res=>{
           this.selectedValue = res;
           this.addEditForm = new FormGroup({
-            ValueId: new FormControl(res.ValueId, [Validators.required]),
+            valueId: new FormControl(res.valueId, [Validators.required]),
             isActive: new FormControl(res.isActive),
           });
         },
@@ -58,18 +58,33 @@ export class AddEditDepartmentComponent implements OnInit {
     }
     else{
       this.addEditForm = new FormGroup({
-        ValueId: new FormControl(null, [Validators.required]),
+        valueId: new FormControl(null, [Validators.required]),
         isActive: new FormControl(false),
       });
     }
   }
   onSubmit() {
     this.isSubmited = true;
+    console.log(this.addEditForm.value);
     if (this.addEditForm.valid) {
       if(this.id){
+        this.departmentService.updateDepartment(new Department(
+          this.id,
+          this.addEditForm.value.valueId,
+          this.addEditForm.value.isActive)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Department updated successfuly" });
+            this.ref.close();
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
+      }else{
         this.departmentService.addDepartment(new Department(
           this.id || 0,
-          this.addEditForm.value.ValueId,
+          this.addEditForm.value.valueId,
           this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
@@ -80,21 +95,6 @@ export class AddEditDepartmentComponent implements OnInit {
             this.toast.add({ severity: 'error', summary: err.error });
           }
         });
-      }else{
-        this.departmentService.updateDepartment(new Department(
-          this.id,
-          this.addEditForm.value.ValueId,
-          this.addEditForm.value.IsActive)
-        ).subscribe({
-          next: () => {
-            this.toast.add({ severity: 'success', summary: "Department updated successfuly" });
-            this.ref.close();
-          },
-          error: (err: any) => {
-            this.toast.add({ severity: 'error', summary: err.error });
-          }
-        });
-
       }
     }
   }
@@ -102,3 +102,5 @@ export class AddEditDepartmentComponent implements OnInit {
     this.ref.close();
   }
 }
+
+
