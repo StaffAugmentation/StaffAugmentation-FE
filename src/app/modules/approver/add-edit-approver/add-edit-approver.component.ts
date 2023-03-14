@@ -46,21 +46,15 @@ export class AddEditApproverComponent implements OnInit {
       this.approverService.getOne(this.id).subscribe({
         next: res=>{
           this.selectedValue = res;
-          this.addEditForm = new FormGroup({
-            appFirstName: new FormControl(res.appFirstName, [Validators.required]),
-            appLastName: new FormControl(res.appLastName, [Validators.required]),
-          });
+          this.initForm(res);
         },
-        error: err => {
-
+        error: (err: any) => {
+          this.toast.add({ severity: 'error', summary: err.error });
         }
-      })
+      });
     }
     else{
-      this.addEditForm = new FormGroup({
-        appFirstName: new FormControl(null, [Validators.required]),
-        appLastName: new FormControl(null, [Validators.required]),
-      });
+      this.initForm(null);
     }
   }
   onSubmit() {
@@ -101,6 +95,14 @@ export class AddEditApproverComponent implements OnInit {
       
     }
   }
+
+  initForm(data: Approver | null): void {
+    this.addEditForm = new FormGroup({
+      appFirstName: new FormControl(data ? data.appFirstName : null, [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+      appLastName: new FormControl(data ? data.appLastName : null, [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+    });
+  }
+
   close() {
     this.ref.close();
   }

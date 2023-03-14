@@ -90,10 +90,10 @@ export class ApproverComponent implements OnInit {
     }
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getCompanies();
+    this.getApprovers();
   }
 
-  getCompanies(): void {
+  getApprovers(): void {
     this.tableOptions.loading = true;
 
     this.approverService.getAll().subscribe({
@@ -108,7 +108,7 @@ export class ApproverComponent implements OnInit {
   }
 
   refresh():void{
-    this.getCompanies();
+    this.getApprovers();
   }
   addEdit(action: string): void {
     if (action == 'add') {
@@ -121,7 +121,7 @@ export class ApproverComponent implements OnInit {
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
     else if (this.selectedApprover?.id) {
@@ -136,7 +136,7 @@ export class ApproverComponent implements OnInit {
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
     else {
@@ -181,7 +181,7 @@ export class ApproverComponent implements OnInit {
           this.approverService.deleteApprover(this.selectedApprover.id).subscribe({
             next: () => {
               this.toast.add({ severity: 'success', summary: "Approver deleted successfuly" });
-              this.getCompanies();
+              this.getApprovers();
             },
             error: (err: any) => {
               this.toast.add({ severity: 'error', summary: err.error });

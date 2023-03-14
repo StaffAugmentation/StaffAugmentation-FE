@@ -66,35 +66,18 @@ export class AddEditCompanyComponent implements OnInit {
       this.companyService.getOne(this.id).subscribe({
         next: res=>{
           this.selectedValue = res;
-          this.addEditForm = new FormGroup({
-            companyName: new FormControl(res.companyName, [Validators.required]),
-            ibanNumber: new FormControl(res.bankAccount),
-            cmpEmail: new FormControl(res.cmpEmail, [Validators.required, Validators.email]),
-            vatLegal: new FormControl(res.cmpVatlegalEntity),
-            bic: new FormControl(res.cmpBicsw),
-            approver: new FormControl(res.idApproverCmp),
-            vatRate: new FormControl(res.cmpVatRate),
-            isNTTData: new FormControl(res.isEveris),
-          });
+          this.initForm(res);
         },
-        error: err => {
-
+        error: (err: any) => {
+          this.toast.add({ severity: 'error', summary: err.error });
         }
       })
     }
     else{
-      this.addEditForm = new FormGroup({
-        companyName: new FormControl(null, [Validators.required]),
-        ibanNumber: new FormControl(null),
-        cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
-        vatLegal: new FormControl(null),
-        bic: new FormControl(null),
-        approver: new FormControl(null),
-        vatRate: new FormControl(null),
-        isNTTData: new FormControl(false),
-      });
+      this.initForm(null);
     }
   }
+
   onSubmit() {
     this.isSubmited = true;
     if (this.addEditForm.valid) {
@@ -121,7 +104,6 @@ export class AddEditCompanyComponent implements OnInit {
         });
 
       }else{
-        
         this.companyService.addCompany(new Company(
           this.id || 0,
           this.addEditForm.value.companyName,
@@ -146,6 +128,20 @@ export class AddEditCompanyComponent implements OnInit {
       
     }
   }
+
+  initForm(data: Company | null): void {
+    this.addEditForm = new FormGroup({
+      companyName: new FormControl(data ? data.companyName : null, [Validators.required]),
+      ibanNumber: new FormControl(data ? data.bankAccount : null),
+      cmpEmail: new FormControl(data ? data.cmpEmail : null, [Validators.required, Validators.email]),
+      vatLegal: new FormControl(data ? data.cmpVatlegalEntity : null),
+      bic: new FormControl(data ? data.cmpBicsw : null),
+      approver: new FormControl(data ? data.idApproverCmp : null),
+      vatRate: new FormControl(data ? data.cmpVatRate : null),
+      isNTTData: new FormControl(data ? data.isEveris : false),
+    });
+  }
+
   close() {
     this.ref.close();
   }
