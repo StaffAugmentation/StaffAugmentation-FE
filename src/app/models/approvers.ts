@@ -1,4 +1,4 @@
-export class Approver{
+export class Approvers{
     id:number;
     appFirstName:string;
     appLastName:string;

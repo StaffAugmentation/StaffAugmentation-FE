@@ -85,7 +85,6 @@ export class CompanyComponent implements OnInit {
     exportLoading: false
   };
   
-  Company: Company[] = [];
   constructor(private companyService: CompanyService, private toast: MessageService,
     private modalService: DialogService,
     private modalAddEdit: DynamicDialogRef,

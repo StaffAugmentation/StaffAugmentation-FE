@@ -7,12 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -20,9 +21,10 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
     AppRoutingModule,
     AppLayoutModule,
     HttpClientModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [MessageService, DialogService, DynamicDialogRef],
+  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

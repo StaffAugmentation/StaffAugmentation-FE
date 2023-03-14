@@ -1,26 +1,25 @@
-<div *ngIf="addEditForm">
-    <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-        <p-tabView orientation="left" class="p-fluid m-0">
-            <div class="field">
-                <label for="appFirstName"> <b>First name </b><span class="text-red-500">*</span></label>
-                <input type="text" pInputText
-                    [class]="addEditForm.get('appFirstName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
-                    placeholder="First name" formControlName="appFirstName">
-                <p-message *ngIf="addEditForm.get('appFirstName')?.invalid && isSubmited" severity="error"
-                    text="First name is required"></p-message>
-            </div>
-            <div class="field">
-                <label for="appLastName"> <b>Last name</b><span class="text-red-500">*</span></label>
-                <input type="text" pInputText
-                    [class]="addEditForm.get('appLastName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''" 
-                    placeholder="Last name" formControlName="appLastName">
-                <p-message *ngIf="addEditForm.get('appLastName')?.invalid && isSubmited" severity="error"
-                    text="Last name is required"></p-message>
-            </div>  
-        </p-tabView>        
-        <div class="footer">
-            <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>&nbsp;
-            <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid p-2 mb-4">
+        <div class="field">
+            <label for="appFirstName"> <b>First name </b><span class="text-red-500">*</span></label>
+            <input type="text" pInputText name-only
+                [class]="addEditForm.get('appFirstName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                placeholder="First name" formControlName="appFirstName">
+            <p-message *ngIf="addEditForm.get('appFirstName')?.invalid && isSubmited" severity="error"
+                [text]="getErrorMessage('First name', addEditForm.get('appFirstName')?.errors)"></p-message>
         </div>
-    </form>
+        <div class="field">
+            <label for="appLastName"> <b>Last name</b><span class="text-red-500">*</span></label>
+            <input type="text" pInputText name-only
+                [class]="addEditForm.get('appLastName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                placeholder="Last name" formControlName="appLastName">
+            <p-message *ngIf="addEditForm.get('appLastName')?.invalid && isSubmited" severity="error"
+                [text]="getErrorMessage('Last name', addEditForm.get('appLastName')?.errors)"></p-message>
+        </div>
     </div>
+    <div class="footer">
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary"
+            label="Close"></button>&nbsp;
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
+    </div>
+</form>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Approver } from '@models/approver';
+import { Approvers } from '@models/approvers';
 import { ApproverService } from '@services/approver.service';
 import { MessageService } from 'primeng/api';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +15,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 import { AddEditApproverComponent } from './add-edit-approver/add-edit-approver.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
@@ -34,32 +33,6 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
     DynamicDialogModule,
     OverlayPanelModule,
     ConfirmDialogModule
-  ],
-  providers: [ConfirmationService],
-  animations: [
-    trigger('showHide', [
-      state('true', style({
-        height: 0,
-        opacity: 0,
-        marginTop: 0
-      })),
-      state('false', style({
-        height: 'fit-content',
-        opacity: 1,
-        marginTop: 12
-      })),
-      transition('true => false', [
-        animate('300ms ease-out', keyframes([
-          style({ height: 'fit-content' }),
-          style({ opacity: 1, marginTop: 12 })
-        ]))
-      ]),
-      transition('false => true', [
-        animate('300ms  ease-in', keyframes([
-          style({ opacity: 0, height: '0', marginTop: 0 })
-        ]))
-      ]),
-    ])
   ]
 })
 export class ApproverComponent implements OnInit {
@@ -69,8 +42,8 @@ export class ApproverComponent implements OnInit {
     list: true
   };
   frameworkContracts = [];
-  listApprover: Approver[] = [];
-  selectedApprover!: Approver;
+  listApprover: Approvers[] = [];
+  selectedApprover!: Approvers | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
@@ -80,20 +53,17 @@ export class ApproverComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  
-  Approver: Approver[] = [];
+
   constructor(private approverService: ApproverService, private toast: MessageService,
-    private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef,
-    private confirmationService: ConfirmationService,
-    private fileExporter: FileExporterService) { 
-    }
-  ngOnInit(): void {
-    this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getCompanies();
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
   }
 
-  getCompanies(): void {
+  ngOnInit(): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getApprovers();
+  }
+  getApprovers(): void {
     this.tableOptions.loading = true;
 
     this.approverService.getAll().subscribe({
@@ -102,90 +72,96 @@ export class ApproverComponent implements OnInit {
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        this.toast.add({ severity: 'error', summary: err.error });
+        let errMessage: string = err.error;
+        if (err.status == 0) {
+          errMessage = 'Something went wrong with the server !';
+        }
+        this.toast.add({ severity: 'error', summary: errMessage });
       }
     });
   }
-
-  refresh():void{
-    this.getCompanies();
+  refresh(): void {
+    this.getApprovers();
   }
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
         header: `Add approver`,
-        width: '60%',
-        height: '50',
-        data: {
-          Approver: this.listApprover[0]
-        }
+        width: '500px',
+        height: '50'
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
     else if (this.selectedApprover?.id) {
       this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
         header: `Edit approver`,
-        width: '60%',
+        width: '500px',
         height: '50',
         data: {
-          idApprover: this.selectedApprover.id,
-          ApproverName:this.selectedApprover.appFirstName,
-          bankAccount:this.selectedApprover.appLastName,
+          idApprover: this.selectedApprover.id
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
-
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table, event: Event): void {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
   clearFilter(table: Table): void {
     table.clear();
   }
-
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
-    setTimeout(()=>{
-      this.fileExporter.exportExcel(this.listApprover,'Approver').finally(()=> this.tableOptions.exportLoading = false);
-    },50);
+    this.fileExporter.exportExcel(this.listApprover.map(approver => {
+      let appr: any = { ...approver };
+      appr['First name'] = approver.appFirstName;
+      appr['Last name'] = approver.appLastName;
+      delete appr['appFirstName'];
+      delete appr['appLastName'];
+      return appr;
+    }), 'Approvers').finally(() => this.tableOptions.exportLoading = false);
   }
-
-  delete():void{
+  delete(): void {
     if (this.selectedApprover?.id) {
       this.confirmationService.confirm({
-        message: 'Are you sure you want to delete '+this.selectedApprover.appFirstName+' '+this.selectedApprover.appLastName,
-        header: 'Confirm',
-        icon:'pi pi-exclamation-triangle',
+        message: 'You won\'t be able to revert this! ',
+        header: 'Are you sure?',
+        icon: 'pi pi-exclamation-circle text-yellow-500',
+        acceptButtonStyleClass: 'p-button-danger p-button-raised',
+        rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+        acceptLabel: 'Yes, delete it',
+        rejectLabel: 'No, cancel',
+        defaultFocus: 'reject',
         accept: () => {
-          this.approverService.deleteApprover(this.selectedApprover.id).subscribe({
+          this.approverService.deleteApprover(this.selectedApprover?.id || 0).subscribe({
             next: () => {
               this.toast.add({ severity: 'success', summary: "Approver deleted successfuly" });
-              this.getCompanies();
+              this.getApprovers();
+              this.selectedApprover = null;
             },
             error: (err: any) => {
-              this.toast.add({ severity: 'error', summary: err.error });
+              let errMessage: string = err.error;
+              if (err.status == 0) {
+                errMessage = 'Something went wrong with the server !';
+              }
+              this.toast.add({ severity: 'error', summary: errMessage });
             }
           });
         }
-
-      });  
-    } else{
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
-    } 
+      });
+    } else {
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
+    }
   }
 
 }

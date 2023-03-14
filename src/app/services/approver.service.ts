@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Approver } from '@models/approver';
+import { Approvers } from '@models/approvers';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -13,22 +13,22 @@ export class ApproverService {
 
   constructor(private http: HttpClient) { }
 
-  public getAll() : Observable<Approver[]>{
-    return this.http.get<Approver[]>(this.baseUrl);
+  public getAll() : Observable<Approvers[]>{
+    return this.http.get<Approvers[]>(this.baseUrl);
   }
 
-  public getOne(id: number) : Observable<Approver>{
-    return this.http.get<Approver>(`${this.baseUrl}/${id}`);
+  public getOne(id: number) : Observable<Approvers>{
+    return this.http.get<Approvers>(`${this.baseUrl}/${id}`);
   }
 
-  public addApprover(approver: Approver) : Observable<Approver>{
-    return this.http.post<Approver>(`${this.baseUrl}`,approver);
+  public addApprover(approver: Approvers) : Observable<Approvers>{
+    return this.http.post<Approvers>(`${this.baseUrl}`,approver);
   }
 
-  public updateApprover(approver: Approver) : Observable<Approver>{
-    return this.http.put<Approver>(`${this.baseUrl}`,approver);
+  public updateApprover(approver: Approvers) : Observable<Approvers>{
+    return this.http.put<Approvers>(`${this.baseUrl}`,approver);
   }
-  public deleteApprover(id: number) : Observable<Approver>{
-    return this.http.delete<Approver>(`${this.baseUrl}/${id}`);
+  public deleteApprover(id: number) : Observable<Approvers>{
+    return this.http.delete<Approvers>(`${this.baseUrl}/${id}`);
   }
 }
