@@ -1,19 +1,25 @@
-<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <p-tabView orientation="left">
-          <div class="field">
-              <label for="ValueId" class="mr-2"> <b>Value</b></label>
-              <input type="text" pInputText placeholder="Value" formControlName="ValueId">
-          </div>
-          <div class="field">
-              <b class="mr-2">Is active</b>
-              <p-radioButton id="isActive" name="isActive" class="mr-2" [value]=true label="Yes"
-                  formControlName="isActive" ></p-radioButton>
-              <p-radioButton id="isNotActive" name="isActive" class="mr-2" [value]=false label="No"
+<div *ngIf="addEditForm">
+  <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+      <p-tabView orientation="left">
+              <div class="field">
+                  <label for="ValueId"> <b>Value</b><span class="text-red-500">*</span></label>
+                  <input type="text" pInputText
+                      [class]="addEditForm.get('ValueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                      placeholder="Value" formControlName="valueId">
+                  <p-message *ngIf="addEditForm.get('ValueId')?.invalid && isSubmited" severity="error"
+                      text="Value is required"></p-message>
+              </div>
+              <div class="field">
+                  <b class="mr-2">Is Active</b>
+                  <p-radioButton name="isActive" class=" mr-2" [value]="true" label="Yes"
                   formControlName="isActive"></p-radioButton>
-          </div>
-  </p-tabView>
-  <div class="footer">
-      <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>&nbsp;
-      <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>
+                  <p-radioButton name="isActive" class=" mr-2" [value]="false" label="No"
+                  formControlName="isActive"></p-radioButton>
+              </div>
+      </p-tabView>
+      <div class="footer">
+          <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>&nbsp;
+          <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
+      </div>
+  </form>
   </div>
-</form>

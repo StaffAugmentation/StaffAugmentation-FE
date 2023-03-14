@@ -11,7 +11,7 @@ import { DepartmentService } from '@services/department.service';
 import { Department } from '@models/department';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module'
 
 @Component({
@@ -38,31 +38,64 @@ export class AddEditDepartmentComponent implements OnInit {
   selectedValue!: Department;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private departmentService: DepartmentService, private toast: MessageService) { }
+  constructor(private ref: DynamicDialogRef, private departmentService: DepartmentService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.addEditForm = new FormGroup({
-      Id: new FormControl(null  ),
-      ValueId: new FormControl(null),
-      isActive: new FormControl(false),
-    })
+    this.id = this.config.data.id;
+    if(this.id){
+      this.departmentService.getOne(this.id).subscribe({
+        next: res=>{
+          this.selectedValue = res;
+          this.addEditForm = new FormGroup({
+            ValueId: new FormControl(res.ValueId, [Validators.required]),
+            isActive: new FormControl(res.isActive),
+          });
+        },
+        error: err => {
+
+        }
+      })
+    }
+    else{
+      this.addEditForm = new FormGroup({
+        ValueId: new FormControl(null, [Validators.required]),
+        isActive: new FormControl(false),
+      });
+    }
   }
   onSubmit() {
     this.isSubmited = true;
     if (this.addEditForm.valid) {
-      this.departmentService.addDepartment(new Department(
-        this.id || 0,
-        this.addEditForm.value.Id,
-        this.addEditForm.value.Value,)
-      ).subscribe({
-        next: () => {
-          this.toast.add({ severity: 'success', summary: "Department added successfuly" });
-          this.ref.close();
-        },
-        error: (err: any) => {
-          this.toast.add({ severity: 'error', summary: err.error });
-        }
-      });
+      if(this.id){
+        this.departmentService.addDepartment(new Department(
+          this.id || 0,
+          this.addEditForm.value.ValueId,
+          this.addEditForm.value.isActive)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Department added successfuly" });
+            this.ref.close();
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
+      }else{
+        this.departmentService.updateDepartment(new Department(
+          this.id,
+          this.addEditForm.value.ValueId,
+          this.addEditForm.value.IsActive)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Department updated successfuly" });
+            this.ref.close();
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
+
+      }
     }
   }
   close() {

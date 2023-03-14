@@ -5,7 +5,6 @@ import { MessageService } from 'primeng/api';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
-import { FileExporterService } from 'src/app/services/file-exporter.service';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,14 +13,14 @@ import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddEditDepartmentComponent } from './add-edit-department/add-edit-department.component';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 @Component({
   standalone: true,
-  selector: 'app-company',
+  selector: 'app-department',
   templateUrl: './department.component.html',
   imports: [
     CommonModule,
@@ -32,8 +31,10 @@ import { AddEditDepartmentComponent } from './add-edit-department/add-edit-depar
     CalendarModule,
     TableModule,
     DynamicDialogModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   animations: [
     trigger('showHide', [
       state('true', style({
@@ -68,25 +69,24 @@ export class DepartmentComponent implements OnInit {
     list: true
   };
   frameworkContracts = [];
-  listDepartment: any[] = [];
-  selectedDepartment: any = {};
+  listDepartment: Department[] = [];
+  selectedDepartment!: Department;
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'id', label: 'Id' },
-      { id: 'valueId', label: 'Value' },
-      { id: 'isActive', label: 'State' },
+      { id: 'ValueId', label: 'Value' },
+      { id: 'IsActive', label: 'State' }
     ],
     loading: false,
     exportLoading: false
   };
 
-
-  department: Department[] = [];
+  Company: Department[] = [];
   constructor(private departmentService: DepartmentService, private toast: MessageService,
     private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef) { }
-
+    private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService) {
+    }
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getDepartments();
@@ -106,31 +106,36 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
+  refresh():void{
+    this.getDepartments();
+  }
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Add Department`,
+        header: `Add department`,
         width: '60%',
         height: '50',
         data: {
-          modal: this.modalAddEdit,
-          Department: {}
+          Department: this.listDepartment[0]
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getDepartments();
       });
     }
-    else if (this.selectedDepartment?.id) {
+    else if (this.selectedDepartment?.Id) {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Edit Department`,
-        width: '80%',
-        height: '95%',
+        header: `Edit department`,
+        width: '60%',
+        height: '50',
         data: {
-          department: this.selectedDepartment
+          id: this.selectedDepartment.Id,
+          valueId:this.selectedDepartment.ValueId,
+          isActive:this.selectedDepartment.isActive,
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
+        this.getDepartments();
       });
     }
     else {
@@ -151,7 +156,28 @@ export class DepartmentComponent implements OnInit {
     table.clear();
   }
 
+  delete():void{
+    if (this.selectedDepartment?.Id) {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to delete '+this.selectedDepartment.ValueId,
+        header: 'Confirm',
+        icon:'pi pi-exclamation-triangle',
+        accept: () => {
+          this.departmentService.deleteDepartment(this.selectedDepartment.Id).subscribe({
+            next: () => {
+              this.toast.add({ severity: 'success', summary: "Department deleted successfuly" });
+              this.getDepartments();
+            },
+            error: (err: any) => {
+              this.toast.add({ severity: 'error', summary: err.error });
+            }
+          });
+        }
+
+      });
+    } else{
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+    }
+  }
 
 }
-
-
