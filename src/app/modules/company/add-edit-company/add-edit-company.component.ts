@@ -12,7 +12,10 @@ import { Company } from '@models/company';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedModule } from '@modules/shared/shared.module'
+import { SharedModule } from '@modules/shared/shared.module';
+import { Approver } from '@models/approver';
+import { ApproverService } from '@services/approver.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   standalone: true,
@@ -29,7 +32,8 @@ import { SharedModule } from '@modules/shared/shared.module'
     TabViewModule,
     RadioButtonModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    DropdownModule
   ]
 })
 export class AddEditCompanyComponent implements OnInit {
@@ -38,7 +42,23 @@ export class AddEditCompanyComponent implements OnInit {
   selectedValue!: Company;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService, public config: DynamicDialogConfig) { }
+  approvers:Approver[] = [];
+  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService, public config: DynamicDialogConfig, private approverService:ApproverService) {
+    this.approverService.getAll().subscribe({
+      next: (res) => {
+        this.approvers = res;
+        this.approvers=this.approvers.map((appr: any) => {
+          return {
+            ...appr,
+            displayLabel: appr.appFirstName + ' ' + appr.appLastName
+          };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.id = this.config.data.idCompany;

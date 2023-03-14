@@ -32,10 +32,10 @@
             </div>
             <div class="field">
                 <label for="Approver"> <b>Approver</b></label>
-                <input type="text" pInputText placeholder="Approver" formControlName="approver">
+                <p-dropdown [options]="approvers" placeholder="Approver" formControlName="approver" 
+                    optionLabel="displayLabel" optionValue="id"></p-dropdown>
             </div>
             <div class="field">
-                
                 <label for="VATRate"> <b>VAT rate</b></label>
                 <div class="p-inputgroup">
                 <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
