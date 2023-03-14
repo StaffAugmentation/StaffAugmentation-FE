@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module';
-import { Approver } from '@models/approver';
+import { Approvers } from '@models/approvers';
 import { ApproverService } from '@services/approver.service';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -42,7 +42,7 @@ export class AddEditCompanyComponent implements OnInit {
   selectedValue!: Company;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  approvers:Approver[] = [];
+  approvers:Approvers[] = [];
   constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService, public config: DynamicDialogConfig, private approverService:ApproverService) {
     this.approverService.getAll().subscribe({
       next: (res) => {

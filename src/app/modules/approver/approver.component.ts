@@ -53,6 +53,7 @@ export class ApproverComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+  searchTable: string = '';
 
   constructor(private approverService: ApproverService, private toast: MessageService,
     private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
@@ -114,11 +115,13 @@ export class ApproverComponent implements OnInit {
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-  onGlobalFilter(table: Table, event: Event): void {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  onGlobalFilter(table: Table): void {
+    table.filterGlobal(this.searchTable, 'contains');
   }
   clearFilter(table: Table): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
     table.clear();
+    this.searchTable = '';
   }
   exportExcel(): void {
     this.tableOptions.exportLoading = true;

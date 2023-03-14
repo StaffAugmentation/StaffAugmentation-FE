@@ -33,32 +33,6 @@ import {ConfirmationService} from 'primeng/api';
     DynamicDialogModule,
     OverlayPanelModule,
     ConfirmDialogModule
-  ],
-  providers: [ConfirmationService],
-  animations: [
-    trigger('showHide', [
-      state('true', style({
-        height: 0,
-        opacity: 0,
-        marginTop: 0
-      })),
-      state('false', style({
-        height: 'fit-content',
-        opacity: 1,
-        marginTop: 12
-      })),
-      transition('true => false', [
-        animate('300ms ease-out', keyframes([
-          style({ height: 'fit-content' }),
-          style({ opacity: 1, marginTop: 12 })
-        ]))
-      ]),
-      transition('false => true', [
-        animate('300ms  ease-in', keyframes([
-          style({ opacity: 0, height: '0', marginTop: 0 })
-        ]))
-      ]),
-    ])
   ]
 })
 
@@ -84,6 +58,7 @@ export class CompanyComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+  searchTable: string = '';
   
   constructor(private companyService: CompanyService, private toast: MessageService,
     private modalService: DialogService,
@@ -158,11 +133,13 @@ export class CompanyComponent implements OnInit {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
 
-  onGlobalFilter(table: Table, event: Event): void {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  onGlobalFilter(table: Table): void {
+    table.filterGlobal(this.searchTable, 'contains');
   }
 
   clearFilter(table: Table): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.searchTable = '';
     table.clear();
   }
 
