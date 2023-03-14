@@ -55,7 +55,7 @@ export class AddEditApproverComponent implements OnInit {
           }
           this.toast.add({ severity: 'error', summary: errMessage });
         }
-      })
+      });
     }
   }
   onSubmit() {
