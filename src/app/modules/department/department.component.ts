@@ -74,8 +74,8 @@ export class DepartmentComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'ValueId', label: 'Value' },
-      { id: 'IsActive', label: 'State' }
+      { id: 'valueId', label: 'Value' },
+      { id: 'isActive', label: 'State' }
     ],
     loading: false,
     exportLoading: false

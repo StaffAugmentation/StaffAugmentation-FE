@@ -21,7 +21,14 @@ export class DepartmentService {
     return this.http.get<Department>(`${this.baseUrl}/${Id}`);
   }
 
-  public addDepartment(company: Department) : Observable<Department>{
-    return this.http.post<Department>(`${this.baseUrl}`,company);
+  public addDepartment(department: Department) : Observable<Department>{
+    return this.http.post<Department>(`${this.baseUrl}`,department);
+  }
+
+  public updateDepartment(department: Department) : Observable<Department>{
+    return this.http.put<Department>(`${this.baseUrl}`,department);
+  }
+  public deleteDepartment(Id: number) : Observable<Department>{
+    return this.http.delete<Department>(`${this.baseUrl}/${Id}`);
   }
 }
