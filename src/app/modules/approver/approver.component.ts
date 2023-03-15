@@ -74,7 +74,7 @@ export class ApproverComponent implements OnInit {
       },
       error: (err: any) => {
         let errMessage: string = err.error;
-        if (err.status == 0) {
+        if (err.status != 400) {
           errMessage = 'Something went wrong with the server !';
         }
         this.toast.add({ severity: 'error', summary: errMessage });
@@ -88,8 +88,7 @@ export class ApproverComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
         header: `Add approver`,
-        width: '500px',
-        height: '50'
+        style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getApprovers();
@@ -98,8 +97,7 @@ export class ApproverComponent implements OnInit {
     else if (this.selectedApprover?.id) {
       this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
         header: `Edit approver`,
-        width: '500px',
-        height: '50',
+        style: { width: '90%', maxWidth: '500px' },
         data: {
           idApprover: this.selectedApprover.id
         }
@@ -154,7 +152,7 @@ export class ApproverComponent implements OnInit {
             },
             error: (err: any) => {
               let errMessage: string = err.error;
-              if (err.status == 0) {
+              if (err.status != 400) {
                 errMessage = 'Something went wrong with the server !';
               }
               this.toast.add({ severity: 'error', summary: errMessage });

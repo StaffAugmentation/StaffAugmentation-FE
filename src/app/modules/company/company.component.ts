@@ -16,7 +16,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { Approvers } from '@models/approvers';
+import { ApproverService } from '@services/approver.service';
 
 @Component({
   standalone: true,
@@ -44,7 +46,7 @@ export class CompanyComponent implements OnInit {
   };
   frameworkContracts = [];
   listCompany: Company[] = [];
-  selectedCompany!: Company;
+  selectedCompany!: Company | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
@@ -53,18 +55,19 @@ export class CompanyComponent implements OnInit {
       { id: 'cmpEmail', label: 'Email' },
       { id: 'cmpVatlegalEntity', label: 'VAT legal entity' },
       { id: 'cmpBicsw', label: 'BIC/SW' },
-      { id: 'idApproverCmp', label: 'Approver' },
+      { id: 'approverName', label: 'Approver' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
-  
-  constructor(private companyService: CompanyService, private toast: MessageService,
-    private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef,
-    private confirmationService: ConfirmationService) { 
-    }
+  approvers: Approvers[] = [];
+
+  constructor(private companyService: CompanyService, private approverService: ApproverService,
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private toast: MessageService, private confirmationService: ConfirmationService) {
+  }
+
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getCompanies();
@@ -72,30 +75,30 @@ export class CompanyComponent implements OnInit {
 
   getCompanies(): void {
     this.tableOptions.loading = true;
-
     this.companyService.getAll().subscribe({
       next: (res) => {
         this.listCompany = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        this.toast.add({ severity: 'error', summary: err.error });
+        let errMessage: string = err.error;
+        if (err.status != 400) {
+          errMessage = 'Something went wrong with the server !';
+        }
+        this.toast.add({ severity: 'error', summary: errMessage });
       }
     });
   }
 
-  refresh():void{
+  refresh(): void {
     this.getCompanies();
   }
+
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
         header: `Add company`,
-        width: '60%',
-        height: '50',
-        data: {
-          Company: this.listCompany[0]
-        }
+        style: { width: '95%', maxWidth: '750px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getCompanies();
@@ -104,20 +107,8 @@ export class CompanyComponent implements OnInit {
     else if (this.selectedCompany?.idCompany) {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
         header: `Edit company`,
-        width: '60%',
-        height: '50',
-        data: {
-          idCompany: this.selectedCompany.idCompany,
-          companyName:this.selectedCompany.companyName,
-          bankAccount:this.selectedCompany.bankAccount,
-          cmpEmail:this.selectedCompany.cmpEmail,
-          cmpVatLegalEntity:this.selectedCompany.cmpVatlegalEntity,
-          cmpBicsw:this.selectedCompany.cmpBicsw,
-          cmpVatRate:this.selectedCompany.cmpVatRate,
-          idApproverCmp:this.selectedCompany.idApproverCmp,
-          isEveris:this.selectedCompany.isEveris,
-
-        }
+        style: { width: '95%', maxWidth: '750px' },
+        data: { idCompany: this.selectedCompany.idCompany }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getCompanies();
@@ -140,31 +131,42 @@ export class CompanyComponent implements OnInit {
   clearFilter(table: Table): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.searchTable = '';
+    this.selectedCompany = null;
     table.clear();
   }
 
-  delete():void{
+  delete(): void {
     if (this.selectedCompany?.idCompany) {
       this.confirmationService.confirm({
-        message: 'Are you sure you want to delete '+this.selectedCompany.companyName,
-        header: 'Confirm',
-        icon:'pi pi-exclamation-triangle',
+        message: 'You won\'t be able to revert this! ',
+        header: 'Are you sure?',
+        icon: 'pi pi-exclamation-circle text-yellow-500',
+        acceptButtonStyleClass: 'p-button-danger p-button-raised',
+        rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+        acceptLabel: 'Yes, delete it',
+        rejectLabel: 'No, cancel',
+        defaultFocus: 'reject',
         accept: () => {
-          this.companyService.deleteCompany(this.selectedCompany.idCompany).subscribe({
+          this.companyService.deleteCompany(this.selectedCompany?.idCompany || 0).subscribe({
             next: () => {
               this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
               this.getCompanies();
+              this.selectedCompany = null;
             },
             error: (err: any) => {
-              this.toast.add({ severity: 'error', summary: err.error });
+              let errMessage: string = err.error;
+              if (err.status != 400) {
+                errMessage = 'Something went wrong with the server !';
+              }
+              this.toast.add({ severity: 'error', summary: errMessage });
             }
           });
         }
 
-      });  
-    } else{
+      });
+    } else {
       this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
-    } 
+    }
   }
 
 }

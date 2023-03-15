@@ -13,7 +13,7 @@
                     class="border-white"></button>
                 <button (click)="exportExcel()" pButton pRipple label="Export All" icon="pi pi-download"
                     class="bg-yellow-500 hover:bg-yellow-600 border-white"
-                    [loading]="tableOptions.exportLoading"></button>
+                    [loading]="tableOptions.exportLoading" [disabled]="!listApprover.length"></button>
             </span>
         </div>
         <p-table #dtApprover [value]="listApprover" selectionMode="single" [(selection)]="selectedApprover" dataKey="id"

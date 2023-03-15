@@ -9,7 +9,7 @@
             <button (click)="delete()" pButton pRipple label="Delete" icon="pi pi-trash" class="border-white"></button>
         </span>
     </div>
-<p-table #dtCompany [value]="listCompany" selectionMode="single" [(selection)]="selectedCompany" dataKey="id" 
+<p-table #dtCompany [value]="listCompany" selectionMode="single" [(selection)]="selectedCompany" dataKey="idCompany" 
     [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines" 
     [paginator]="true" [globalFilterFields]="globalFilterFields" [rowsPerPageOptions]="[250,500,1000]"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"

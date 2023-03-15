@@ -37,6 +37,8 @@ export class AddEditApproverComponent implements OnInit {
   selectedValue!: Approvers;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
+  actionLoading: boolean = false;
+
   constructor(private ref: DynamicDialogRef, private approverService: ApproverService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class AddEditApproverComponent implements OnInit {
         },
         error: err => {
           let errMessage: string = err.error;
-          if (err.status == 0) {
+          if (err.status != 400) {
             errMessage = 'Something went wrong with the server !';
           }
           this.toast.add({ severity: 'error', summary: errMessage });
@@ -61,6 +63,7 @@ export class AddEditApproverComponent implements OnInit {
   onSubmit() {
     this.isSubmited = true;
     if (this.addEditForm.valid) {
+      this.actionLoading = true;
       if (this.id) {
         this.approverService.updateApprover(new Approvers(
           this.id,
@@ -69,14 +72,16 @@ export class AddEditApproverComponent implements OnInit {
         )
         ).subscribe({
           next: () => {
+            this.actionLoading = false;
             this.toast.add({ severity: 'success', summary: "Approver updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
             let errMessage: string = err.error;
-            if (err.status == 0) {
+            if (err.status != 400) {
               errMessage = 'Something went wrong with the server !';
             }
+            this.actionLoading = false;
             this.toast.add({ severity: 'error', summary: errMessage });
           }
         });
@@ -89,13 +94,15 @@ export class AddEditApproverComponent implements OnInit {
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Approver added successfuly" });
+            this.actionLoading = false;
             this.ref.close();
           },
           error: (err: any) => {
             let errMessage: string = err.error;
-            if (err.status == 0) {
+            if (err.status != 400) {
               errMessage = 'Something went wrong with the server !';
             }
+            this.actionLoading = false;
             this.toast.add({ severity: 'error', summary: errMessage });
           }
         });

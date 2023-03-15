@@ -32,7 +32,7 @@
             </div>
             <div class="field">
                 <label for="Approver"> <b>Approver</b></label>
-                <p-dropdown [options]="approvers" placeholder="Approver" formControlName="approver" 
+                <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver" 
                     optionLabel="displayLabel" optionValue="id"></p-dropdown>
             </div>
             <div class="field">
@@ -54,8 +54,8 @@
         </p-tabPanel>
     </p-tabView>
     <div class="footer">
-        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>&nbsp;
-        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
     </div>
 </form>
 </div>

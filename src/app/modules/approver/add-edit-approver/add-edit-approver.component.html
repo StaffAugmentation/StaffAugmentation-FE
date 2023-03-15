@@ -18,8 +18,8 @@
         </div>
     </div>
     <div class="footer">
-        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary"
-            label="Close"></button>&nbsp;
-        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>
+        <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+            label="Close"></button>
     </div>
 </form>
