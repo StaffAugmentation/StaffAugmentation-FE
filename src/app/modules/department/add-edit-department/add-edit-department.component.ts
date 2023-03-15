@@ -41,7 +41,7 @@ export class AddEditDepartmentComponent implements OnInit {
   constructor(private ref: DynamicDialogRef, private departmentService: DepartmentService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.id = this.config.data.id;
+    this.id = this.config.data?.id;
     if(this.id){
       this.departmentService.getOne(this.id).subscribe({
         next: res=>{

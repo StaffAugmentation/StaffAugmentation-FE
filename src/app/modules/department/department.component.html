@@ -38,6 +38,7 @@
                   <i class="pi pi-search"></i>
               </span>
               <div>
+                <button pButton (click)="clearFilter(dtDepartment)" label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"></button>
                   <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2" icon="pi pi-bars"></button>
                   <p-overlayPanel #opMenu [showCloseIcon]="true">
                       <ng-template pTemplate>
@@ -63,9 +64,15 @@
       </ng-template>
       <ng-template pTemplate="body" let-Department>
           <tr [pSelectableRow]="Department">
-              <td *ngFor="let col of tableOptions.visibleCols">
-                  {{Department[col.id]}}
+              <td>
+                  {{Department.id}}
               </td>
+              <td>
+                {{Department.valueId}}
+            </td>
+            <td>
+              <p-badge [severity]="Department.isActive ? 'success' : 'danger'" styleClass="p-mr-2"></p-badge>
+            </td>
           </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

@@ -1,6 +1,6 @@
 <div *ngIf="addEditForm">
   <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-      <p-tabView orientation="left">
+      <p-tabView orientation="left"  class="p-fluid m-0">
               <div class="field">
                   <label for="ValueId"> <b>Value</b><span class="text-red-500">*</span></label>
                   <input type="text" pInputText

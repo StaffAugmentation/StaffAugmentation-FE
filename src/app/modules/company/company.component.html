@@ -1,6 +1,6 @@
-<p-table #dtCompany [value]="listCompany" dataKey="id" [rows]="250" [loading]="tableOptions.loading" 
+<p-table #dtCompany [value]="listCompany" dataKey="id" [rows]="250" [loading]="tableOptions.loading"
     [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
-    [globalFilterFields]="globalFilterFields"  
+    [globalFilterFields]="globalFilterFields"
     selectionMode="single" [(selection)]="selectedCompany" [rowsPerPageOptions]="[250,500,1000]"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
     scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
@@ -17,7 +17,7 @@
                 <p-overlayPanel #opMenu [showCloseIcon]="true">
                     <ng-template pTemplate>
                         <span class="p-float-label mt-4">
-                            <p-multiSelect #msVisible [options]="tableOptions.cols" [(ngModel)]="tableOptions.visibleCols" 
+                            <p-multiSelect #msVisible [options]="tableOptions.cols" [(ngModel)]="tableOptions.visibleCols"
                                 placeholder="Select visible columns" optionLabel="label" class="multiselect-custom"></p-multiSelect>
                             <label>Visible columns</label>
                         </span>

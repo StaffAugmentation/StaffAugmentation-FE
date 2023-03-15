@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
+import { BadgeModule } from 'primeng/badge';
 import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
@@ -28,6 +29,7 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
     FormsModule,
     ButtonModule,
     InputTextModule,
+    BadgeModule,
     MultiSelectModule,
     CalendarModule,
     TableModule,
@@ -104,7 +106,11 @@ export class DepartmentComponent implements OnInit {
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        this.toast.add({ severity: 'error', summary: err.error });
+        let errMessage:string = err.error;
+        if (err.status !=400) {
+          errMessage = 'Something went wrong with the server !';
+        }
+        this.toast.add({ severity: 'error', summary: errMessage });
       }
     });
   }
@@ -114,10 +120,7 @@ export class DepartmentComponent implements OnInit {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
         header: `Add department`,
         width: '60%',
-        height: '50',
-        data: {
-          Department: this.listDepartment[0]
-        }
+        height: '50'
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getDepartments();
@@ -184,10 +187,10 @@ export class DepartmentComponent implements OnInit {
       // let data = this.listBR.filter(br => br)
         this.fileExporter.exportExcel(this.listDepartment.map(department =>{
           let dprt : any = {...department};
-          dprt['valueId'] = department.appValue;
-          dprt['isActive'] = department.appState;
-          delete dprt['appValue'];
-          delete dprt['appState'];
+          dprt['Value'] = department.valueId;
+          dprt['State'] = department.isActive;
+          delete dprt['valueId'];
+          delete dprt['isActive'];
           return dprt;
         }),'department').finally(()=> this.tableOptions.exportLoading = false);
       }
