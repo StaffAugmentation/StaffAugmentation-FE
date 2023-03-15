@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from '@models/company';
-import { CompanyService } from '@services/company.service';
+import { Approvers } from '@models/approvers';
+import { ApproverService } from '@services/approver.service';
 import { MessageService } from 'primeng/api';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -14,16 +13,15 @@ import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditCompanyComponent } from './add-edit-company/add-edit-company.component';
+import { AddEditApproverComponent } from './add-edit-approver/add-edit-approver.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { Approvers } from '@models/approvers';
-import { ApproverService } from '@services/approver.service';
+import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
   standalone: true,
-  selector: 'app-company',
-  templateUrl: './company.component.html',
+  selector: 'app-approver',
+  templateUrl: './approver.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -37,47 +35,41 @@ import { ApproverService } from '@services/approver.service';
     ConfirmDialogModule
   ]
 })
-
-export class CompanyComponent implements OnInit {
+export class ApproverComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listCompany: Company[] = [];
-  selectedCompany!: Company | null;
+  listApprover: Approvers[] = [];
+  selectedApprover!: Approvers | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'companyName', label: 'Company name' },
-      { id: 'bankAccount', label: 'IBAN Number' },
-      { id: 'cmpEmail', label: 'Email' },
-      { id: 'cmpVatlegalEntity', label: 'VAT legal entity' },
-      { id: 'cmpBicsw', label: 'BIC/SW' },
-      { id: 'approverName', label: 'Approver' },
+      { id: 'appFirstName', label: 'First name' },
+      { id: 'appLastName', label: 'Last name' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
-  approvers: Approvers[] = [];
 
-  constructor(private companyService: CompanyService, private approverService: ApproverService,
+  constructor(private approverService: ApproverService, private toast: MessageService,
     private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
-    private toast: MessageService, private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
   }
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getCompanies();
+    this.getApprovers();
   }
-
-  getCompanies(): void {
+  getApprovers(): void {
     this.tableOptions.loading = true;
-    this.companyService.getAll().subscribe({
+
+    this.approverService.getAll().subscribe({
       next: (res) => {
-        this.listCompany = res;
+        this.listApprover = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -89,54 +81,59 @@ export class CompanyComponent implements OnInit {
       }
     });
   }
-
   refresh(): void {
-    this.getCompanies();
+    this.getApprovers();
   }
-
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Add company`,
-        style: { width: '95%', maxWidth: '750px' }
+      this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
+        header: `Add approver`,
+        style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
-    else if (this.selectedCompany?.idCompany) {
-      this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
-        header: `Edit company`,
-        style: { width: '95%', maxWidth: '750px' },
-        data: { idCompany: this.selectedCompany.idCompany }
+    else if (this.selectedApprover?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditApproverComponent, {
+        header: `Edit approver`,
+        style: { width: '90%', maxWidth: '500px' },
+        data: {
+          idApprover: this.selectedApprover.id
+        }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getCompanies();
+        this.getApprovers();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
-
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table): void {
     table.filterGlobal(this.searchTable, 'contains');
   }
-
   clearFilter(table: Table): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.searchTable = '';
-    this.selectedCompany = null;
     table.clear();
+    this.searchTable = '';
   }
-
+  exportExcel(): void {
+    this.tableOptions.exportLoading = true;
+    this.fileExporter.exportExcel(this.listApprover.map(approver => {
+      let appr: any = { ...approver };
+      appr['First name'] = approver.appFirstName;
+      appr['Last name'] = approver.appLastName;
+      delete appr['appFirstName'];
+      delete appr['appLastName'];
+      return appr;
+    }), 'Approvers').finally(() => this.tableOptions.exportLoading = false);
+  }
   delete(): void {
-    if (this.selectedCompany?.idCompany) {
+    if (this.selectedApprover?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -147,11 +144,11 @@ export class CompanyComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.companyService.deleteCompany(this.selectedCompany?.idCompany || 0).subscribe({
+          this.approverService.deleteApprover(this.selectedApprover?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
-              this.getCompanies();
-              this.selectedCompany = null;
+              this.toast.add({ severity: 'success', summary: "Approver deleted successfuly" });
+              this.getApprovers();
+              this.selectedApprover = null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -162,10 +159,9 @@ export class CompanyComponent implements OnInit {
             }
           });
         }
-
       });
     } else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
   }
 

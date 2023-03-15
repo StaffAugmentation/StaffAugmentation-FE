@@ -11,14 +11,16 @@ import { CompanyService } from '@services/company.service';
 import { Company } from '@models/company';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedModule } from '@modules/shared/shared.module'
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SharedModule } from '@modules/shared/shared.module';
+import { Approvers } from '@models/approvers';
+import { ApproverService } from '@services/approver.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   standalone: true,
   selector: 'app-add-edit-company',
   templateUrl: './add-edit-company.component.html',
-  styleUrls: ['./add-edit-company.component.scss'],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,7 +31,8 @@ import { SharedModule } from '@modules/shared/shared.module'
     TabViewModule,
     RadioButtonModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    DropdownModule
   ]
 })
 export class AddEditCompanyComponent implements OnInit {
@@ -38,45 +41,124 @@ export class AddEditCompanyComponent implements OnInit {
   selectedValue!: Company;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService) { }
+  approvers: Approvers[] = [];
+  actionLoading: boolean = false;
+
+  constructor(private ref: DynamicDialogRef, private companyService: CompanyService, private toast: MessageService, public config: DynamicDialogConfig, private approverService: ApproverService) {
+    this.getApprovers();
+  }
 
   ngOnInit(): void {
-    this.addEditForm = new FormGroup({
-      companyName: new FormControl(null, [Validators.required]),
-      ibanNumber: new FormControl(null),
-      cmpEmail: new FormControl(null, [Validators.required, Validators.email]),
-      vatLegal: new FormControl(null),
-      bic: new FormControl(null),
-      approver: new FormControl(null),
-      vatRate: new FormControl(null),
-      isNTTData: new FormControl(false),
-    })
+    this.id = this.config.data?.idCompany;
+    if (this.id) {
+      this.companyService.getOne(this.id).subscribe({
+        next: res => {
+          this.selectedValue = res;
+          this.initForm(res);
+        },
+        error: (err: any) => {
+          let errMessage: string = err.error;
+          if (err.status != 400) {
+            errMessage = 'Something went wrong with the server !';
+          }
+          this.toast.add({ severity: 'error', summary: errMessage });
+        }
+      })
+    }
+    else {
+      this.initForm(null);
+    }
   }
+
+  getApprovers(): void {
+    this.approverService.getAll().subscribe({
+      next: (res) => {
+        this.approvers = res;
+        this.approvers = this.approvers.map((appr: any) => {
+          return { ...appr, displayLabel: appr.appFirstName + ' ' + appr.appLastName }; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+
   onSubmit() {
     this.isSubmited = true;
     if (this.addEditForm.valid) {
-      this.companyService.addCompany(new Company(
-        this.id || 0,
-        this.addEditForm.value.companyName,
-        this.addEditForm.value.ibanNumber,
-        false,
-        this.addEditForm.value.isNTTData,
-        this.addEditForm.value.vatLegal,
-        this.addEditForm.value.bic,
-        this.addEditForm.value.vatRate,
-        this.addEditForm.value.approver,
-        this.addEditForm.value.cmpEmail)
-      ).subscribe({
-        next: () => {
-          this.toast.add({ severity: 'success', summary: "Company added successfuly" });
-          this.ref.close();
-        },
-        error: (err: any) => {
-          this.toast.add({ severity: 'error', summary: err.error });
-        }
-      });
+      this.actionLoading = true;
+      if (this.id) {
+        this.companyService.updateCompany(new Company(
+          this.id,
+          this.addEditForm.value.companyName,
+          this.addEditForm.value.ibanNumber,
+          false,
+          this.addEditForm.value.isNTTData,
+          this.addEditForm.value.vatLegal,
+          this.addEditForm.value.bic,
+          this.addEditForm.value.vatRate,
+          this.addEditForm.value.approver,
+          this.addEditForm.value.cmpEmail)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Company updated successfuly" });
+            this.ref.close();
+            this.actionLoading = true;
+          },
+          error: (err: any) => {
+            let errMessage: string = err.error;
+            if (err.status != 400) {
+              errMessage = 'Something went wrong with the server !';
+            }
+            this.actionLoading = false;
+            this.toast.add({ severity: 'error', summary: errMessage });
+          }
+        });
+
+      } else {
+        this.companyService.addCompany(new Company(
+          this.id || 0,
+          this.addEditForm.value.companyName,
+          this.addEditForm.value.ibanNumber,
+          false,
+          this.addEditForm.value.isNTTData,
+          this.addEditForm.value.vatLegal,
+          this.addEditForm.value.bic,
+          this.addEditForm.value.vatRate,
+          this.addEditForm.value.approver,
+          this.addEditForm.value.cmpEmail)
+        ).subscribe({
+          next: () => {
+            this.toast.add({ severity: 'success', summary: "Company added successfuly" });
+            this.ref.close();
+            this.actionLoading = true;
+          },
+          error: (err: any) => {
+            let errMessage: string = err.error;
+            if (err.status != 400) {
+              errMessage = 'Something went wrong with the server !';
+            }
+            this.actionLoading = false;
+            this.toast.add({ severity: 'error', summary: errMessage });
+          }
+        });
+      }
     }
   }
+
+  initForm(data: Company | null): void {
+    this.addEditForm = new FormGroup({
+      companyName: new FormControl(data ? data.companyName : '', [Validators.required]),
+      ibanNumber: new FormControl(data ? data.bankAccount : null),
+      cmpEmail: new FormControl(data ? data.cmpEmail : '', [Validators.required, Validators.email]),
+      vatLegal: new FormControl(data ? data.cmpVatlegalEntity : null),
+      bic: new FormControl(data ? data.cmpBicsw : null),
+      approver: new FormControl(data ? data.idApproverCmp : null),
+      vatRate: new FormControl(data ? data.cmpVatRate : null),
+      isNTTData: new FormControl(data ? data.isEveris : false),
+    });
+  }
+
   close() {
     this.ref.close();
   }

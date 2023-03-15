@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Department } from '@models/department';
 import { DepartmentService } from '@services/department.service';
 import { MessageService } from 'primeng/api';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -37,32 +36,7 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
     OverlayPanelModule,
     ConfirmDialogModule
   ],
-  providers: [ConfirmationService],
-  animations: [
-    trigger('showHide', [
-      state('true', style({
-        height: 0,
-        opacity: 0,
-        marginTop: 0
-      })),
-      state('false', style({
-        height: 'fit-content',
-        opacity: 1,
-        marginTop: 12
-      })),
-      transition('true => false', [
-        animate('300ms ease-out', keyframes([
-          style({ height: 'fit-content' }),
-          style({ opacity: 1, marginTop: 12 })
-        ]))
-      ]),
-      transition('false => true', [
-        animate('300ms  ease-in', keyframes([
-          style({ opacity: 0, height: '0', marginTop: 0 })
-        ]))
-      ]),
-    ])
-  ]
+  providers: [ConfirmationService]
 })
 
 export class DepartmentComponent implements OnInit {
@@ -84,8 +58,9 @@ export class DepartmentComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-
   Department: Department[] = [];
+  searchTable: string = '';
+
   constructor(private departmentService: DepartmentService, private toast: MessageService,
     private modalService: DialogService,
     private modalAddEdit: DynamicDialogRef,
@@ -119,8 +94,7 @@ export class DepartmentComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
         header: `Add department`,
-        width: '60%',
-        height: '50'
+        style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getDepartments();
@@ -129,13 +103,8 @@ export class DepartmentComponent implements OnInit {
     else if (this.selectedDepartment?.id) {
       this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
         header: `Edit department`,
-        width: '60%',
-        height: '50',
-        data: {
-          id: this.selectedDepartment.id,
-          valueId:this.selectedDepartment.valueId,
-          isActive:this.selectedDepartment.isActive,
-        }
+        style: { width: '90%', maxWidth: '500px' },
+        data: { id: this.selectedDepartment.id }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getDepartments();
@@ -151,11 +120,13 @@ export class DepartmentComponent implements OnInit {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
 
-  onGlobalFilter(table: Table, event: Event): void {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  onGlobalFilter(table: Table): void {
+    table.filterGlobal(this.searchTable, 'contains');
   }
 
   clearFilter(table: Table): void {
+    this.searchTable = '';
+    this.tableOptions.visibleCols = this.tableOptions.cols;
     table.clear();
   }
 
