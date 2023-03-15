@@ -8,6 +8,7 @@ const routes: Routes = [
       { path: '', loadComponent: () => import('@modules/home/home.component').then(c => c.HomeComponent) },
       { path: 'business-request', loadChildren: ()=> import('@modules/br/br.module').then(m => m.BrModule) },
       { path: 'company', loadComponent: () => import('@modules/company/company.component').then(c => c.CompanyComponent) },
+      { path: 'approver', loadComponent: () => import('@modules/approver/approver.component').then(c => c.ApproverComponent) },
     ] 
   }
 ];

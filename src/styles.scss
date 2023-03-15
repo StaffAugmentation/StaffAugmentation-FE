@@ -6,19 +6,19 @@ $gutter: 1rem; //for primeflex grid system
 @import "../node_modules/primeflex/primeflex.scss";
 @import "../node_modules/primeicons/primeicons.css";
 
-.footer {
-    position: fixed;
-    bottom: -4%;
-    right: 0px;
-    left: 0px;
-    height: 60px;
-    width: 100%;
-    z-index: 102;
-    background-color: rgb(220, 220, 220);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 3px;
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    padding: 0 12px;
-}
+// .footer {
+//     position: fixed;
+//     bottom: -4%;
+//     right: 0px;
+//     left: 0px;
+//     height: 60px;
+//     width: 100%;
+//     z-index: 102;
+//     background-color: rgb(220, 220, 220);
+//     border-bottom-left-radius: 4px;
+//     border-bottom-right-radius: 3px;
+//     display: flex;
+//     align-items: center;
+//     flex-direction: row-reverse;
+//     padding: 0 12px;
+// }

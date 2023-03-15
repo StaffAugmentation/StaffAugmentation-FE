@@ -1,3 +1,4 @@
+<div *ngIf="addEditForm">
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <p-tabView orientation="left">
         <p-tabPanel header="General infos" class="p-fluid m-0">
@@ -31,26 +32,30 @@
             </div>
             <div class="field">
                 <label for="Approver"> <b>Approver</b></label>
-                <input type="text" pInputText placeholder="Approver" formControlName="approver">
+                <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver" 
+                    optionLabel="displayLabel" optionValue="id"></p-dropdown>
             </div>
             <div class="field">
                 <label for="VATRate"> <b>VAT rate</b></label>
+                <div class="p-inputgroup">
                 <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
+                <span class="p-inputgroup-addon">%</span> 
+                </div>
             </div>
             <div class="field">
                 <b class="mr-2">Is NTT data</b>
-                <p-radioButton id="isNTTData" name="groupname" class=" mr-2" [value]="true" label="Yes"
-                    formControlName="isNTTData"></p-radioButton>
-                <p-radioButton id="isNotNTTData" name="groupname" class="" [value]="false" label="No"
-                    formControlName="isNTTData"></p-radioButton>
+                <p-radioButton name="isNTTData" class=" mr-2" [value]="true" label="Yes" 
+                formControlName="isNTTData"></p-radioButton>
+                <p-radioButton name="isNTTData" class=" mr-2" [value]="false" label="No" 
+                formControlName="isNTTData"></p-radioButton>
             </div>
         </p-tabPanel>
         <p-tabPanel header="Contract management portal" class="p-fluid m-0">
-
         </p-tabPanel>
     </p-tabView>
     <div class="footer">
-        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save"></button>&nbsp;
-        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
     </div>
 </form>
+</div>
