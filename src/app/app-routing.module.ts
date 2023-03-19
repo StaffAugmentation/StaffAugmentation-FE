@@ -10,7 +10,8 @@ const routes: Routes = [
       { path: 'company', loadComponent: () => import('@modules/company/company.component').then(c => c.CompanyComponent) },
       { path: 'department', loadComponent: () => import('@modules/department/department.component').then(d => d.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/approver/approver.component').then(c => c.ApproverComponent) },
-      { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) }
+      { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) },
+      { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) }
     ]
   }
 ];
