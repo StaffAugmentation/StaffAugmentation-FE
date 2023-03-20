@@ -11,7 +11,8 @@ const routes: Routes = [
       { path: 'department', loadComponent: () => import('@modules/department/department.component').then(d => d.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/approver/approver.component').then(c => c.ApproverComponent) },
       { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) },
-      { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) }
+      { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
+      { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) }
     ]
   }
 ];
