@@ -16,7 +16,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 import { AddEditTypeComponent } from './add-edit-type/add-edit-type.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
@@ -35,8 +35,7 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
     DynamicDialogModule,
     OverlayPanelModule,
     ConfirmDialogModule
-  ],
-  providers: [ConfirmationService]
+  ]
 })
 
 export class TypeComponent implements OnInit {
@@ -140,7 +139,6 @@ export class TypeComponent implements OnInit {
   }
   delete(): void {
     if (this.selectedType?.id) {
-      debugger
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
