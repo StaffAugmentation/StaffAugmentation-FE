@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from '@models/department';
-import { DepartmentService } from '@services/department.service';
+import { Type } from '@models/type';
+import { TypeService } from '@services/type.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -14,15 +14,15 @@ import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditDepartmentComponent } from './add-edit-department/add-edit-department.component';
+import { AddEditTypeComponent } from './add-edit-type/add-edit-type.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
   standalone: true,
-  selector: 'app-department',
-  templateUrl: './department.component.html',
+  selector: 'app-type',
+  templateUrl: './type.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -39,15 +39,15 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
   providers: [ConfirmationService]
 })
 
-export class DepartmentComponent implements OnInit {
+export class TypeComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listDepartment: Department[] = [];
-  selectedDepartment!: Department;
+  listType: Type[] = [];
+  selectedType!: Type;
   tableOptions: any = {
     visibleCols: [],
     cols: [
@@ -58,84 +58,89 @@ export class DepartmentComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  Department: Department[] = [];
+  Type: Type[] = [];
   searchTable: string = '';
 
-  constructor(private departmentService: DepartmentService, private toast: MessageService,
-    private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef,
-    private fileExporter: FileExporterService,
-    private confirmationService: ConfirmationService) {
-    }
-  ngOnInit(): void {
-    this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getDepartments();
+  constructor(private typeService: TypeService, private toast: MessageService,
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
   }
 
-  getDepartments(): void {
+  ngOnInit(): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getTypes();
+  }
+  getTypes(): void {
     this.tableOptions.loading = true;
 
-    this.departmentService.getAll().subscribe({
+    this.typeService.getAll().subscribe({
       next: (res) => {
-        this.listDepartment = res;
+        this.listType = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        let errMessage:string = err.error;
-        if (err.status !=400) {
+        let errMessage: string = err.error;
+        if (err.status != 400) {
           errMessage = 'Something went wrong with the server !';
         }
         this.toast.add({ severity: 'error', summary: errMessage });
       }
     });
   }
-
   refresh(): void {
-    this.getDepartments();
+    this.getTypes();
   }
-
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Add department`,
+      this.modalAddEdit = this.modalService.open(AddEditTypeComponent, {
+        header: `Add type`,
         style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getDepartments();
+        this.getTypes();
       });
     }
-    else if (this.selectedDepartment?.id) {
-      this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Edit department`,
+    else if (this.selectedType?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditTypeComponent, {
+        header: `Edit type`,
         style: { width: '90%', maxWidth: '500px' },
-        data: { id: this.selectedDepartment.id }
+        data: {
+          idType: this.selectedType.id
+        }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getDepartments();
+        this.getTypes();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
-
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table): void {
     table.filterGlobal(this.searchTable, 'contains');
   }
-
   clearFilter(table: Table): void {
-    this.searchTable = '';
     this.tableOptions.visibleCols = this.tableOptions.cols;
     table.clear();
+    this.searchTable = '';
   }
-
+  exportExcel(): void {
+    this.tableOptions.exportLoading = true;
+    this.fileExporter.exportExcel(this.listType.map(Type => {
+      let appr: any = { ...Type };
+      appr['Value'] = Type.valueId;
+      appr['State'] = Type.isActive;
+      delete appr['valueId'];
+      delete appr['isActive'];
+      return appr;
+    }), 'Type').finally(() => this.tableOptions.exportLoading = false);
+  }
   delete(): void {
-    if (this.selectedDepartment?.id) {
+    if (this.selectedType?.id) {
+      debugger
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -146,11 +151,11 @@ export class DepartmentComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.departmentService.deleteDepartment(this.selectedDepartment?.id || 0).subscribe({
+          this.typeService.deleteType(this.selectedType?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Department deleted successfuly" });
-              this.getDepartments();
-              this.selectedDepartment == null;
+              this.toast.add({ severity: 'success', summary: "Type deleted successfuly" });
+              this.getTypes();
+              this.selectedType == null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -166,18 +171,5 @@ export class DepartmentComponent implements OnInit {
       this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
   }
-
-    exportExcel(): void {
-      this.tableOptions.exportLoading = true;
-      // let data = this.listBR.filter(br => br)
-        this.fileExporter.exportExcel(this.listDepartment.map(department =>{
-          let dprt : any = {...department};
-          dprt['Value'] = department.valueId;
-          dprt['State'] = department.isActive;
-          delete dprt['valueId'];
-          delete dprt['isActive'];
-          return dprt;
-        }),'department').finally(()=> this.tableOptions.exportLoading = false);
-      }
 
 }

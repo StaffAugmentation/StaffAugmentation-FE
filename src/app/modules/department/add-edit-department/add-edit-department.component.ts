@@ -59,7 +59,7 @@ export class AddEditDepartmentComponent implements OnInit {
     else{
       this.addEditForm = new FormGroup({
         valueId: new FormControl(null, [Validators.required]),
-        isActive: new FormControl(false),
+        isActive: new FormControl(true),
       });
     }
   }
