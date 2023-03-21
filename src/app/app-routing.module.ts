@@ -12,7 +12,8 @@ const routes: Routes = [
       { path: 'approver', loadComponent: () => import('@modules/approver/approver.component').then(c => c.ApproverComponent) },
       { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) },
       { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
-      { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) }
+      { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) },
+      { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) }
     ]
   }
 ];
