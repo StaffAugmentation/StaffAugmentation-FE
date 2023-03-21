@@ -1,11 +1,11 @@
 export class BrType{
   id: number;
-  valueId: number;
+  valueId: string;
   isActive: boolean;
   constructor
       (
       id: number,
-      valueId: number,
+      valueId: string,
       isActive: boolean,
       ){
           this.id=id,

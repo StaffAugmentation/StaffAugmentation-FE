@@ -19,7 +19,7 @@ export class Company{
         cmpVatRate: 0,
         idApproverCmp: 0,
         cmpEmail: string){
-            
+
             this.idCompany=idCompany,
             this.companyName=companyName,
             this.bankAccount=bankAccount,
@@ -29,6 +29,6 @@ export class Company{
             this.cmpBicsw=cmpBicsw,
             this.cmpVatRate=cmpVatRate,
             this.idApproverCmp=idApproverCmp,
-            this.cmpEmail=cmpEmail    
+            this.cmpEmail=cmpEmail
         }
 }
