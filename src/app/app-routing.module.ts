@@ -12,7 +12,8 @@ const routes: Routes = [
       { path: 'approver', loadComponent: () => import('@modules/approver/approver.component').then(c => c.ApproverComponent) },
       { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) },
       { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) },
-      { path: 'subcontractor', loadComponent: () => import('@modules/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) }
+      { path: 'subcontractor', loadComponent: () => import('@modules/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
+      { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
     ]
   }
 ];

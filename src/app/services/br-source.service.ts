@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BrSource } from '@models/brSource';
+import { BrSource } from '@models/br-source';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
