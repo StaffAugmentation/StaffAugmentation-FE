@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from '@models/department';
-import { DepartmentService } from '@services/department.service';
+import { Category } from '@models/category';
+import { CategoryService } from '@services/category.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -9,133 +9,134 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
-import { BadgeModule } from 'primeng/badge';
 import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditDepartmentComponent } from './add-edit-department/add-edit-department.component';
+import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
-import { FileExporterService } from 'src/app/services/file-exporter.service'
+import { ConfirmationService } from 'primeng/api';
+import { FileExporterService } from 'src/app/services/file-exporter.service';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   standalone: true,
-  selector: 'app-department',
-  templateUrl: './department.component.html',
+  selector: 'app-category',
+  templateUrl: './category.component.html',
   imports: [
     CommonModule,
     FormsModule,
     ButtonModule,
     InputTextModule,
-    BadgeModule,
     MultiSelectModule,
     CalendarModule,
     TableModule,
     DynamicDialogModule,
     OverlayPanelModule,
-    ConfirmDialogModule
-  ],
-  providers: [ConfirmationService]
+    ConfirmDialogModule,
+    BadgeModule
+  ]
 })
-
-export class DepartmentComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listDepartment: Department[] = [];
-  selectedDepartment!: Department;
+  listCategory: Category[] = [];
+  selectedCategory!: Category | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
       { id: 'id', label: 'Id' },
       { id: 'valueId', label: 'Value' },
-      { id: 'isActive', label: 'State' }
+      { id: 'isActive', label: 'State' },
     ],
     loading: false,
     exportLoading: false
   };
-  Department: Department[] = [];
   searchTable: string = '';
 
-  constructor(private departmentService: DepartmentService, private toast: MessageService,
-    private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef,
-    private fileExporter: FileExporterService,
-    private confirmationService: ConfirmationService) {
-    }
-  ngOnInit(): void {
-    this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getDepartments();
+  constructor(private categoryService: CategoryService, private toast: MessageService,
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
   }
 
-  getDepartments(): void {
+  ngOnInit(): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getCategories();
+  }
+  getCategories(): void {
     this.tableOptions.loading = true;
 
-    this.departmentService.getAll().subscribe({
+    this.categoryService.getAll().subscribe({
       next: (res) => {
-        this.listDepartment = res;
+        this.listCategory = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        let errMessage:string = err.error;
-        if (err.status !=400) {
+        let errMessage: string = err.error;
+        if (err.status != 400) {
           errMessage = 'Something went wrong with the server !';
         }
         this.toast.add({ severity: 'error', summary: errMessage });
       }
     });
   }
-
   refresh(): void {
-    this.getDepartments();
+    this.getCategories();
   }
-
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Add department`,
+      this.modalAddEdit = this.modalService.open(AddEditCategoryComponent, {
+        header: `Add category`,
         style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getDepartments();
+        this.getCategories();
       });
     }
-    else if (this.selectedDepartment?.id) {
-      this.modalAddEdit = this.modalService.open(AddEditDepartmentComponent, {
-        header: `Edit department`,
+    else if (this.selectedCategory?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditCategoryComponent, {
+        header: `Edit category`,
         style: { width: '90%', maxWidth: '500px' },
-        data: { id: this.selectedDepartment.id }
+        data: {
+          idCategory: this.selectedCategory.id
+        }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getDepartments();
+        this.getCategories();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
-
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table): void {
     table.filterGlobal(this.searchTable, 'contains');
   }
-
   clearFilter(table: Table): void {
-    this.searchTable = '';
     this.tableOptions.visibleCols = this.tableOptions.cols;
     table.clear();
+    this.searchTable = '';
   }
-
+  exportExcel(): void {
+    this.tableOptions.exportLoading = true;
+    this.fileExporter.exportExcel(this.listCategory.map(Category => {
+      let appr: any = { ...Category };
+      appr['Value'] = Category.valueId;
+      appr['State'] = Category.isActive;
+      delete appr['valueId'];
+      delete appr['isActive'];
+      return appr;
+    }), 'Category').finally(() => this.tableOptions.exportLoading = false);
+  }
   delete(): void {
-    if (this.selectedDepartment?.id) {
+    if (this.selectedCategory?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -146,11 +147,11 @@ export class DepartmentComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.departmentService.deleteDepartment(this.selectedDepartment?.id || 0).subscribe({
+          this.categoryService.deleteCategory(this.selectedCategory?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Department deleted successfuly" });
-              this.getDepartments();
-              this.selectedDepartment == null;
+              this.toast.add({ severity: 'success', summary: "Category deleted successfuly" });
+              this.getCategories();
+              this.selectedCategory = null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -166,18 +167,5 @@ export class DepartmentComponent implements OnInit {
       this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
   }
-
-    exportExcel(): void {
-      this.tableOptions.exportLoading = true;
-      // let data = this.listBR.filter(br => br)
-        this.fileExporter.exportExcel(this.listDepartment.map(department =>{
-          let dprt : any = {...department};
-          dprt['Value'] = department.valueId;
-          dprt['State'] = department.isActive;
-          delete dprt['valueId'];
-          delete dprt['isActive'];
-          return dprt;
-        }),'department').finally(()=> this.tableOptions.exportLoading = false);
-      }
 
 }

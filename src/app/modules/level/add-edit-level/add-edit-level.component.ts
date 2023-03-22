@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
-import { ProfileService } from '@services/profile.service';
-import { Profile } from '@models/profile';
+import { LevelService } from '@services/level.service';
+import { Level } from '@models/level';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,8 +16,8 @@ import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   standalone: true,
-  selector: 'app-add-edit-profile',
-  templateUrl: './add-edit-profile.component.html',
+  selector: 'app-add-edit-level',
+  templateUrl: './add-edit-level.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -31,21 +31,21 @@ import { TabViewModule } from 'primeng/tabview';
     TabViewModule
   ]
 })
-export class AddEditProfileComponent implements OnInit {
+export class AddEditLevelComponent implements OnInit {
 
   id!: number;
-  selectedValue!: Profile;
+  selectedValue!: Level;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
 
-  constructor(private ref: DynamicDialogRef, private profileService: ProfileService, private toast: MessageService, public config: DynamicDialogConfig) { }
+  constructor(private ref: DynamicDialogRef, private levelService: LevelService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.id = this.config.data?.idProfile;
+    this.id = this.config.data?.idLevel;
     this.initForm(null);
     if (this.id) {
-      this.profileService.getOne(this.id).subscribe({
+      this.levelService.getOne(this.id).subscribe({
         next: res => {
           this.selectedValue = res;
           this.initForm(res);
@@ -65,7 +65,7 @@ export class AddEditProfileComponent implements OnInit {
     if (this.addEditForm.valid) {
       this.actionLoading = true;
       if (this.id) {
-        this.profileService.updateProfile(new Profile(
+        this.levelService.updateLevel(new Level(
           this.id,
           this.addEditForm.value.valueId,
           this.addEditForm.value.isActive
@@ -73,7 +73,7 @@ export class AddEditProfileComponent implements OnInit {
         ).subscribe({
           next: () => {
             this.actionLoading = false;
-            this.toast.add({ severity: 'success', summary: "Profile updated successfuly" });
+            this.toast.add({ severity: 'success', summary: "Level updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
@@ -87,13 +87,13 @@ export class AddEditProfileComponent implements OnInit {
         });
 
       } else {
-        this.profileService.addProfile(new Profile(
+        this.levelService.addLevel(new Level(
           this.id || 0,
           this.addEditForm.value.valueId,
           this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "Profile added successfuly" });
+            this.toast.add({ severity: 'success', summary: "Level added successfuly" });
             this.actionLoading = false;
             this.ref.close();
           },
@@ -110,7 +110,7 @@ export class AddEditProfileComponent implements OnInit {
 
     }
   }
-  initForm(data: Profile | null): void {
+  initForm(data: Level | null): void {
     this.addEditForm = new FormGroup({
       valueId: new FormControl(data ? data.valueId : '', [Validators.required]),
       isActive: new FormControl(data ? data.isActive : true, [Validators.required]),
