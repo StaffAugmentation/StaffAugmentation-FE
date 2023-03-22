@@ -2,7 +2,7 @@
     <div class="p-fluid p-2 mb-4">
         <div class="field">
             <label for="valueId"> <b>Name</b><span class="text-red-500">*</span></label>
-            <input type="text" pInputText name-only
+            <input type="text" pInputText
                 [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 formControlName="valueId">
             <p-message *ngIf="addEditForm.get('valueId')?.invalid && isSubmited" severity="error"
