@@ -14,14 +14,9 @@ const routes: Routes = [
       { path: 'ptm-owner', loadComponent: () => import('@modules/ptm-owner/ptm-owner.component').then(c => c.PTMOwnerComponent) },
       { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
       { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) },
-<<<<<<< HEAD
       { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) },
-      { path: 'place-of-delivery', loadComponent: () => import('@modules/place-of-delivery/PlaceOfDelivery.component').then(c => c.PlaceOfDeliveryComponent) }
-
-=======
+      { path: 'place-of-delivery', loadComponent: () => import('@modules/place-of-delivery/PlaceOfDelivery.component').then(c => c.PlaceOfDeliveryComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
-      { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) }
->>>>>>> c6aa4b4a50e1efc62f88bed10cafe0aee011e59b
     ]
   }
 ];
