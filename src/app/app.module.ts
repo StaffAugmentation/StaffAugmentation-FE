@@ -14,7 +14,7 @@ import { AddEditTypeComponent } from './modules/type/add-edit-type/add-edit-type
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

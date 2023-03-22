@@ -13,7 +13,9 @@ const routes: Routes = [
       { path: 'profile', loadComponent: () => import('@modules/profile/profile.component').then(c => c.ProfileComponent) },
       { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
       { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) },
-      { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) }
+      { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) },
+      { path: 'place-of-delivery', loadComponent: () => import('@modules/place-of-delivery/PlaceOfDelivery.component').then(c => c.PlaceOfDeliveryComponent) }
+
     ]
   }
 ];
