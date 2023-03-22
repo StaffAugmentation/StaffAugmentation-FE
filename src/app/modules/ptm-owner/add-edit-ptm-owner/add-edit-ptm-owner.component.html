@@ -1,0 +1,51 @@
+<div *ngIf="addEditForm">
+  <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+      <p-tabView orientation="left">
+          <div class="p-fluid m-0">
+              <div class="field">
+                  <label for="valueId"> <b>Name </b><span class="text-red-500">*</span></label>
+                  <input type="text" pInputText
+                      [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                      placeholder="Name" formControlName="valueId">
+                  <p-message *ngIf="addEditForm.get('valueId')?.invalid && isSubmited" severity="error"
+                      text="Name is required"></p-message>
+              </div>
+              <div class="field">
+                  <label for="ptmOwnerBA"> <b>IBAN Number</b></label>
+                  <input type="text" pInputText placeholder="IBAN Number" formControlName="ptmOwnerBA">
+              </div>
+              <div class="field">
+                  <label for="ptmOwnerVatNumber"> <b>VAT number</b></label>
+                  <input type="text" pInputText placeholder="VAT number" formControlName="ptmOwnerVatNumber">
+              </div>
+              <div class="field">
+                  <label for="ptmOwnerBICSW"> <b>BIC/SW</b></label>
+                  <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="ptmOwnerBICSW">
+              </div>
+              <div class="field">
+                  <label for="idApprover"> <b>Approver</b></label>
+                  <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="idApprover"
+                      optionLabel="displayLabel" optionValue="id"></p-dropdown>
+              </div>
+              <div class="field">
+                  <label for="ptmOwnerVatRate"> <b>VAT rate</b></label>
+                  <div class="p-inputgroup">
+                  <input decimal type="text" pInputText placeholder="VAT rate" formControlName="ptmOwnerVatRate">
+                  <span class="p-inputgroup-addon">%</span>
+                  </div>
+              </div>
+              <div class="field">
+                  <b class="mr-2">Is NTT data</b>
+                  <p-radioButton name="isEveris" class=" mr-2" [value]="true" label="Yes"
+                  formControlName="isEveris"></p-radioButton>
+                  <p-radioButton name="isEveris" class=" mr-2" [value]="false" label="No"
+                  formControlName="isEveris"></p-radioButton>
+              </div>
+            </div>
+      </p-tabView>
+      <div class="footer">
+        <button type="submit" pButton class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+      </div>
+  </form>
+  </div>
