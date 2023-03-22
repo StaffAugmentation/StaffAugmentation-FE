@@ -145,6 +145,7 @@ export class PTMOwnerComponent implements OnInit {
       delete appr['idApprover'];
       delete appr['ptmOwnerVatRate'];
       delete appr['isEveris'];
+      delete appr['approverName'];
 
       return appr;
     }), 'PTMOwner').finally(() => this.tableOptions.exportLoading = false);
