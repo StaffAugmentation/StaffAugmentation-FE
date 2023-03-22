@@ -28,10 +28,16 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Department', icon: 'pi pi-fw pi-bookmark', routerLink: ['/department'] },
                                     { label: 'Approver', icon: 'pi pi-fw pi-bookmark', routerLink: ['/approver'] },
                                     { label: 'Profile', icon: 'pi pi-fw pi-bookmark', routerLink: ['/profile'] },
+                                    { label: 'PTM Owner', icon: 'pi pi-fw pi-bookmark', routerLink: ['/ptm-owner'] },
                                     { label: 'Type', icon: 'pi pi-fw pi-bookmark', routerLink: ['/type'] },
                                     { label: 'Level', icon: 'pi pi-fw pi-bookmark', routerLink: ['/level'] },
+<<<<<<< HEAD
                                     { label: 'Category', icon: 'pi pi-fw pi-bookmark', routerLink: ['/category'] },
                                     { label: 'Place Of Delivery', icon: 'pi pi-fw pi-bookmark', routerLink: ['/place-of-delivery'] }
+=======
+                                    { label: 'Subcontractor', icon: 'pi pi-fw pi-bookmark', routerLink: ['/subcontractor'] },
+                                    { label: 'Category', icon: 'pi pi-fw pi-bookmark', routerLink: ['/category'] }
+>>>>>>> c6aa4b4a50e1efc62f88bed10cafe0aee011e59b
                                 ]
                             }
                         ]

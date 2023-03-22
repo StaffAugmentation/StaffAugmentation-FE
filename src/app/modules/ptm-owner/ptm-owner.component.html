@@ -1,0 +1,77 @@
+<div class="card">
+  <div id="listPTMOwner">
+      <div class="flex justify-content-between mb-3">
+          <div></div>
+          <span class="p-buttonset">
+              <button (click)="refresh()" pButton pRipple label="Refresh" icon="pi pi-refresh"
+                  class="border-white"></button>
+              <button (click)="addEdit('add')" pButton pRipple label="Add" icon="pi pi-plus"
+                  class="border-white"></button>
+              <button (click)="addEdit('edit')" pButton pRipple label="Edit" icon="pi pi-pencil"
+                  class="border-white"></button>
+              <button (click)="delete()" pButton pRipple label="Delete" icon="pi pi-trash"
+                  class="border-white"></button>
+              <button (click)="exportExcel()" pButton pRipple label="Export All" icon="pi pi-download"
+                  class="bg-yellow-500 hover:bg-yellow-600 border-white"
+                  [loading]="tableOptions.exportLoading" [disabled]="!listPTMOwner.length"></button>
+          </span>
+      </div>
+      <p-table #dtPTMOwner [value]="listPTMOwner" selectionMode="single" [(selection)]="selectedPTMOwner" dataKey="id"
+          [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+          [paginator]="true" [globalFilterFields]="globalFilterFields" [rowsPerPageOptions]="[250,500,1000]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+          responsiveLayout="scroll">
+          <ng-template pTemplate="caption">
+              <div class="w-full flex justify-content-between">
+                  <span class="p-input-icon-right">
+                      <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtPTMOwner)" type="text" pInputText placeholder="Search" />
+                      <i class="pi pi-search"></i>
+                  </span>
+                  <div>
+                    <button pButton (click)="clearFilter(dtPTMOwner)" label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"></button>
+                      <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2" icon="pi pi-bars"></button>
+                      <p-overlayPanel #opMenu [showCloseIcon]="true">
+                          <ng-template pTemplate>
+                              <span class="p-float-label mt-4">
+                                  <p-multiSelect #msVisible [options]="tableOptions.cols" [(ngModel)]="tableOptions.visibleCols"
+                                      placeholder="Select visible columns" optionLabel="label" class="multiselect-custom"></p-multiSelect>
+                                  <label>Visible columns</label>
+                              </span>
+                          </ng-template>
+                      </p-overlayPanel>
+                  </div>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+                  <th *ngFor="let col of tableOptions.visibleCols" style="min-width: 120px;">
+                      <div class="flex justify-content-between align-items-center">
+                          {{col.label}}
+                          <p-columnFilter type="text" field="{{col.id}}" display="menu"
+                              placeholder="Search by {{col.label}}"></p-columnFilter>
+                      </div>
+                  </th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-PTMOwner>
+              <tr [pSelectableRow]="PTMOwner">
+                <td *ngFor="let col of tableOptions.visibleCols">
+                  {{PTMOwner[col.id]}}
+                </td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="8">No PTM Owner found.</td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+              <tr>
+                  <td colspan="8">Loading PTM Owners data. Please wait.</td>
+              </tr>
+          </ng-template>
+      </p-table>
+  </div>
+</div>
+
