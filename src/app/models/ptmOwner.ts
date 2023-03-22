@@ -7,6 +7,7 @@ export class PTMOwner{
   isEveris: boolean;
   idApprover: number;
   ptmOwnerVatNumber: string;
+  approverName?: string;
   constructor
       (
         id: number,

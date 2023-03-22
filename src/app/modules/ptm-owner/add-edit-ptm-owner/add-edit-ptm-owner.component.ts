@@ -147,7 +147,7 @@ export class AddEditPTMOwnerComponent implements OnInit {
       valueId: new FormControl(data ? data.valueId : '', [Validators.required]),
       ptmOwnerBA: new FormControl(data ? data.ptmOwnerBA : null),
       ptmOwnerVatNumber: new FormControl(data ? data.ptmOwnerVatNumber : null),
-      bic: new FormControl(data ? data.ptmOwnerBICSW : null),
+      ptmOwnerBICSW: new FormControl(data ? data.ptmOwnerBICSW : null),
       idApprover: new FormControl(data ? data.idApprover : null),
       ptmOwnerVatRate: new FormControl(data ? data.ptmOwnerVatRate : null),
       isEveris: new FormControl(data ? data.isEveris : false),

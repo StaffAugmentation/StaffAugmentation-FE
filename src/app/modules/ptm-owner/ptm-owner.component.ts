@@ -135,7 +135,7 @@ export class PTMOwnerComponent implements OnInit {
       appr['IBAN Number'] = PTMOwner.ptmOwnerBA;
       appr['VAT number'] = PTMOwner.ptmOwnerVatNumber;
       appr['BIC/SW'] = PTMOwner.ptmOwnerBICSW;
-      appr['Approver'] = PTMOwner.idApprover;
+      appr['Approver'] = PTMOwner.approverName;
       appr['VAT_Rate'] = PTMOwner.ptmOwnerVatRate;
       delete appr['id'];
       delete appr['valueId'];
