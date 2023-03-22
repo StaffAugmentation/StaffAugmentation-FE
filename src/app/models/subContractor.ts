@@ -1,4 +1,4 @@
-export class SubContractor{
+export class Subcontractor{
     id: number;
     valueId: string;
     subContBa?: string;

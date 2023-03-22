@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SubContractor } from '@models/subContractor';
+import { Subcontractor } from '@models/subcontractor';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SubContractorService {
+export class SubcontractorService {
 
-  private baseUrl : string = `${environment.baseUrl}api/SubContractor`;
+  private baseUrl : string = `${environment.baseUrl}api/Subcontractor`;
 
   constructor(private http: HttpClient) { }
 
-  public getAll() : Observable<SubContractor[]>{
-    return this.http.get<SubContractor[]>(this.baseUrl);
+  public getAll() : Observable<Subcontractor[]>{
+    return this.http.get<Subcontractor[]>(this.baseUrl);
   }
 
-  public getOne(id: number) : Observable<SubContractor>{
-    return this.http.get<SubContractor>(`${this.baseUrl}/${id}`);
+  public getOne(id: number) : Observable<Subcontractor>{
+    return this.http.get<Subcontractor>(`${this.baseUrl}/${id}`);
   }
 
-  public addSubContractor(subContractor: SubContractor) : Observable<SubContractor>{
-    return this.http.post<SubContractor>(`${this.baseUrl}`,subContractor);
+  public addSubcontractor(subcontractor: Subcontractor) : Observable<Subcontractor>{
+    return this.http.post<Subcontractor>(`${this.baseUrl}`,subcontractor);
   }
 
-  public updateSubContractor(subContractor: SubContractor) : Observable<SubContractor>{
-    return this.http.put<SubContractor>(`${this.baseUrl}`,subContractor);
+  public updateSubcontractor(subcontractor: Subcontractor) : Observable<Subcontractor>{
+    return this.http.put<Subcontractor>(`${this.baseUrl}`,subcontractor);
   }
-  public deleteSubContractor(id: number) : Observable<SubContractor>{
-    return this.http.delete<SubContractor>(`${this.baseUrl}/${id}`);
+  public deleteSubcontractor(id: number) : Observable<Subcontractor>{
+    return this.http.delete<Subcontractor>(`${this.baseUrl}/${id}`);
   }
 }

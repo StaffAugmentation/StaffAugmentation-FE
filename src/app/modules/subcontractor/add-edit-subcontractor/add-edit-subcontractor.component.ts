@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
-import { SubContractorService } from '@services/subContractor.service';
+import { SubcontractorService } from '@services/subcontractor.service';
 import { ApproverService } from '@services/approver.service';
 import { TypeOfCostService } from '@services/typeOfCost.service';
 import { PaymentTermService } from '@services/paymentTerm.service';
 import { PaymentTerm } from '@models/paymentTerm';
 import { TypeOfCost } from '@models/typeOfCost';
-import { SubContractor } from '@models/subContractor';
+import { Subcontractor } from '@models/subcontractor';
 import { Approvers } from '@models/approvers';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -44,23 +44,23 @@ import {CheckboxModule} from 'primeng/checkbox';
 export class AddEditSubcontractorComponent implements OnInit {
 
   id!: number;
-  selectedValue!: SubContractor;
+  selectedValue!: Subcontractor;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   approvers: Approvers[] = [];
   typeOfCost: TypeOfCost[] = [];
   paymentTerm: PaymentTerm[] = [];
-  constructor(private ref: DynamicDialogRef, private typeOfCostService: TypeOfCostService , private paymentTermService: PaymentTermService , private subContractorService: SubContractorService, private toast: MessageService, public config: DynamicDialogConfig , private approverService: ApproverService) {
+  constructor(private ref: DynamicDialogRef, private typeOfCostService: TypeOfCostService , private paymentTermService: PaymentTermService , private subcontractorService: SubcontractorService, private toast: MessageService, public config: DynamicDialogConfig , private approverService: ApproverService) {
     this.getApprovers();
     this.getTypeOfCost();
     this.getPaymentTerm();
   }
   ngOnInit(): void {
-    this.id = this.config.data?.idSubContractor;
+    this.id = this.config.data?.idSubcontractor;
     this.initForm(null);
     if (this.id) {
-      this.subContractorService.getOne(this.id).subscribe({
+      this.subcontractorService.getOne(this.id).subscribe({
         next: res => {
           this.selectedValue = res;
           this.initForm(res);
@@ -120,7 +120,7 @@ export class AddEditSubcontractorComponent implements OnInit {
     if (this.addEditForm.valid) {
       this.actionLoading = true;
       if (this.id) {
-        this.subContractorService.updateSubContractor(new SubContractor(
+        this.subcontractorService.updateSubcontractor(new Subcontractor(
           this.id,
           this.addEditForm.value.valueId,
           this.addEditForm.value.subContBa,
@@ -138,7 +138,7 @@ export class AddEditSubcontractorComponent implements OnInit {
         ).subscribe({
           next: () => {
             this.actionLoading = false;
-            this.toast.add({ severity: 'success', summary: "SubContractor updated successfuly" });
+            this.toast.add({ severity: 'success', summary: "Subcontractor updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
@@ -152,7 +152,7 @@ export class AddEditSubcontractorComponent implements OnInit {
         });
 
       } else {
-        this.subContractorService.addSubContractor(new SubContractor(
+        this.subcontractorService.addSubcontractor(new Subcontractor(
           this.id || 0,
           this.addEditForm.value.valueId,
           this.addEditForm.value.subContBa,
@@ -169,7 +169,7 @@ export class AddEditSubcontractorComponent implements OnInit {
         )
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "SubContractor added successfuly" });
+            this.toast.add({ severity: 'success', summary: "Subcontractor added successfuly" });
             this.actionLoading = false;
             this.ref.close();
           },
@@ -186,7 +186,7 @@ export class AddEditSubcontractorComponent implements OnInit {
 
     }
   }
-  initForm(data: SubContractor | null): void {
+  initForm(data: Subcontractor | null): void {
     this.addEditForm = new FormGroup({
       valueId: new FormControl(data ? data.valueId : null, [Validators.required]),
       subContBa: new FormControl(data ? data.subContBa : null),

@@ -29,7 +29,7 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Approver', icon: 'pi pi-fw pi-bookmark', routerLink: ['/approver'] },
                                     { label: 'Profile', icon: 'pi pi-fw pi-bookmark', routerLink: ['/profile'] },
                                     { label: 'Level', icon: 'pi pi-fw pi-bookmark', routerLink: ['/level'] },
-                                    { label: 'SubContractor', icon: 'pi pi-fw pi-bookmark', routerLink: ['/subcontractor'] },
+                                    { label: 'Subcontractor', icon: 'pi pi-fw pi-bookmark', routerLink: ['/subcontractor'] },
                                     { label: 'Type', icon: 'pi pi-fw pi-bookmark', routerLink: ['/type'] },
                                     { label: 'Category', icon: 'pi pi-fw pi-bookmark', routerLink: ['/category'] }
                                 ]

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SubContractor } from '@models/subContractor';
-import { SubContractorService } from '@services/subContractor.service';
+import { Subcontractor } from '@models/subcontractor';
+import { SubcontractorService } from '@services/subcontractor.service';
 import { MessageService } from 'primeng/api';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -43,8 +43,8 @@ export class SubcontractorComponent implements OnInit {
     list: true
   };
   frameworkContracts = [];
-  listSubContractor: SubContractor[] = [];
-  selectedSubContractor!: SubContractor | null;
+  listSubcontractor: Subcontractor[] = [];
+  selectedSubcontractor!: Subcontractor | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
@@ -59,21 +59,21 @@ export class SubcontractorComponent implements OnInit {
   };
   searchTable: string = '';
 
-  constructor(private subContractorService: SubContractorService, private modalService: DialogService, 
+  constructor(private subcontractorService: SubcontractorService, private modalService: DialogService, 
     private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService, 
     private fileExporter: FileExporterService) {
   }
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getSubContractors();
+    this.getSubcontractors();
   }
 
-  getSubContractors(): void {
+  getSubcontractors(): void {
     this.tableOptions.loading = true;
-    this.subContractorService.getAll().subscribe({
+    this.subcontractorService.getAll().subscribe({
       next: (res) => {
-        this.listSubContractor = res;
+        this.listSubcontractor = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -87,27 +87,27 @@ export class SubcontractorComponent implements OnInit {
   }
 
   refresh(): void {
-    this.getSubContractors();
+    this.getSubcontractors();
   }
 
   addEdit(action: string): void {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditSubcontractorComponent, {
-        header: `Add subContractor`,
+        header: `Add subcontractor`,
         style: { width: '95%', maxWidth: '750px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getSubContractors();
+        this.getSubcontractors();
       });
     }
-    else if (this.selectedSubContractor?.id) {
+    else if (this.selectedSubcontractor?.id) {
       this.modalAddEdit = this.modalService.open(AddEditSubcontractorComponent, {
-        header: `Edit subContractor`,
+        header: `Edit subcontractor`,
         style: { width: '95%', maxWidth: '750px' },
-        data: { idSubContractor: this.selectedSubContractor.id }
+        data: { idSubcontractor: this.selectedSubcontractor.id }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getSubContractors();
+        this.getSubcontractors();
       });
     }
     else {
@@ -127,25 +127,25 @@ export class SubcontractorComponent implements OnInit {
   clearFilter(table: Table): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.searchTable = '';
-    this.selectedSubContractor = null;
+    this.selectedSubcontractor = null;
     table.clear();
   }
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
-    this.fileExporter.exportExcel(this.listSubContractor.map(SubContractor => {
-      let subC: any = { ...SubContractor };
-      subC['Value'] = SubContractor.valueId;
-      subC['IBAN Number'] = SubContractor.subContBa;
-      subC['BIC/SW'] = SubContractor.subContBicsw;
+    this.fileExporter.exportExcel(this.listSubcontractor.map(Subcontractor => {
+      let subC: any = { ...Subcontractor };
+      subC['Value'] = Subcontractor.valueId;
+      subC['IBAN Number'] = Subcontractor.subContBa;
+      subC['BIC/SW'] = Subcontractor.subContBicsw;
       subC['Approver'] = subC['approverName'];
-      subC['VAT rate'] = SubContractor.subContVatRate;
+      subC['VAT rate'] = Subcontractor.subContVatRate;
       subC['Payment terms'] = subC['paymentTermName'];
       subC['Type of cost'] = subC['typeOfCostName'];
-      subC['VAT number'] = SubContractor.vatNumber;
-      subC['Legal entity name'] = SubContractor.legalEntityName;
-      subC['Legal entity address'] = SubContractor.legalEntityAdress;
-      subC['ID Number'] = SubContractor.idNumber;
-      subC['Official'] = SubContractor.isOfficial;
+      subC['VAT number'] = Subcontractor.vatNumber;
+      subC['Legal entity name'] = Subcontractor.legalEntityName;
+      subC['Legal entity address'] = Subcontractor.legalEntityAdress;
+      subC['ID Number'] = Subcontractor.idNumber;
+      subC['Official'] = Subcontractor.isOfficial;
 
       delete subC['id'];
       delete subC['valueId'];
@@ -164,11 +164,11 @@ export class SubcontractorComponent implements OnInit {
       delete subC['paymentTermName'];
       delete subC['typeOfCostName'];
       return subC;
-    }), 'SubContractor').finally(() => this.tableOptions.exportLoading = false);
+    }), 'Subcontractor').finally(() => this.tableOptions.exportLoading = false);
   }
 
   delete(): void {
-    if (this.selectedSubContractor?.id) {
+    if (this.selectedSubcontractor?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -179,11 +179,11 @@ export class SubcontractorComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.subContractorService.deleteSubContractor(this.selectedSubContractor?.id || 0).subscribe({
+          this.subcontractorService.deleteSubcontractor(this.selectedSubcontractor?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "SubContractor deleted successfuly" });
-              this.getSubContractors();
-              this.selectedSubContractor = null;
+              this.toast.add({ severity: 'success', summary: "Subcontractor deleted successfuly" });
+              this.getSubcontractors();
+              this.selectedSubcontractor = null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;

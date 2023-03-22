@@ -1,5 +1,5 @@
 <div class="card">
-    <div id="listSubContractor">
+    <div id="listSubcontractor">
         <div class="flex justify-content-between mb-3">
             <div></div>
             <span class="p-buttonset">
@@ -9,10 +9,10 @@
                 <button (click)="delete()" pButton pRipple label="Delete" icon="pi pi-trash" class="border-white"></button>
                 <button (click)="exportExcel()" pButton pRipple label="Export All" icon="pi pi-download"
                     class="bg-yellow-500 hover:bg-yellow-600 border-white"
-                    [loading]="tableOptions.exportLoading" [disabled]="!listSubContractor.length"></button>
+                    [loading]="tableOptions.exportLoading" [disabled]="!listSubcontractor.length"></button>
             </span>
         </div>
-    <p-table #dtSubContractor [value]="listSubContractor" selectionMode="single" [(selection)]="selectedSubContractor" dataKey="id" 
+    <p-table #dtSubcontractor [value]="listSubcontractor" selectionMode="single" [(selection)]="selectedSubcontractor" dataKey="id" 
         [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines" 
         [paginator]="true" [globalFilterFields]="globalFilterFields" [rowsPerPageOptions]="[250,500,1000]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
@@ -20,11 +20,11 @@
         <ng-template pTemplate="caption">
             <div class="w-full flex justify-content-between">
                 <span class="p-input-icon-right">
-                    <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtSubContractor)" type="text" pInputText placeholder="Search" />
+                    <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtSubcontractor)" type="text" pInputText placeholder="Search" />
                     <i class="pi pi-search"></i>
                 </span>
                 <div>
-                    <button pButton (click)="clearFilter(dtSubContractor)" label="Clear" class="p-button-outlined"
+                    <button pButton (click)="clearFilter(dtSubcontractor)" label="Clear" class="p-button-outlined"
                                 icon="pi pi-filter-slash"></button>
                     <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2" icon="pi pi-bars"></button>
                     <p-overlayPanel #opMenu [showCloseIcon]="true">
@@ -49,21 +49,21 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-SubContractor>
-            <tr [pSelectableRow]="SubContractor">
+        <ng-template pTemplate="body" let-Subcontractor>
+            <tr [pSelectableRow]="Subcontractor">
                 <td *ngFor="let col of tableOptions.visibleCols">
-                    {{SubContractor[col.id]}}
+                    {{Subcontractor[col.id]}}
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="8">No subContractor found.</td>
+                <td colspan="8">No subcontractor found.</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody">
             <tr>
-                <td colspan="8">Loading subContractors data. Please wait.</td>
+                <td colspan="8">Loading subcontractors data. Please wait.</td>
             </tr>
         </ng-template>
     </p-table>
