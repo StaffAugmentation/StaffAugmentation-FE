@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'level', loadComponent: () => import('@modules/level/level.component').then(c => c.LevelComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
       { path: 'type', loadComponent: () => import('@modules/type/type.component').then(c => c.TypeComponent) },
+      { path: 'category', loadComponent: () => import('@modules/category/category.component').then(c => c.CategoryComponent) }
     ]
   }
 ];
