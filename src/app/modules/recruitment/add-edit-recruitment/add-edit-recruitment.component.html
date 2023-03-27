@@ -1,0 +1,25 @@
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid p-2 mb-4">
+        <div class="field">
+            <label for="responsibleName"> <b>Responsible name</b><span class="text-red-500">*</span></label>
+            <input type="text" pInputText name-only
+                [class]="addEditForm.get('responsibleName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                formControlName="responsibleName">
+            <p-message *ngIf="addEditForm.get('responsibleName')?.invalid && isSubmited" severity="error"
+                [text]="getErrorMessage('Responsible name', addEditForm.get('responsibleName')?.errors)"></p-message>
+        </div>
+        <div class="field">
+            <label for="responsibleEmail"> <b>Responsible email</b><span class="text-red-500">*</span></label>
+            <input type="text" pInputText
+                [class]="addEditForm.get('responsibleEmail')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                formControlName="responsibleEmail">
+            <p-message *ngIf="addEditForm.get('responsibleEmail')?.invalid && isSubmited" severity="error"
+                [text]="getErrorMessage('Responsible email', addEditForm.get('responsibleEmail')?.errors)"></p-message>
+        </div>
+    </div>    
+    <div class="footer">
+        <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+            label="Close"></button>
+    </div>
+</form>
