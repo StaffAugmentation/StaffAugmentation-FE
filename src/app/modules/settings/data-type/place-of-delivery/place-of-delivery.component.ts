@@ -21,8 +21,8 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
 
 @Component({
   standalone: true,
-  selector: 'app-PlaceOfDelivery',
-  templateUrl: './PlaceOfDelivery.component.html',
+  selector: 'app-place-of-delivery',
+  templateUrl: './place-of-delivery.component.html',
   imports: [
     CommonModule,
     FormsModule,

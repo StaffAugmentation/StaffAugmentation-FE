@@ -7,8 +7,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
 import { TabViewModule } from 'primeng/tabview';
-import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
-import { PlaceOfDelivery } from '@models/place-of-delivery';
+import { DepartmentService } from '@services/department.service';
+import { Department } from '@models/department';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,9 +16,8 @@ import { SharedModule } from '@modules/shared/shared.module'
 
 @Component({
   standalone: true,
-  selector: 'app-add-edit-PlaceOfDelivery',
-  templateUrl: './add-edit-place-of-delivery.component.html',
-  styleUrls: ['./add-edit-place-of-delivery.component.scss'],
+  selector: 'app-add-edit-department',
+  templateUrl: './add-edit-department.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -32,18 +31,18 @@ import { SharedModule } from '@modules/shared/shared.module'
     SharedModule
   ]
 })
-export class AddEditPlaceOfDeliveryComponent implements OnInit {
+export class AddEditDepartmentComponent implements OnInit {
 
   id!: number;
-  selectedValue!: PlaceOfDelivery;
+  selectedValue!: Department;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private PlaceOfDeliveryService: PlaceOfDeliveryService, private toast: MessageService, public config: DynamicDialogConfig) { }
+  constructor(private ref: DynamicDialogRef, private departmentService: DepartmentService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
     this.id = this.config.data?.id;
     if(this.id){
-      this.PlaceOfDeliveryService.getOne(this.id).subscribe({
+      this.departmentService.getOne(this.id).subscribe({
         next: res=>{
           this.selectedValue = res;
           this.addEditForm = new FormGroup({
@@ -65,16 +64,15 @@ export class AddEditPlaceOfDeliveryComponent implements OnInit {
   }
   onSubmit() {
     this.isSubmited = true;
-    console.log(this.addEditForm.value);
     if (this.addEditForm.valid) {
       if(this.id){
-        this.PlaceOfDeliveryService.updatePlaceOfDelivery(new PlaceOfDelivery(
+        this.departmentService.updateDepartment(new Department(
           this.id,
           this.addEditForm.value.valueId,
           this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "Place Of Delivery updated successfuly" });
+            this.toast.add({ severity: 'success', summary: "Department updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
@@ -82,13 +80,13 @@ export class AddEditPlaceOfDeliveryComponent implements OnInit {
           }
         });
       }else{
-        this.PlaceOfDeliveryService.addPlaceOfDelivery(new PlaceOfDelivery(
+        this.departmentService.addDepartment(new Department(
           this.id || 0,
           this.addEditForm.value.valueId,
           this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "Place Of Delivery added successfuly" });
+            this.toast.add({ severity: 'success', summary: "Department added successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
