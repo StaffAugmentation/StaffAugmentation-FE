@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Recruitment } from '@models/recruitment';
 import { RecruitmentService } from '@services/recruitment.service';
 import { MessageService } from 'primeng/api';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
