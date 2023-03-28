@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PlaceOfDelivery } from '@models/place-of-delivery';
-import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
+import { Recruitment } from '@models/recruitment';
+import { RecruitmentService } from '@services/recruitment.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -9,80 +9,71 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
-import { BadgeModule } from 'primeng/badge';
 import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditPlaceOfDeliveryComponent } from './add-edit-place-of-delivery/add-edit-place-of-delivery.component';
+import { AddEditRecruitmentComponent } from './add-edit-recruitment/add-edit-recruitment.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
-import { FileExporterService } from 'src/app/services/file-exporter.service'
+import { ConfirmationService } from 'primeng/api';
+import { FileExporterService } from 'src/app/services/file-exporter.service';
 
 @Component({
   standalone: true,
-  selector: 'app-PlaceOfDelivery',
-  templateUrl: './PlaceOfDelivery.component.html',
+  selector: 'app-recruitment',
+  templateUrl: './recruitment.component.html',
   imports: [
     CommonModule,
     FormsModule,
     ButtonModule,
     InputTextModule,
-    BadgeModule,
     MultiSelectModule,
     CalendarModule,
     TableModule,
     DynamicDialogModule,
     OverlayPanelModule,
     ConfirmDialogModule
-  ],
-  providers: [ConfirmationService]
+  ]
 })
-
-export class PlaceOfDeliveryComponent implements OnInit {
+export class RecruitmentComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listPlaceOfDelivery: PlaceOfDelivery[] = [];
-  selectedPlaceOfDelivery!: PlaceOfDelivery;
+  listRecruitment: Recruitment[] = [];
+  selectedRecruitment!: Recruitment | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'id', label: 'Id' },
-      { id: 'valueId', label: 'Value' },
-      { id: 'isActive', label: 'State' }
+      { id: 'responsibleName', label: 'Responsible name' },
+      { id: 'responsibleEmail', label: 'Responsible email' },
     ],
     loading: false,
     exportLoading: false
   };
-  PlaceOfDelivery: PlaceOfDelivery[] = [];
   searchTable: string = '';
 
-  constructor(private PlaceOfDeliveryService: PlaceOfDeliveryService, private toast: MessageService,
-    private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef,
-    private fileExporter: FileExporterService,
-    private confirmationService: ConfirmationService) {
-    }
-  ngOnInit(): void {
-    this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getPlaceOfDeliverys();
+  constructor(private recruitmentService: RecruitmentService, private modalService: DialogService, 
+    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService, 
+    private fileExporter: FileExporterService) {
   }
 
-  getPlaceOfDeliverys(): void {
+  ngOnInit(): void {
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getRecruitments();
+  }
+  getRecruitments(): void {
     this.tableOptions.loading = true;
-
-    this.PlaceOfDeliveryService.getAll().subscribe({
+    this.recruitmentService.getAll().subscribe({
       next: (res) => {
-        this.listPlaceOfDelivery = res;
+        this.listRecruitment = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
-        let errMessage:string = err.error;
-        if (err.status !=400) {
+        let errMessage: string = err.error;
+        if (err.status != 400) {
           errMessage = 'Something went wrong with the server !';
         }
         this.toast.add({ severity: 'error', summary: errMessage });
@@ -91,27 +82,27 @@ export class PlaceOfDeliveryComponent implements OnInit {
   }
 
   refresh(): void {
-    this.getPlaceOfDeliverys();
+    this.getRecruitments();
   }
 
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditPlaceOfDeliveryComponent, {
-        header: `Add Place Of Delivery`,
-        style: { width: '90%', maxWidth: '500px' }
+      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
+        header: `Add Recruitment`,
+        style: { width: '95%', maxWidth: '750px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getPlaceOfDeliverys();
+        this.getRecruitments();
       });
     }
-    else if (this.selectedPlaceOfDelivery?.id) {
-      this.modalAddEdit = this.modalService.open(AddEditPlaceOfDeliveryComponent, {
-        header: `Edit Place Of Delivery`,
-        style: { width: '90%', maxWidth: '500px' },
-        data: { id: this.selectedPlaceOfDelivery.id }
+    else if (this.selectedRecruitment?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
+        header: `Edit Recruitment`,
+        style: { width: '95%', maxWidth: '750px' },
+        data: { idRecruitment: this.selectedRecruitment.id }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getPlaceOfDeliverys();
+        this.getRecruitments();
       });
     }
     else {
@@ -129,13 +120,14 @@ export class PlaceOfDeliveryComponent implements OnInit {
   }
 
   clearFilter(table: Table): void {
-    this.searchTable = '';
     this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.searchTable = '';
+    this.selectedRecruitment = null;
     table.clear();
   }
-
+  
   delete(): void {
-    if (this.selectedPlaceOfDelivery?.id) {
+    if (this.selectedRecruitment?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -146,11 +138,11 @@ export class PlaceOfDeliveryComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.PlaceOfDeliveryService.deletePlaceOfDelivery(this.selectedPlaceOfDelivery?.id || 0).subscribe({
+          this.recruitmentService.deleteRecruitment(this.selectedRecruitment?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Place Of Delivery deleted successfuly" });
-              this.getPlaceOfDeliverys();
-              this.selectedPlaceOfDelivery == null;
+              this.toast.add({ severity: 'success', summary: "Recruitment deleted successfuly" });
+              this.getRecruitments();
+              this.selectedRecruitment = null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -161,23 +153,11 @@ export class PlaceOfDeliveryComponent implements OnInit {
             }
           });
         }
+
       });
     } else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
     }
   }
-
-    exportExcel(): void {
-      this.tableOptions.exportLoading = true;
-      // let data = this.listBR.filter(br => br)
-        this.fileExporter.exportExcel(this.listPlaceOfDelivery.map(PlaceOfDelivery =>{
-          let dprt : any = {...PlaceOfDelivery};
-          dprt['Value'] = PlaceOfDelivery.valueId;
-          dprt['State'] = PlaceOfDelivery.isActive;
-          delete dprt['valueId'];
-          delete dprt['isActive'];
-          return dprt;
-        }),'PlaceOfDelivery').finally(()=> this.tableOptions.exportLoading = false);
-      }
 
 }
