@@ -12,8 +12,8 @@
                     [loading]="tableOptions.exportLoading" [disabled]="!listSubcontractor.length"></button>
             </span>
         </div>
-    <p-table #dtSubcontractor [value]="listSubcontractor" selectionMode="single" [(selection)]="selectedSubcontractor" dataKey="id" 
-        [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines" 
+    <p-table #dtSubcontractor [value]="listSubcontractor" selectionMode="single" [(selection)]="selectedSubcontractor" dataKey="id"
+        [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
         [paginator]="true" [globalFilterFields]="globalFilterFields" [rowsPerPageOptions]="[250,500,1000]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
         scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
@@ -52,7 +52,7 @@
         <ng-template pTemplate="body" let-Subcontractor>
             <tr [pSelectableRow]="Subcontractor">
                 <td *ngFor="let col of tableOptions.visibleCols">
-                    {{Subcontractor[col.id]}}
+                  {{col.id != 'approver' ? Subcontractor[col.id] :Subcontractor[col.id] ? ( Subcontractor[col.id]?.firstName +' '+ Subcontractor[col.id]?.lastName):'' }}
                 </td>
             </tr>
         </ng-template>

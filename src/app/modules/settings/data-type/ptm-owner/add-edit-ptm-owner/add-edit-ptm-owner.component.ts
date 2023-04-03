@@ -75,7 +75,7 @@ export class AddEditPTMOwnerComponent implements OnInit {
       next: (res) => {
         this.approvers = res;
         this.approvers = this.approvers.map((appr: any) => {
-          return { ...appr, displayLabel: appr.appFirstName + ' ' + appr.appLastName }; });
+          return { ...appr, displayLabel: appr.firstName + ' ' + appr.lastName }; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -91,12 +91,12 @@ export class AddEditPTMOwnerComponent implements OnInit {
         this.PTMOwnerService.updatePTMOwner(new PTMOwner(
           this.id,
           this.addEditForm.value.valueId,
-          this.addEditForm.value.ptmOwnerBA,
-          this.addEditForm.value.ptmOwnerBICSW,
-          this.addEditForm.value.ptmOwnerVatRate,
+          this.addEditForm.value.bA,
+          this.addEditForm.value.bicsw,
+          this.addEditForm.value.vatRate,
           this.addEditForm.value.isEveris,
-          this.addEditForm.value.idApprover,
-          this.addEditForm.value.ptmOwnerVatNumber)
+          this.addEditForm.value.vatNumber,
+          this.addEditForm.value.approver)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "PTM Owner updated successfuly" });
@@ -117,12 +117,12 @@ export class AddEditPTMOwnerComponent implements OnInit {
         this.PTMOwnerService.addPTMOwner(new PTMOwner(
           this.id || 0,
           this.addEditForm.value.valueId,
-          this.addEditForm.value.ptmOwnerBA,
-          this.addEditForm.value.ptmOwnerBICSW,
-          this.addEditForm.value.ptmOwnerVatRate,
+          this.addEditForm.value.bA,
+          this.addEditForm.value.bicsw,
+          this.addEditForm.value.vatRate,
           this.addEditForm.value.isEveris,
-          this.addEditForm.value.idApprover,
-          this.addEditForm.value.ptmOwnerVatNumber)
+          this.addEditForm.value.vatNumber,
+          this.addEditForm.value.approver)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "PTM Owner added successfuly" });
@@ -145,11 +145,11 @@ export class AddEditPTMOwnerComponent implements OnInit {
   initForm(data: PTMOwner | null): void {
     this.addEditForm = new FormGroup({
       valueId: new FormControl(data ? data.valueId : '', [Validators.required]),
-      ptmOwnerBA: new FormControl(data ? data.ptmOwnerBA : null),
-      ptmOwnerVatNumber: new FormControl(data ? data.ptmOwnerVatNumber : null),
-      ptmOwnerBICSW: new FormControl(data ? data.ptmOwnerBICSW : null),
-      idApprover: new FormControl(data ? data.idApprover : null),
-      ptmOwnerVatRate: new FormControl(data ? data.ptmOwnerVatRate : null),
+      ba: new FormControl(data ? data.ba : null),
+      vatNumber: new FormControl(data ? data.vatNumber : null),
+      bICSW: new FormControl(data ? data.bicsw : null),
+      approver: new FormControl(data ? data.approver : null),
+      vatRate: new FormControl(data ? data.vatRate : null),
       isEveris: new FormControl(data ? data.isEveris : false),
     });
   }

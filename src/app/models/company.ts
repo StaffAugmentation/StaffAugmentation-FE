@@ -1,34 +1,36 @@
+import { Approvers } from "./approvers";
+
 export class Company{
-    idCompany: number;
-    companyName: string;
+    id: number;
+    name: string;
     bankAccount?: string;
     isDeleted: boolean;
     isEveris: boolean;
-    cmpVatlegalEntity?: string;
-    cmpBicsw?: string;
-    cmpVatRate?: 0;
-    idApproverCmp?: 0;
-    cmpEmail?: string
-    constructor(idCompany: number,
-        companyName: string,
+    vatlegalEntity?: string;
+    bicsw?: string;
+    vatRate?: 0;
+    approver?: Approvers;
+    email?: string
+    constructor(id: number,
+        name: string,
         bankAccount: string,
         isDeleted: boolean,
         isEveris: boolean,
-        cmpVatlegalEntity: string,
-        cmpBicsw: string,
-        cmpVatRate: 0,
-        idApproverCmp: 0,
-        cmpEmail: string){
+        vatlegalEntity: string,
+        bicsw: string,
+        vatRate: 0,
+        approver: Approvers,
+        email: string){
 
-            this.idCompany=idCompany,
-            this.companyName=companyName,
+            this.id=id,
+            this.name=name,
             this.bankAccount=bankAccount,
             this.isDeleted=isDeleted,
             this.isEveris=isEveris,
-            this.cmpVatlegalEntity=cmpVatlegalEntity,
-            this.cmpBicsw=cmpBicsw,
-            this.cmpVatRate=cmpVatRate,
-            this.idApproverCmp=idApproverCmp,
-            this.cmpEmail=cmpEmail
+            this.vatlegalEntity=vatlegalEntity,
+            this.bicsw=bicsw,
+            this.vatRate=vatRate,
+            this.approver=approver,
+            this.email=email
         }
 }
