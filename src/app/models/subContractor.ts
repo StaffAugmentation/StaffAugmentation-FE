@@ -1,43 +1,47 @@
+import { Approvers } from "./approvers";
+import { PaymentTerm } from "./paymentTerm";
+import { TypeOfCost } from "./typeOfCost";
+
 export class Subcontractor{
     id: number;
     valueId: string;
-    subContBa?: string;
-    subContBicsw?: string;
-    subContVatRate?: number;
+    ba?: string;
+    bicsw?: string;
+    vatRate?: number;
     isOfficial: boolean;
-    idApproverSub?: number;
     legalEntityName?: string;
     legalEntityAdress?: string;
     vatNumber?: string;
     idNumber?: string;
-    idPaymentTerm?: string;
-    idTypeOfCost?: string
+    approver?: Approvers;
+    paymentTerm?: PaymentTerm;
+    typeOfCost?: TypeOfCost
     constructor(id: number,
         valueId: string,
-        subContBa: string,
-        subContBicsw: string,
-        subContVatRate: number,
+        ba: string,
+        bicsw: string,
+        vatRate: number,
         isOfficial: boolean,
-        idApproverSub: number,
         legalEntityName: string,
         legalEntityAdress: string,
         vatNumber: string,
         idNumber: string,
-        idPaymentTerm: string,
-        idTypeOfCost: string){
+        approver?: Approvers,
+        paymentTerm?: PaymentTerm,
+        typeOfCost?: TypeOfCost){
 
             this.id=id,
             this.valueId=valueId,
-            this.subContBa=subContBa,
-            this.subContBicsw=subContBicsw,
-            this.subContVatRate=subContVatRate,
+            this.ba=ba,
+            this.bicsw=bicsw,
+            this.vatRate=vatRate,
             this.isOfficial=isOfficial,
-            this.idApproverSub=idApproverSub,
             this.legalEntityName=legalEntityName,
             this.legalEntityAdress=legalEntityAdress,
             this.vatNumber=vatNumber,
             this.idNumber=idNumber,
-            this.idPaymentTerm=idPaymentTerm,
-            this.idTypeOfCost=idTypeOfCost
+            this.approver=approver,
+            this.paymentTerm=paymentTerm,
+            this.typeOfCost=typeOfCost
         }
 }
