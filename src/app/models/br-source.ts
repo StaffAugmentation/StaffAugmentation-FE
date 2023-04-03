@@ -1,12 +1,12 @@
 export class BrSource{
-  idSource: string;
-  sourceName: string;
+  id: string;
+  name: string;
   constructor
       (
-        idSource: string,
-        sourceName: string
+        id: string,
+        name: string
       ){
-          this.idSource=idSource,
-          this.sourceName=sourceName
+          this.id=id,
+          this.name=name
       }
 }
