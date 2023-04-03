@@ -49,7 +49,7 @@ export class AddEditCompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.config.data?.idCompany;
+    this.id = this.config.data?.id;
     if (this.id) {
       this.companyService.getOne(this.id).subscribe({
         next: res => {
@@ -75,7 +75,7 @@ export class AddEditCompanyComponent implements OnInit {
       next: (res) => {
         this.approvers = res;
         this.approvers = this.approvers.map((appr: any) => {
-          return { ...appr, displayLabel: appr.appFirstName + ' ' + appr.appLastName }; });
+          return { ...appr, displayLabel: appr.firstName + ' ' + appr.lastName }; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -90,15 +90,15 @@ export class AddEditCompanyComponent implements OnInit {
       if (this.id) {
         this.companyService.updateCompany(new Company(
           this.id,
-          this.addEditForm.value.companyName,
-          this.addEditForm.value.ibanNumber,
+          this.addEditForm.value.name,
+          this.addEditForm.value.bankAccount,
           false,
           this.addEditForm.value.isNTTData,
           this.addEditForm.value.vatLegal,
           this.addEditForm.value.bic,
           this.addEditForm.value.vatRate,
           this.addEditForm.value.approver,
-          this.addEditForm.value.cmpEmail)
+          this.addEditForm.value.email)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Company updated successfuly" });
@@ -118,15 +118,15 @@ export class AddEditCompanyComponent implements OnInit {
       } else {
         this.companyService.addCompany(new Company(
           this.id || 0,
-          this.addEditForm.value.companyName,
-          this.addEditForm.value.ibanNumber,
+          this.addEditForm.value.name,
+          this.addEditForm.value.bankAccount,
           false,
           this.addEditForm.value.isNTTData,
           this.addEditForm.value.vatLegal,
           this.addEditForm.value.bic,
           this.addEditForm.value.vatRate,
           this.addEditForm.value.approver,
-          this.addEditForm.value.cmpEmail)
+          this.addEditForm.value.email)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Company added successfuly" });
@@ -148,13 +148,13 @@ export class AddEditCompanyComponent implements OnInit {
 
   initForm(data: Company | null): void {
     this.addEditForm = new FormGroup({
-      companyName: new FormControl(data ? data.companyName : '', [Validators.required]),
-      ibanNumber: new FormControl(data ? data.bankAccount : null),
-      cmpEmail: new FormControl(data ? data.cmpEmail : '', [Validators.required, Validators.email]),
-      vatLegal: new FormControl(data ? data.cmpVatlegalEntity : null),
-      bic: new FormControl(data ? data.cmpBicsw : null),
-      approver: new FormControl(data ? data.idApproverCmp : null),
-      vatRate: new FormControl(data ? data.cmpVatRate : null),
+      name: new FormControl(data ? data.name : '', [Validators.required]),
+      bankAccount: new FormControl(data ? data.bankAccount : null),
+      email: new FormControl(data ? data.email : '', [Validators.required, Validators.email]),
+      vatLegal: new FormControl(data ? data.vatlegalEntity : null),
+      bic: new FormControl(data ? data.bicsw : null),
+      approver: new FormControl(data ? data.approver : null),
+      vatRate: new FormControl(data ? data.vatRate : null),
       isNTTData: new FormControl(data ? data.isEveris : false),
     });
   }

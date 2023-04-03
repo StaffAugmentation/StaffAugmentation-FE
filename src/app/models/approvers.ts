@@ -1,10 +1,14 @@
 export class Approvers{
     id:number;
-    appFirstName:string;
-    appLastName:string;
-    constructor(id:number,appFirstName:string,appLastName:string){
+    firstName:string;
+    lastName:string;
+    constructor(
+      id:number,
+      firstName:string,
+      lastName:string)
+      {
         this.id=id;
-        this.appFirstName=appFirstName;
-        this.appLastName=appLastName;
+        this.firstName=firstName;
+        this.lastName=lastName;
     }
 }

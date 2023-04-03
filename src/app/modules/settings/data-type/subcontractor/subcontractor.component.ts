@@ -49,18 +49,18 @@ export class SubcontractorComponent implements OnInit {
     visibleCols: [],
     cols: [
       { id: 'valueId', label: 'Value' },
-      { id: 'subContBa', label: 'IBAN Number' },
-      { id: 'subContBicsw', label: 'BIC/SW' },
-      { id: 'approverName', label: 'Approver' },
-      { id: 'subContVatRate', label: 'VAT rate' },
+      { id: 'ba', label: 'IBAN Number' },
+      { id: 'bicsw', label: 'BIC/SW' },
+      { id: 'approver', label: 'Approver' },
+      { id: 'vatRate', label: 'VAT rate' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
 
-  constructor(private subcontractorService: SubcontractorService, private modalService: DialogService, 
-    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService, 
+  constructor(private subcontractorService: SubcontractorService, private modalService: DialogService,
+    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService,
     private fileExporter: FileExporterService) {
   }
 
@@ -133,36 +133,14 @@ export class SubcontractorComponent implements OnInit {
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
     this.fileExporter.exportExcel(this.listSubcontractor.map(Subcontractor => {
-      let subC: any = { ...Subcontractor };
-      subC['Value'] = Subcontractor.valueId;
-      subC['IBAN Number'] = Subcontractor.subContBa;
-      subC['BIC/SW'] = Subcontractor.subContBicsw;
-      subC['Approver'] = subC['approverName'];
-      subC['VAT rate'] = Subcontractor.subContVatRate;
-      subC['Payment terms'] = subC['paymentTermName'];
-      subC['Type of cost'] = subC['typeOfCostName'];
-      subC['VAT number'] = Subcontractor.vatNumber;
-      subC['Legal entity name'] = Subcontractor.legalEntityName;
-      subC['Legal entity address'] = Subcontractor.legalEntityAdress;
-      subC['ID Number'] = Subcontractor.idNumber;
-      subC['Official'] = Subcontractor.isOfficial;
-
-      delete subC['id'];
-      delete subC['valueId'];
-      delete subC['subContBa'];
-      delete subC['subContBicsw'];
-      delete subC['idApproverSub'];
-      delete subC['subContVatRate'];
-      delete subC['isOfficial'];
-      delete subC['legalEntityAdress'];
-      delete subC['legalEntityName'];
-      delete subC['vatNumber'];
-      delete subC['idNumber'];
-      delete subC['idPaymentTerm'];
-      delete subC['idTypeOfCost'];
-      delete subC['approverName'];
-      delete subC['paymentTermName'];
-      delete subC['typeOfCostName'];
+      let subC: any ={
+        'Value' : Subcontractor.valueId,
+        'IBAN Number' : Subcontractor.ba,
+        'VAT number' : Subcontractor.vatNumber,
+        'BIC/SW' : Subcontractor.bicsw,
+        'Approver' :Subcontractor.approver ?(Subcontractor.approver?.firstName +" "+ Subcontractor.approver?.lastName) : "",
+        'VAT Rate': Subcontractor.vatRate
+      }
       return subC;
     }), 'Subcontractor').finally(() => this.tableOptions.exportLoading = false);
   }

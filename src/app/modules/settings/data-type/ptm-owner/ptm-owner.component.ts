@@ -50,11 +50,11 @@ export class PTMOwnerComponent implements OnInit {
     visibleCols: [],
     cols: [
       { id: 'valueId', label: 'Value' },
-      { id: 'ptmOwnerBA', label: 'IBAN Number' },
-      { id: 'ptmOwnerVatNumber', label: 'VAT Number' },
-      { id: 'ptmOwnerBICSW', label: 'BIC/SW' },
-      { id: 'approverName', label: 'Approver' },
-      { id: 'ptmOwnerVatRate', label: 'VAT_Rate' },
+      { id: 'ba', label: 'IBAN Number' },
+      { id: 'vatNumber', label: 'VAT Number' },
+      { id: 'bicsw', label: 'BIC/SW' },
+      { id: 'approver', label: 'Approver' },
+      { id: 'vatRate', label: 'VAT_Rate' },
     ],
     loading: false,
     exportLoading: false
@@ -130,24 +130,15 @@ export class PTMOwnerComponent implements OnInit {
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
     this.fileExporter.exportExcel(this.listPTMOwner.map(PTMOwner => {
-      let appr: any = { ...PTMOwner };
-      appr['Value'] = PTMOwner.valueId;
-      appr['IBAN Number'] = PTMOwner.ptmOwnerBA;
-      appr['VAT number'] = PTMOwner.ptmOwnerVatNumber;
-      appr['BIC/SW'] = PTMOwner.ptmOwnerBICSW;
-      appr['Approver'] = PTMOwner.approverName;
-      appr['VAT_Rate'] = PTMOwner.ptmOwnerVatRate;
-      delete appr['id'];
-      delete appr['valueId'];
-      delete appr['ptmOwnerBA'];
-      delete appr['ptmOwnerVatNumber'];
-      delete appr['ptmOwnerBICSW'];
-      delete appr['idApprover'];
-      delete appr['ptmOwnerVatRate'];
-      delete appr['isEveris'];
-      delete appr['approverName'];
-
-      return appr;
+      let pto: any ={
+        'Value' : PTMOwner.valueId,
+        'IBAN Number' : PTMOwner.ba,
+        'VAT number' : PTMOwner.vatNumber,
+        'BIC/SW' : PTMOwner.bicsw,
+        'Approver' :PTMOwner.approver ?(PTMOwner.approver?.firstName +" "+ PTMOwner.approver?.lastName) : "",
+        'VAT Rate': PTMOwner.vatRate
+      }
+      return pto;
     }), 'PTMOwner').finally(() => this.tableOptions.exportLoading = false);
   }
 
