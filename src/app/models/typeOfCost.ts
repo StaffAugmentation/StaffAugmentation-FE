@@ -1,12 +1,12 @@
 export class TypeOfCost{
   id: string;
-  typeOfCostValue: string;
+  value: string;
   constructor
       (
       id: string,
-      typeOfCostValue: string,
+      value: string,
       ){
           this.id=id,
-          this.typeOfCostValue=typeOfCostValue
+          this.value=value
       }
 }

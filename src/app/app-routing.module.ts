@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'place-of-delivery', loadComponent: () => import('@modules/place-of-delivery/PlaceOfDelivery.component').then(c => c.PlaceOfDeliveryComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
       { path: 'highest-degree', loadComponent: () => import('@modules/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
+      { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)}
     ]
   }
 ];
