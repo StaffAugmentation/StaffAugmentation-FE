@@ -28,14 +28,18 @@
             <ng-template pTemplate="body" let-Forecasts let-editing="editing">
                 <tr  [pEditableRow]="Forecasts">
                     <td *ngFor="let col of tableOptions.visibleCols" [pEditableColumn]="Forecasts[col.id]" pEditableColumnField="col.id">
-                        <p-cellEditor >
+                      <ng-container *ngIf="col.id=='monthF' || Forecasts['monthF']<currentMonthName">
+                        {{col.id != 'monthF' ? Forecasts[col.id] : Forecasts[col.id] | date: 'MMMM' }}
+                      </ng-container>
+                      <p-cellEditor *ngIf="col.id!=='monthF'  && Forecasts['monthF']>=currentMonthName">
                           <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="Forecasts[col.id]">
+                            <input  pInputText type="text" [(ngModel)]="Forecasts[col.id]">
                           </ng-template>
                           <ng-template pTemplate="output">
                             {{Forecasts[col.id]}}
                           </ng-template>
                         </p-cellEditor>
+
                     </td>
                 </tr>
             </ng-template>

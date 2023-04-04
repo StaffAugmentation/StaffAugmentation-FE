@@ -17,10 +17,10 @@ export class ForecastsService {
       },
       {
         id: 2,
-        absenteeismDays: 4,
-        forecastedDays: 18,
+        absenteeismDays: 42,
+        forecastedDays: 13,
         monthF: 2,
-        workingDays: 22,
+        workingDays: 28,
         year: 2023
       },
       {
@@ -33,18 +33,18 @@ export class ForecastsService {
       },
       {
         id: 4,
-        absenteeismDays: 4,
-        forecastedDays: 18,
+        absenteeismDays: 3,
+        forecastedDays: 20,
         monthF: 4,
-        workingDays: 22,
+        workingDays: 12,
         year: 2023
       },
       {
         id: 5,
         absenteeismDays: 4,
-        forecastedDays: 18,
+        forecastedDays: 28,
         monthF: 5,
-        workingDays: 22,
+        workingDays: 32,
         year: 2023
       },
       {

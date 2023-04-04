@@ -17,11 +17,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service';
 import { BadgeModule } from 'primeng/badge';
+import { DatePipe } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-forecasts',
   templateUrl: './forecasts.component.html',
+  providers: [
+    DatePipe
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,6 +43,7 @@ import { BadgeModule } from 'primeng/badge';
 })
 export class ForecastsComponent implements OnInit {
   years!: any[];
+  currentMonthName: any;
   selectedYear!: number;
   isCollapsed: any = {
     advancedSearch: false,
@@ -61,11 +66,12 @@ export class ForecastsComponent implements OnInit {
 
   constructor(private ForecastsService: ForecastsService, private toast: MessageService,
     private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
-    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService, private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
     this.years = [2020,2021,2022,2023];
+    this.currentMonthName = this.datePipe.transform(new Date(), 'MM');
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getForecasts();
   }
