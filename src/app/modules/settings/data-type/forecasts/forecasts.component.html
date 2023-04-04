@@ -29,7 +29,7 @@
                 <tr  [pEditableRow]="Forecasts">
                     <td *ngFor="let col of tableOptions.visibleCols" [pEditableColumn]="Forecasts[col.id]" pEditableColumnField="col.id">
                       <ng-container *ngIf="col.id=='monthF' || Forecasts['monthF']<currentMonthName">
-                        {{col.id != 'monthF' ? Forecasts[col.id] : Forecasts[col.id] | date: 'MMMM' }}
+                        {{col.id != 'monthF' ? Forecasts[col.id] : Forecasts[col.id] }}
                       </ng-container>
                       <p-cellEditor *ngIf="col.id!=='monthF'  && Forecasts['monthF']>=currentMonthName">
                           <ng-template pTemplate="input">

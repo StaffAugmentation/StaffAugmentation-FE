@@ -41,8 +41,9 @@ import { DatePipe } from '@angular/common';
     DropdownModule
   ]
 })
+
 export class ForecastsComponent implements OnInit {
-  years!: any[];
+  years: number[] = [];
   currentMonthName: any;
   selectedYear!: number;
   isCollapsed: any = {
@@ -70,10 +71,17 @@ export class ForecastsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.years = [2020,2021,2022,2023];
     this.currentMonthName = this.datePipe.transform(new Date(), 'MM');
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getForecasts();
+    this.getYears();
+  }
+  getYears(): void {
+    const currentYear = new Date().getFullYear();
+    const startYear = 1900;
+    for (let year = currentYear; year >= startYear; year--) {
+      this.years.push(year);
+    }
   }
   getForecasts(): void {
     this.tableOptions.loading = true;
