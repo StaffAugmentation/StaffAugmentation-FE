@@ -53,6 +53,7 @@ export class HighestDegreeComponent implements OnInit {
     cols: [
       { id: 'id', label: 'Id' },
       { id: 'value', label: 'Value' },
+      { id: 'isActive', label: 'State' }
     ],
     loading: false,
     exportLoading: false
@@ -169,7 +170,14 @@ export class HighestDegreeComponent implements OnInit {
     exportExcel(): void {
       this.tableOptions.exportLoading = true;
       // let data = this.listBR.filter(br => br)
-        this.fileExporter.exportExcel(this.listHighestDegree,'HighestDegree').finally(()=> this.tableOptions.exportLoading = false);
+        this.fileExporter.exportExcel(this.listHighestDegree.map(highestDegree =>{
+          let htd : any = {...highestDegree};
+          htd['Value'] = highestDegree.value;
+          htd['State'] = highestDegree.isActive;
+          delete htd['value'];
+          delete htd['isActive'];
+          return htd;
+        }),'highestDegree').finally(()=> this.tableOptions.exportLoading = false);
       }
 
 }

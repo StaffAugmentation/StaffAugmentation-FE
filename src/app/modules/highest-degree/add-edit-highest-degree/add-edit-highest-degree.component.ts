@@ -18,7 +18,6 @@ import { SharedModule } from '@modules/shared/shared.module'
   standalone: true,
   selector: 'app-add-edit-highest-degree',
   templateUrl: './add-edit-highest-degree.component.html',
-  styleUrls: ['./add-edit-highest-degree.component.scss'],
   imports: [
     CommonModule,
     FormsModule,
@@ -48,6 +47,7 @@ export class AddEditHighestDegreeComponent implements OnInit {
           this.selectedValue = res;
           this.addEditForm = new FormGroup({
             value: new FormControl(res.value, [Validators.required]),
+            isActive: new FormControl(res.isActive),
           });
         },
         error: err => {
@@ -58,6 +58,7 @@ export class AddEditHighestDegreeComponent implements OnInit {
     else{
       this.addEditForm = new FormGroup({
         value: new FormControl(null, [Validators.required]),
+        isActive: new FormControl(true),
       });
     }
   }
@@ -68,7 +69,8 @@ export class AddEditHighestDegreeComponent implements OnInit {
       if(this.id){
         this.HighestDegreeService.updateHighestDegree(new HighestDegree(
           this.id,
-          this.addEditForm.value.value)
+          this.addEditForm.value.value,
+          this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Highest Degree updated successfuly" });
@@ -81,7 +83,8 @@ export class AddEditHighestDegreeComponent implements OnInit {
       }else{
         this.HighestDegreeService.addHighestDegree(new HighestDegree(
           this.id || 0,
-          this.addEditForm.value.value)
+          this.addEditForm.value.value,
+          this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Highest Degree added successfuly" });

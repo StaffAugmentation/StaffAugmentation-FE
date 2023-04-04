@@ -70,8 +70,8 @@
       <ng-template pTemplate="body" let-HighestDegree>
           <tr [pSelectableRow]="HighestDegree">
             <td *ngFor="let col of tableOptions.visibleCols">
-              {{HighestDegree[col.id]}}
-            </td>
+              {{col.id != 'isActive' ? HighestDegree[col.id] : ''}}
+              <p-badge *ngIf="col.id=='isActive'" [severity]="HighestDegree.isActive ? 'success' : 'danger'" styleClass="p-mr-2"></p-badge>            </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
