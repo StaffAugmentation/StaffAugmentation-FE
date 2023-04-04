@@ -36,8 +36,9 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Subcontractor', icon: 'pi pi-fw pi-bookmark', routerLink: ['/subcontractor'] },
                                     { label: 'Recruitment', icon: 'pi pi-fw pi-bookmark', routerLink: ['/recruitment'] }
                                     
-                                ]
-                            }
+                                ],
+                            },
+                            {label: 'App parameters management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/app-parameter']}
                         ]
                     }
                 ]

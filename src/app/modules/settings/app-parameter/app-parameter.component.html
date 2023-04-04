@@ -1,0 +1,87 @@
+<div *ngIf="editForm">
+<form [formGroup]="editForm">
+    <div class="card">
+        <div class="field grid">
+            <label for="daysBeforeDeletingFile"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">Days before deleting files</label>
+            <div class="col-12 md:col-10">
+                <input type="text" pInputText decimal class="w-6" placeholder="number of days before deleting a file" formControlName="daysBeforeDeletingFile">
+            </div>
+        </div>    
+        <div class="field grid">
+            <label for="brAdvancedSearchDate"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">BR advanced search period</label>
+            <div class="col-12 md:col-10">
+                <input type="text"  pInputText decimal class="w-6" placeholder="br advanced search period" formControlName="brAdvancedSearchDate">
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="scAdvancedSearchPeriod"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">SC advanced search period</label>
+            <div class="col-12 md:col-10">
+                <input type="text"  pInputText decimal class="w-6" placeholder="sc advanced search period" formControlName="scAdvancedSearchPeriod">
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="contractApprover"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">Contract approver</label>
+            <div class="col-12 md:col-10">
+                <input type="text"  pInputText class="w-6" placeholder="contract approver" formControlName="contractApprover">
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="contractApproverEmail"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">Contract approver email</label>
+            <div class="col-12 md:col-10">
+                <input type="text"  pInputText class="w-6" placeholder="contract approver email"
+                    [class]="editForm.get('contractApproverEmail')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                    formControlName="contractApproverEmail"><br/>
+                <p-message class="p-2" *ngIf="editForm.get('contractApproverEmail')?.invalid && isSubmited" severity="error"
+                    [text]="getErrorMessage('Contract approver email', editForm.get('contractApproverEmail')?.errors)"></p-message>    
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="saEmail"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">CM Responsible</label>
+            <div class="col-12 md:col-10">
+                <textarea pInputTextarea class="w-6 " formControlName="saEmail" aria-describedby="saEmail-help"
+                [class]="editForm.get('saEmail')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
+                <small id="saEmail-help" class="px-4 pb-5">(For multiple emails please separate them with ',')</small>
+                <p-message class="p-2" *ngIf="editForm.get('saEmail')?.invalid && isSubmited" severity="error"
+                    [text]="getErrorMessage('CM Responsible', editForm.get('saEmail')?.errors)"></p-message>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="qtmDailyPriceIsActive"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">QTM sales price</label>
+            <div class="col-12 md:col-10">
+                <p-radioButton name="qtmDailyPriceIsActive" class=" mr-2" [value]="true" label="Active" 
+                    formControlName="qtmDailyPriceIsActive"></p-radioButton>
+                <p-radioButton name="qtmDailyPriceIsActive" class=" mr-2" [value]="false" label="Not active" 
+                    formControlName="qtmDailyPriceIsActive"></p-radioButton>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="tmDailyPriceIsActive"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">TM sales price</label>
+            <div class="col-12 md:col-10">
+                <p-radioButton name="tmDailyPriceIsActive" class=" mr-2" [value]="true" label="Active" 
+                    formControlName="tmDailyPriceIsActive"></p-radioButton>
+                <p-radioButton name="tmDailyPriceIsActive" class=" mr-2" [value]="false" label="Not active" 
+                    formControlName="tmDailyPriceIsActive"></p-radioButton>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="useLDAPService"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">Use LDAP Service</label>
+            <div class="col-12 md:col-10">
+                <p-radioButton name="useLDAPService" class=" mr-2" [value]="true" label="Yes" 
+                    formControlName="useLDAPService"></p-radioButton>
+                <p-radioButton name="useLDAPService" class=" mr-2" [value]="false" label="No" 
+                    formControlName="useLDAPService"></p-radioButton>
+            </div>
+        </div>
+        <div class="field grid pl-7 pt-5">
+                <button pButton  pRipple (click)="edit('recruitment')" icon="pi pi-cog" class="border-white p-button-sm"></button>
+                <p class="pt-2 px-5 font-bold">Contact recruitment</p>
+                <button pButton  pRipple (click)="edit('consultant')" icon="pi pi-cog" class="border-white p-button-sm"></button>
+                <p class="pt-2 px-5 font-bold">Contact consultant</p>
+        </div>
+        <div class=" col-offset-6 pt-5">
+            <button type="submit" (click)="onSubmit()" pButton pRipple class="p-button-sm p-button-primary" label="Save changes" [loading]="actionLoading"></button>
+        </div>
+    </div>    
+</form>
+</div>
+
