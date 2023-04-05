@@ -38,11 +38,8 @@
         <div class="field grid">
             <label for="saEmail"  class="col-12 mb-2 md:col-2 md:mb-0 font-bold">CM Responsible</label>
             <div class="col-12 md:col-10">
-                <textarea pInputTextarea class="w-6 " formControlName="saEmail" aria-describedby="saEmail-help"
-                [class]="editForm.get('saEmail')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
+                <textarea pInputTextarea class="w-6 " formControlName="saEmail" aria-describedby="saEmail-help"></textarea>
                 <small id="saEmail-help" class="px-4 pb-5">(For multiple emails please separate them with ',')</small>
-                <p-message class="p-2" *ngIf="editForm.get('saEmail')?.invalid && isSubmited" severity="error"
-                    [text]="getErrorMessage('CM Responsible', editForm.get('saEmail')?.errors)"></p-message>
             </div>
         </div>
         <div class="field grid">

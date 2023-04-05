@@ -32,8 +32,7 @@ export class EditRecruitmentConsultantComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   type!: string;
-  appParameter: AppParameter = new AppParameter(1);
-  visible : boolean = false;
+  appParameter!: AppParameter;
 
   constructor(private ref: DynamicDialogRef, private appParameterService: AppParameterService, private toast: MessageService, 
     public config: DynamicDialogConfig , private confirmationService:ConfirmationService) { }
@@ -41,21 +40,11 @@ export class EditRecruitmentConsultantComponent implements OnInit {
   ngOnInit(): void {
     this.appParameter = this.config.data?.appParameter;
     this.type = this.config.data?.type;
-    this.appParameterService.getOne(this.appParameter.id).subscribe({
-      next: res => {
-        this.initForm(res);
-      },
-      error: err => {
-        let errMessage: string = err.error;
-        if (err.status != 400) {
-          errMessage = 'Something went wrong with the server !';
-        }
-        this.toast.add({ severity: 'error', summary: errMessage });
-      }
-    });
+    this.initForm(this.appParameter);
   }
 
   onSubmit() {
+    console.log(this.appParameter.daysBeforeDeletingFile)
     this.isSubmited = true;
       if (this.editForm.valid) {
         this.actionLoading = true;

@@ -38,16 +38,21 @@ export class AppParameterComponent implements OnInit {
   editForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
-  appParameter: AppParameter = new AppParameter(1);
-  visible : boolean = false;
+  appParameter!: AppParameter;
+  id : number = 1;
 
   constructor(private appParameterService: AppParameterService, private toast: MessageService, private modalService: DialogService,
     private modalEdit: DynamicDialogRef, private confirmationService:ConfirmationService) {}
 
   ngOnInit(): void {
-    this.appParameterService.getOne(this.appParameter.id).subscribe({
+    this.getAppParameters();
+  }
+  
+  getAppParameters(): void {
+    this.appParameterService.getOne(this.id).subscribe({
       next: res => {
         this.initForm(res);
+        this.appParameter=res;
       },
       error: err => {
         let errMessage: string = err.error;
@@ -58,7 +63,7 @@ export class AppParameterComponent implements OnInit {
       }
     });
   }
-  
+
   edit(action: string): void {
     if (action == 'recruitment') {
       this.modalEdit = this.modalService.open(EditRecruitmentConsultantComponent, {
@@ -69,8 +74,8 @@ export class AppParameterComponent implements OnInit {
           type: 'hr',
         }
       });
-      this.modalEdit.onClose.subscribe(res => {
-        this.ngOnInit();
+      this.modalEdit.onClose.subscribe(() => {
+        this.getAppParameters();
       });
     }
     else if (action == 'consultant') {
@@ -82,8 +87,8 @@ export class AppParameterComponent implements OnInit {
           type: 'consultant', 
         }
       });
-      this.modalEdit.onClose.subscribe(res => {
-        this.ngOnInit();
+      this.modalEdit.onClose.subscribe(() => {
+        this.getAppParameters();
       });
     }
   }
@@ -116,7 +121,7 @@ export class AppParameterComponent implements OnInit {
                 rejectVisible: false,
                 
               })
-              this.initForm(res);
+              this.getAppParameters();
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -138,7 +143,7 @@ export class AppParameterComponent implements OnInit {
       scAdvancedSearchPeriod: new FormControl(data ? data.scAdvancedSearchPeriod : null),
       contractApprover: new FormControl(data ? data.contractApprover : null),
       contractApproverEmail: new FormControl(data ? data.contractApproverEmail : null, [Validators.email]),
-      saEmail: new FormControl(data ? data.saEmail : null, [Validators.email]),
+      saEmail: new FormControl(data ? data.saEmail : null),
       qtmDailyPriceIsActive: new FormControl(data ? data.qtmDailyPriceIsActive : true),
       tmDailyPriceIsActive: new FormControl(data ? data.tmDailyPriceIsActive : true),
       useLDAPService: new FormControl(data ? data.useLDAPService : false),
