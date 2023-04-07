@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Recruitment } from '@models/recruitment';
-import { RecruitmentService } from '@services/recruitment.service';
+import { Country } from '@models/country';
+import { CountryService } from '@services/country.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -13,15 +13,14 @@ import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditRecruitmentComponent } from './add-edit-recruitment/add-edit-recruitment.component';
+import { AddEditCountryComponent } from './add-edit-country/add-edit-country.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { FileExporterService } from 'src/app/services/file-exporter.service';
 
 @Component({
   standalone: true,
-  selector: 'app-recruitment',
-  templateUrl: './recruitment.component.html',
+  selector: 'app-country',
+  templateUrl: './country.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -35,40 +34,43 @@ import { FileExporterService } from 'src/app/services/file-exporter.service';
     ConfirmDialogModule
   ]
 })
-export class RecruitmentComponent implements OnInit {
+export class CountryComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listRecruitment: Recruitment[] = [];
-  selectedRecruitment!: Recruitment | null;
+  listCountry: Country[] = [];
+  selectedCountry!: Country | null;
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'name', label: 'Responsible name' },
-      { id: 'email', label: 'Responsible email' },
+      { id: 'countryName', label: 'Country name' },
+      { id: 'hotelCeiling', label: 'Hotel Ceiling' },
+      { id: 'dailyAllowance', label: 'Daily allowance' },
+      { id: 'isVisible', label: 'Visible' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
 
-  constructor(private recruitmentService: RecruitmentService, private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService,
-    private fileExporter: FileExporterService) {
+  constructor(private countryService: CountryService, private toast: MessageService,
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getRecruitments();
+    this.getCountries();
   }
-  getRecruitments(): void {
+  getCountries(): void {
     this.tableOptions.loading = true;
-    this.recruitmentService.getAll().subscribe({
+
+    this.countryService.getAll().subscribe({
       next: (res) => {
-        this.listRecruitment = res;
+        this.listCountry = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -80,54 +82,48 @@ export class RecruitmentComponent implements OnInit {
       }
     });
   }
-
   refresh(): void {
-    this.getRecruitments();
+    this.getCountries();
   }
-
   addEdit(action: string): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
-        header: `Add Recruitment`,
-        style: { width: '95%', maxWidth: '750px' }
+      this.modalAddEdit = this.modalService.open(AddEditCountryComponent, {
+        header: `Add Country`,
+        style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getRecruitments();
+        this.getCountries();
       });
     }
-    else if (this.selectedRecruitment?.id) {
-      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
-        header: `Edit Recruitment`,
-        style: { width: '95%', maxWidth: '750px' },
-        data: { idRecruitment: this.selectedRecruitment.id }
+    else if (this.selectedCountry?.id) {
+      this.modalAddEdit = this.modalService.open(AddEditCountryComponent, {
+        header: `Edit Country`,
+        style: { width: '90%', maxWidth: '500px' },
+        data: {
+          idCountry: this.selectedCountry.id
+        }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getRecruitments();
+        this.getCountries();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
-
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table): void {
     table.filterGlobal(this.searchTable, 'contains');
   }
-
   clearFilter(table: Table): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.searchTable = '';
-    this.selectedRecruitment = null;
     table.clear();
+    this.searchTable = '';
   }
-
   delete(): void {
-    if (this.selectedRecruitment?.id) {
+    if (this.selectedCountry?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -138,11 +134,11 @@ export class RecruitmentComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.recruitmentService.deleteRecruitment(this.selectedRecruitment?.id || 0).subscribe({
+          this.countryService.deleteCountry(this.selectedCountry?.id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Recruitment deleted successfuly" });
-              this.getRecruitments();
-              this.selectedRecruitment = null;
+              this.toast.add({ severity: 'success', summary: "Country deleted successfuly" });
+              this.getCountries();
+              this.selectedCountry = null;
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -153,10 +149,9 @@ export class RecruitmentComponent implements OnInit {
             }
           });
         }
-
       });
     } else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
   }
 

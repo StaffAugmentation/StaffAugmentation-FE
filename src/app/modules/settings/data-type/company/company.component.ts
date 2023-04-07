@@ -50,12 +50,12 @@ export class CompanyComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'companyName', label: 'Company name' },
+      { id: 'name', label: 'Company name' },
       { id: 'bankAccount', label: 'IBAN Number' },
-      { id: 'cmpEmail', label: 'Email' },
-      { id: 'cmpVatlegalEntity', label: 'VAT legal entity' },
-      { id: 'cmpBicsw', label: 'BIC/SW' },
-      { id: 'approverName', label: 'Approver' },
+      { id: 'email', label: 'Email' },
+      { id: 'vatlegalEntity', label: 'VAT legal entity' },
+      { id: 'bicsw', label: 'BIC/SW' },
+      { id: 'approver', label: 'Approver' },
     ],
     loading: false,
     exportLoading: false
@@ -104,11 +104,11 @@ export class CompanyComponent implements OnInit {
         this.getCompanies();
       });
     }
-    else if (this.selectedCompany?.idCompany) {
+    else if (this.selectedCompany?.id) {
       this.modalAddEdit = this.modalService.open(AddEditCompanyComponent, {
         header: `Edit company`,
         style: { width: '95%', maxWidth: '750px' },
-        data: { idCompany: this.selectedCompany.idCompany }
+        data: { id: this.selectedCompany.id }
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.getCompanies();
@@ -136,7 +136,7 @@ export class CompanyComponent implements OnInit {
   }
 
   delete(): void {
-    if (this.selectedCompany?.idCompany) {
+    if (this.selectedCompany?.id) {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -147,7 +147,7 @@ export class CompanyComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.companyService.deleteCompany(this.selectedCompany?.idCompany || 0).subscribe({
+          this.companyService.deleteCompany(this.selectedCompany?.id || 0).subscribe({
             next: () => {
               this.toast.add({ severity: 'success', summary: "Company deleted successfuly" });
               this.getCompanies();
