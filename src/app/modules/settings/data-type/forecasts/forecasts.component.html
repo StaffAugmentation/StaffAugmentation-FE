@@ -1,19 +1,15 @@
 <div class="card">
   <div id="listForecasts">
-      <p-table #dtForecasts [value]="listForecasts" selectionMode="single" dataKey="id"
+      <p-table #dtForecasts [value]="months" selectionMode="single" dataKey="id"
             [rows]="250" [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             [globalFilterFields]="globalFilterFields"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
             responsiveLayout="scroll">
             <ng-template pTemplate="caption">
-                <div class="flex justify-content-between">
-                  <div></div>
-                  <div>
-                    <label>Year :</label>
-                    <p-dropdown class="flex mt-1" [options]="years" [(ngModel)]="selectedYear" ></p-dropdown>
-                  </div>
-                  <div></div>
+                <div class="flex justify-content-end align-items-center">
+                  <label class="mr-2">Year :</label>
+                  <p-dropdown class="flex mt-1" [options]="years" [(ngModel)]="selectedYear"  (ngModelChange)="getForecasts()"  ></p-dropdown>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
@@ -28,18 +24,17 @@
             <ng-template pTemplate="body" let-Forecasts let-editing="editing">
                 <tr  [pEditableRow]="Forecasts">
                     <td *ngFor="let col of tableOptions.visibleCols" [pEditableColumn]="Forecasts[col.id]" pEditableColumnField="col.id">
-                      <ng-container *ngIf="col.id=='monthF' || Forecasts['monthF']<currentMonthName">
-                        {{col.id != 'monthF' ? Forecasts[col.id] : Forecasts[col.id] }}
+                      <ng-container *ngIf="col.id=='month' || col.id=='forecastedDays' || getForecastValueByMonth(Forecasts['id'] , 'month')<currentMonthName">
+                        {{col.id != 'month' ? getForecastValueByMonth(Forecasts['id'] , col.id) : Forecasts['label']}}
                       </ng-container>
-                      <p-cellEditor *ngIf="col.id!=='monthF'  && Forecasts['monthF']>=currentMonthName">
+                      <p-cellEditor *ngIf="col.id!=='month' && col.id!=='forecastedDays' && getForecastValueByMonth(Forecasts['id'] , 'month')>=currentMonthName">
                           <ng-template pTemplate="input">
-                            <input  pInputText type="text" [(ngModel)]="Forecasts[col.id]">
+                            <input  pInputText type="text" [(ngModel)]="col.id != 'month' ? getForecastValueByMonth(Forecasts['id'] , col.id) : Forecasts['label']">
                           </ng-template>
                           <ng-template pTemplate="output">
-                            {{Forecasts[col.id]}}
+                            {{col.id != 'month' ? getForecastValueByMonth(Forecasts['id'] , col.id) : Forecasts['label']}}
                           </ng-template>
                         </p-cellEditor>
-
                     </td>
                 </tr>
             </ng-template>
@@ -54,9 +49,8 @@
                 </tr>
             </ng-template>
         </p-table>
-        <div class="flex justify-content-between mt-5">
-          <div></div>
-          <button  pButton pRipple label="Save changes" class="border-white"></button>
+        <div class="flex justify-content-end align-items-center mr-3 mt-2">
+          <button  pButton pRipple label="Save changes"  class="border-white"></button>
         </div>
   </div>
 </div>

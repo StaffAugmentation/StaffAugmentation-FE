@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
@@ -18,6 +18,7 @@ import { ConfirmationService } from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service';
 import { BadgeModule } from 'primeng/badge';
 import { DatePipe } from '@angular/common';
+import { Department } from '@models/department';
 
 @Component({
   standalone: true,
@@ -44,8 +45,23 @@ import { DatePipe } from '@angular/common';
 
 export class ForecastsComponent implements OnInit {
   years: number[] = [];
+  months =[
+    {id:1 , label:"January"},
+    {id:2 , label:"February"},
+    {id:3 , label:"March"},
+    {id:4 , label:"April"},
+    {id:5 , label:"Mai"},
+    {id:6 , label:"June"},
+    {id:7 , label:"July"},
+    {id:8 , label:"August"},
+    {id:9 , label:"September"},
+    {id:10 , label:"October"},
+    {id:11 , label:"November"},
+    {id:12 , label:"December"},
+  ];
+  editForm!: FormGroup;
   currentMonthName: any;
-  selectedYear!: number;
+  selectedYear: number = new Date().getFullYear() ;
   isCollapsed: any = {
     advancedSearch: false,
     list: true
@@ -55,17 +71,17 @@ export class ForecastsComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'monthF', label: 'Month' },
+      { id: 'month', label: 'Month' },
       { id: 'workingDays', label: 'Number of working Days' },
-      { id: 'absenteeismDays', label: 'Absenteeism Days' },
+      { id: 'absenteeismDays', label: 'Absenteeism' },
       { id: 'forecastedDays', label: 'Forecasted Days' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
-
-  constructor(private ForecastsService: ForecastsService, private toast: MessageService,
+  id!: number;
+  constructor(private forecastsService: ForecastsService, private toast: MessageService,
     private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
     private confirmationService: ConfirmationService, private fileExporter: FileExporterService, private datePipe: DatePipe) {
   }
@@ -78,18 +94,25 @@ export class ForecastsComponent implements OnInit {
   }
   getYears(): void {
     const currentYear = new Date().getFullYear();
-    const startYear = 1900;
-    for (let year = currentYear; year >= startYear; year--) {
+    const startYear = currentYear-5;
+    for (let year = currentYear+4; year >= startYear; year--) {
       this.years.push(year);
     }
   }
+
+  getForecastValueByMonth(month:number , key:string): any{
+    let obj:any = this.listForecasts.filter(forecast => forecast.month==month)[0];
+    if (!obj){
+      return 0;
+    }
+    return obj[key];
+  }
+
   getForecasts(): void {
     this.tableOptions.loading = true;
-
-    this.ForecastsService.getByYear(this.selectedYear).subscribe({
+    this.forecastsService.getForecastByYear(this.selectedYear).subscribe({
       next: (res) => {
         this.listForecasts = res;
-        console.log(this.listForecasts)
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -106,3 +129,5 @@ export class ForecastsComponent implements OnInit {
   }
 
 }
+
+
