@@ -10,7 +10,7 @@
 
 <div class="card flex justify-content-between align-items-center">
   <div class="mr-4">Month name</div>
-  <p-calendar view="month" dateFormat="MM" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+  <p-calendar dateFormat="MM" [showIcon]="true" [readonlyInput]="true"></p-calendar>
 </div>
 
 <div class="card flex justify-content-between align-items-center">
@@ -29,6 +29,11 @@
 </div>
 
 <div class="card flex justify-content-between align-items-center">
-  <div class="mr-4">Min / Max</div>
-  <p-calendar [minDate]="minDate" [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+  <div class="mr-4">Min </div>
+  <p-calendar [minDate]="minDate" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Max</div>
+  <p-calendar  [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true"></p-calendar>
 </div>
