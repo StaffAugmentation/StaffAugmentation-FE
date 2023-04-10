@@ -8,7 +8,7 @@ const routes: Routes = [
       { path: '', loadComponent: () => import('@modules/home/home.component').then(c => c.HomeComponent) },
       { path: 'business-request', loadChildren: ()=> import('@modules/br/br.module').then(m => m.BrModule) },
       { path: 'company', loadComponent: () => import('@modules/settings/data-type/company/company.component').then(c => c.CompanyComponent) },
-      { path: 'department', loadComponent: () => import('@modules/settings/data-type/department/department.component').then(d => d.DepartmentComponent) },
+      { path: 'department', loadComponent: () => import('@modules/settings/data-type/department/department.component').then(c => c.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/settings/data-type/approver/approver.component').then(c => c.ApproverComponent) },
       { path: 'profile', loadComponent: () => import('@modules/settings/data-type/profile/profile.component').then(c => c.ProfileComponent) },
       { path: 'ptm-owner', loadComponent: () => import('@modules/settings/data-type/ptm-owner/ptm-owner.component').then(c => c.PTMOwnerComponent) },
@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'place-of-delivery', loadComponent: () => import('@modules/settings/data-type/place-of-delivery/place-of-delivery.component').then(c => c.PlaceOfDeliveryComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/settings/data-type/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
       { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)},
+      { path: 'date-picker', loadComponent: () => import('@modules/settings/data-type/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
     ]
   }
 ];
