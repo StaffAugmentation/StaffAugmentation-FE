@@ -1,0 +1,32 @@
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid p-2 mb-4">
+        <div class="field">
+            <label for="countryName"> <b>Country name</b><span class="text-red-500">*</span></label>
+            <input type="text" pInputText 
+                [class]="addEditForm.get('countryName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                placeholder="country name" formControlName="countryName">
+            <p-message *ngIf="addEditForm.get('countryName')?.invalid && isSubmited" severity="error"
+                [text]="getErrorMessage('Country name', addEditForm.get('countryName')?.errors)"></p-message>
+        </div>
+        <div class="field">
+            <label for="hotelCeiling"> <b>Hotel ceiling</b></label>
+            <input type="text" decimal pInputText placeholder="Hotel ceiling" formControlName="hotelCeiling">
+        </div>
+        <div class="field">
+            <label for="dailyAllowance"> <b>Daily allowance</b></label>
+            <input type="text" decimal pInputText placeholder="Daily allowance" formControlName="dailyAllowance">
+        </div>
+        <div class="field">
+            <b class="mr-2">Visible</b>
+            <p-radioButton name="isVisible" class=" mr-2" [value]="true" label="Yes" 
+                formControlName="isVisible"></p-radioButton>
+            <p-radioButton name="isVisible" class=" mr-2" [value]="false" label="No" 
+                formControlName="isVisible"></p-radioButton>
+        </div>
+    </div>
+    <div class="footer">
+        <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save" [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+            label="Close"></button>
+    </div>
+</form>
