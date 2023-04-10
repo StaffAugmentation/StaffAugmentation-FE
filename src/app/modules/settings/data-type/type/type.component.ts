@@ -129,12 +129,12 @@ export class TypeComponent implements OnInit {
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
     this.fileExporter.exportExcel(this.listType.map(Type => {
-      let appr: any = { ...Type };
-      appr['Value'] = Type.valueId;
-      appr['State'] = Type.isActive;
-      delete appr['valueId'];
-      delete appr['isActive'];
-      return appr;
+      let typ: any = { ...Type };
+      typ['Value'] = Type.valueId;
+      typ['State'] = Type.isActive;
+      delete typ['valueId'];
+      delete typ['isActive'];
+      return typ;
     }), 'Type').finally(() => this.tableOptions.exportLoading = false);
   }
   delete(): void {

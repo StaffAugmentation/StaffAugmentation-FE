@@ -65,6 +65,7 @@ export class AddEditTypeComponent implements OnInit {
     if (this.addEditForm.valid) {
       this.actionLoading = true;
       if (this.id) {
+        console.log(this.id);
         this.typeService.updateType(new Type(
           this.id,
           this.addEditForm.value.valueId,
