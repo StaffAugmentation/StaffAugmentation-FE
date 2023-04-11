@@ -40,7 +40,6 @@ export class AppParameterComponent implements OnInit {
   actionLoading: boolean = false;
   appParameter!: AppParameter;
   id : number = 1;
-
   constructor(private appParameterService: AppParameterService, private toast: MessageService, private modalService: DialogService,
     private modalEdit: DynamicDialogRef, private confirmationService:ConfirmationService) {}
 

@@ -100,3 +100,4 @@ export class EditRecruitmentConsultantComponent implements OnInit {
     this.ref.close();
   }
 }
+
