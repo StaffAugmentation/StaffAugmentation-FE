@@ -1,1 +1,96 @@
-<p>add-edit-br works!</p>
+<div class="flex justify-content-center align-items-center mb-3">
+  <ng-container *ngFor="let item of items">
+    <p-button class="item" label={{item.label}}></p-button>
+  </ng-container>
+</div>
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-2 mb-4">
+    <div class="field">
+      <label for="requestNumber"> <b>Request number</b><span class="text-red-500">*</span></label>
+      <input type="text" pInputText formControlName="requestNumber"
+        [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+      <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('requestNumber', addEditForm.get('requestNumber')?.errors)"></p-message>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="frameworkContract"> <b>Framework Contract</b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="frameworkContract" formControlName="frameworkContract"
+          [class]="addEditForm.get('frameworkContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+        </p-dropdown>
+        <p-message *ngIf="addEditForm.get('frameworkContract')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('frameworkContract', addEditForm.get('frameworkContract')?.errors)"></p-message>
+      </div>
+      <div class="field col">
+        <label for="cascade"><b>Cascade</b></label>
+        <p-dropdown [options]="cascade" formControlName="Cascade">
+        </p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="department"><b>Department</b><span class="text-red-500">*</span></label>
+        <div class="p-inputgroup">
+          <p-autoComplete [suggestions]="filteredDepartments" formControlName="department"
+            (completeMethod)="filterDepartment($event)"
+            [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-autoComplete>
+          <button (click)="add" class="p-inputgroup-addon">
+            <i class="pi pi-plus-circle"></i>
+          </button>
+          <p-message *ngIf="addEditForm.get('department')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('department', addEditForm.get('department')?.errors)"></p-message>
+        </div>
+      </div>
+      <div class="field col">
+        <label for="departmentEmail"><b>Department Email</b></label>
+        <input type="email7" pInputText formControlName="departmentEmail">
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="contactName"> <b>Contact Name</b></label>
+        <input type="text" pInputText formControlName="contactName">
+      </div>
+      <div class="field col">
+        <label for="technicalContact"><b>Technical Contact</b></label>
+        <input type="text" pInputText formControlName="technicalContact">
+      </div>
+      <div class="field col">
+        <label for="openIntended"><b>Open/Intended</b></label>
+        <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="comment"><b>Comment</b></label>
+        <input type="text" pInputText formControlName="comment">
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="status"> <b>Status</b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="status" formControlName="status"
+        [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
+      </div>
+      <div class="field col">
+        <label for="serviceType"> <b>Service Type</b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="serviceType" formControlName="serviceType"
+        [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('serviceType', addEditForm.get('serviceType')?.errors)"></p-message>
+      </div>
+    </div>
+    <div class="field">
+      <label for="source"> <b>Source</b><span class="text-red-500">*</span></label>
+      <p-dropdown [options]="source" formControlName="source"
+      [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+      <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
+    </div>
+  </div>
+
+  <div class="footer">
+        <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+          [loading]="actionLoading"></button>
+        <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+          label="Close"></button>
+  </div>
+</form>
