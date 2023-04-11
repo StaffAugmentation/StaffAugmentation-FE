@@ -1,0 +1,24 @@
+<div class="card">
+    <p-treeTable [value]="files" [lazy]="true" [columns]="cols" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}" expandedIcon="null" collapsedIcon="null">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr (dblclick)="onRowDoubleClick(rowData)">
+                <td *ngFor="let col of columns; let i = index">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" ></p-treeTableToggler>
+                    {{ rowData[col.field] }}
+                </td>
+                <td>
+                    <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text" (click)="edit(rowData.id)"></p-button>
+                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="delete(rowData.id)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+</div>
