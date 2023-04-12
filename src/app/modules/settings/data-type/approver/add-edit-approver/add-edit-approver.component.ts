@@ -67,8 +67,8 @@ export class AddEditApproverComponent implements OnInit {
       if (this.id) {
         this.approverService.updateApprover(new Approvers(
           this.id,
-          this.addEditForm.value.appFirstName,
-          this.addEditForm.value.appLastName
+          this.addEditForm.value.firstName,
+          this.addEditForm.value.lastName
         )
         ).subscribe({
           next: () => {
@@ -89,8 +89,8 @@ export class AddEditApproverComponent implements OnInit {
       } else {
         this.approverService.addApprover(new Approvers(
           this.id || 0,
-          this.addEditForm.value.appFirstName,
-          this.addEditForm.value.appLastName)
+          this.addEditForm.value.firstName,
+          this.addEditForm.value.lastName)
         ).subscribe({
           next: () => {
             this.toast.add({ severity: 'success', summary: "Approver added successfuly" });
@@ -112,8 +112,8 @@ export class AddEditApproverComponent implements OnInit {
   }
   initForm(data: Approvers | null): void {
     this.addEditForm = new FormGroup({
-      appFirstName: new FormControl(data ? data.appFirstName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      appLastName: new FormControl(data ? data.appLastName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      firstName: new FormControl(data ? data.firstName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      lastName: new FormControl(data ? data.lastName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     });
   }
   getErrorMessage(field: string, error: any): string {

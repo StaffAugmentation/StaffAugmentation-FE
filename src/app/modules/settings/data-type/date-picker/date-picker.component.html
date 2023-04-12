@@ -1,0 +1,39 @@
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Date format : dd/MM/yyyy</div>
+  <p-calendar [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Date format : dd/MM/yyyy h:mm:ss</div>
+  <p-calendar [showTime]="true" [showSeconds]="true" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Month name</div>
+  <p-calendar dateFormat="MM" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Active all days</div>
+  <p-calendar [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Disable weekend</div>
+  <p-calendar  [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Disable date</div>
+  <p-calendar  [disabledDates]="disabledDates" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Min </div>
+  <p-calendar [minDate]="minDate" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>
+
+<div class="card flex justify-content-between align-items-center">
+  <div class="mr-4">Max</div>
+  <p-calendar  [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+</div>

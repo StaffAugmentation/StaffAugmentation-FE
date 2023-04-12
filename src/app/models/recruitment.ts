@@ -1,17 +1,17 @@
 export class Recruitment{
   id: number;
-  responsibleName?: string;
-  responsibleEmail?: string;
+  name?: string;
+  email?: string;
   isPartner: boolean=false;
   typeOfContractId?: number;
   constructor
       (
       id: number,
-      responsibleName : string,
-      responsibleEmail: string,
+      name : string,
+      email: string,
       ){
           this.id=id,
-          this.responsibleName =responsibleName,
-          this.responsibleEmail=responsibleEmail
+          this.name =name,
+          this.email=email
       }
 }

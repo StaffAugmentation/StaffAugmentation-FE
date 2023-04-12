@@ -47,8 +47,8 @@ export class ApproverComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'appFirstName', label: 'First name' },
-      { id: 'appLastName', label: 'Last name' },
+      { id: 'firstName', label: 'First name' },
+      { id: 'lastName', label: 'Last name' },
     ],
     loading: false,
     exportLoading: false
@@ -125,10 +125,10 @@ export class ApproverComponent implements OnInit {
     this.tableOptions.exportLoading = true;
     this.fileExporter.exportExcel(this.listApprover.map(approver => {
       let appr: any = { ...approver };
-      appr['First name'] = approver.appFirstName;
-      appr['Last name'] = approver.appLastName;
-      delete appr['appFirstName'];
-      delete appr['appLastName'];
+      appr['First name'] = approver.firstName;
+      appr['Last name'] = approver.lastName;
+      delete appr['firstName'];
+      delete appr['lastName'];
       return appr;
     }), 'Approvers').finally(() => this.tableOptions.exportLoading = false);
   }

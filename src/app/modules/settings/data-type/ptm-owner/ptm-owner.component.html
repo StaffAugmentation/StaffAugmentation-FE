@@ -57,7 +57,7 @@
           <ng-template pTemplate="body" let-PTMOwner>
               <tr [pSelectableRow]="PTMOwner">
                 <td *ngFor="let col of tableOptions.visibleCols">
-                  {{PTMOwner[col.id]}}
+                  {{col.id != 'approver' ? PTMOwner[col.id] :PTMOwner[col.id] ? ( PTMOwner[col.id]?.firstName +' '+ PTMOwner[col.id]?.lastName):'' }}
                 </td>
               </tr>
           </ng-template>

@@ -47,16 +47,16 @@ export class RecruitmentComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'responsibleName', label: 'Responsible name' },
-      { id: 'responsibleEmail', label: 'Responsible email' },
+      { id: 'name', label: 'Responsible name' },
+      { id: 'email', label: 'Responsible email' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
 
-  constructor(private recruitmentService: RecruitmentService, private modalService: DialogService, 
-    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService, 
+  constructor(private recruitmentService: RecruitmentService, private modalService: DialogService,
+    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService,
     private fileExporter: FileExporterService) {
   }
 
@@ -125,7 +125,7 @@ export class RecruitmentComponent implements OnInit {
     this.selectedRecruitment = null;
     table.clear();
   }
-  
+
   delete(): void {
     if (this.selectedRecruitment?.id) {
       this.confirmationService.confirm({
