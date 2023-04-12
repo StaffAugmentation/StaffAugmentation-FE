@@ -14,8 +14,8 @@
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="subContBa"> <b>IBAN number</b></label>
-                <input type="text" pInputText formControlName="subContBa">
+                <label for="ba"> <b>IBAN number</b></label>
+                <input type="text" pInputText formControlName="ba">
             </div>
             <div class="field col">
                 <label for="vatNumber"> <b>VAT number</b></label>
@@ -24,25 +24,25 @@
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="subContBicsw"> <b>BIC/SW</b></label>
-                <input type="text" pInputText formControlName="subContBicsw">
+                <label for="bicsw"> <b>BIC/SW</b></label>
+                <input type="text" pInputText formControlName="bicsw">
             </div>
             <div class="field col">
-                <label for="idApproverSub"> <b>Approver</b></label>
-                <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="idApproverSub" 
-                    optionLabel="displayLabel" optionValue="id"></p-dropdown>
+                <label for="approver"> <b>Approver</b></label>
+                <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver"
+                    optionLabel="displayLabel"></p-dropdown>
             </div>
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="idPaymentTerm"> <b>Payment terms</b></label>
-                <p-dropdown [options]="paymentTerm" placeholder="Choose payment term" formControlName="idPaymentTerm"
-                    optionLabel="displayLabel" optionValue="id"></p-dropdown>
+                <label for="paymentTerm"> <b>Payment terms</b></label>
+                <p-dropdown [options]="paymentTerm" placeholder="Choose payment term" formControlName="paymentTerm"
+                    optionLabel="displayLabel"></p-dropdown>
             </div>
             <div class="field col">
-                <label for="idTypeOfCost"> <b>Type of cost</b></label>
-                <p-dropdown [options]="typeOfCost" placeholder="Choose type of cost" formControlName="idTypeOfCost"
-                    optionLabel="displayLabel" optionValue="id"></p-dropdown>
+                <label for="typeOfCost"> <b>Type of cost</b></label>
+                <p-dropdown [options]="typeOfCost" placeholder="Choose type of cost" formControlName="typeOfCost"
+                    optionLabel="displayLabel" ></p-dropdown>
             </div>
         </div>
         <div class="formgrid grid">
@@ -51,10 +51,10 @@
                 <input type="text" pInputText formControlName="legalEntityName">
             </div>
             <div class="field col">
-                <label for="subContVatRate"> <b>VAT rate</b></label>
+                <label for="vatRate"> <b>VAT rate</b></label>
                 <div class="p-inputgroup">
-                <input decimal type="text" pInputText formControlName="subContVatRate">
-                <span class="p-inputgroup-addon">%</span> 
+                <input decimal type="text" pInputText formControlName="vatRate">
+                <span class="p-inputgroup-addon">%</span>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
             <p-checkbox formControlName="isOfficial" [binary]="true" label="Official"></p-checkbox>
         </div>
     </div>
-    
+
     <div class="footer">
         <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save" [loading]="actionLoading"></button>
         <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"

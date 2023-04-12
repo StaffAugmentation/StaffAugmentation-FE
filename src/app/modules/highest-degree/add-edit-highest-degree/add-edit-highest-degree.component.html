@@ -1,0 +1,25 @@
+<div *ngIf="addEditForm">
+  <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+    <div class="p-fluid p-2 mb-4">
+      <div class="field">
+          <label for="Value"> <b>Value</b><span class="text-red-500">*</span></label>
+          <input
+            type="text" pInputText
+            [class]="addEditForm.get('value')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+            placeholder="Value" formControlName="value">
+          <p-message *ngIf="addEditForm.get('value')?.invalid && isSubmited" severity="error" text="Value is required"></p-message>
+      </div>
+      <div class="field">
+        <b class="mr-2">State</b>
+        <p-radioButton name="isActive" class=" mr-2" [value]="true" label="Active"
+        formControlName="isActive"></p-radioButton>
+        <p-radioButton name="isActive" class=" mr-2" [value]="false" label="Not Active"
+        formControlName="isActive"></p-radioButton>
+    </div>
+    </div>
+    <div class="footer">
+      <button type="submit" pButton class="p-button-sm p-button-primary ml-2" label="Save"></button>
+      <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary" label="Close"></button>&nbsp;
+    </div>
+  </form>
+  </div>

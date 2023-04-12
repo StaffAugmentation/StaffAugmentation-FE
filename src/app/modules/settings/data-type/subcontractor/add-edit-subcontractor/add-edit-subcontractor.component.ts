@@ -81,7 +81,7 @@ export class AddEditSubcontractorComponent implements OnInit {
       next: (res) => {
         this.approvers = res;
         this.approvers = this.approvers.map((appr: any) => {
-          return { ...appr, displayLabel: appr.appFirstName + ' ' + appr.appLastName }; });
+          return { ...appr, displayLabel: appr.firstName + ' ' + appr.lastName }; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -94,7 +94,7 @@ export class AddEditSubcontractorComponent implements OnInit {
       next: (res) => {
         this.typeOfCost = res;
         this.typeOfCost = this.typeOfCost.map((type: any) => {
-          return { ...type, displayLabel: type.typeOfCostValue}; });
+          return { ...type, displayLabel: type.value}; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -107,7 +107,7 @@ export class AddEditSubcontractorComponent implements OnInit {
       next: (res) => {
         this.paymentTerm = res;
         this.paymentTerm = this.paymentTerm.map((payment: any) => {
-          return { ...payment, displayLabel: payment.paymentTermValue}; });
+          return { ...payment, displayLabel: payment.value}; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -123,17 +123,17 @@ export class AddEditSubcontractorComponent implements OnInit {
         this.subcontractorService.updateSubcontractor(new Subcontractor(
           this.id,
           this.addEditForm.value.valueId,
-          this.addEditForm.value.subContBa,
-          this.addEditForm.value.subContBicsw,
-          this.addEditForm.value.subContVatRate,
+          this.addEditForm.value.ba,
+          this.addEditForm.value.bicsw,
+          this.addEditForm.value.vatRate,
           this.addEditForm.value.isOfficial,
-          this.addEditForm.value.idApproverSub,
           this.addEditForm.value.legalEntityName,
           this.addEditForm.value.legalEntityAdress,
           this.addEditForm.value.vatNumber,
           this.addEditForm.value.idNumber,
-          this.addEditForm.value.idPaymentTerm,
-          this.addEditForm.value.idTypeOfCost
+          this.addEditForm.value.approver,
+          this.addEditForm.value.paymentTerm,
+          this.addEditForm.value.typeOfCost
         )
         ).subscribe({
           next: () => {
@@ -155,17 +155,17 @@ export class AddEditSubcontractorComponent implements OnInit {
         this.subcontractorService.addSubcontractor(new Subcontractor(
           this.id || 0,
           this.addEditForm.value.valueId,
-          this.addEditForm.value.subContBa,
-          this.addEditForm.value.subContBicsw,
-          this.addEditForm.value.subContVatRate,
+          this.addEditForm.value.ba,
+          this.addEditForm.value.bicsw,
+          this.addEditForm.value.vatRate,
           this.addEditForm.value.isOfficial,
-          this.addEditForm.value.idApproverSub,
           this.addEditForm.value.legalEntityName,
           this.addEditForm.value.legalEntityAdress,
           this.addEditForm.value.vatNumber,
           this.addEditForm.value.idNumber,
-          this.addEditForm.value.idPaymentTerm,
-          this.addEditForm.value.idTypeOfCost
+          this.addEditForm.value.approver,
+          this.addEditForm.value.paymentTerm,
+          this.addEditForm.value.typeOfCost
         )
         ).subscribe({
           next: () => {
@@ -189,17 +189,17 @@ export class AddEditSubcontractorComponent implements OnInit {
   initForm(data: Subcontractor | null): void {
     this.addEditForm = new FormGroup({
       valueId: new FormControl(data ? data.valueId : null, [Validators.required]),
-      subContBa: new FormControl(data ? data.subContBa : null),
-      subContBicsw: new FormControl(data ? data.subContBicsw : null),
-      subContVatRate: new FormControl(data ? data.subContVatRate : null),
+      ba: new FormControl(data ? data.ba : null),
+      bicsw: new FormControl(data ? data.bicsw : null),
+      vatRate: new FormControl(data ? data.vatRate : null),
       isOfficial: new FormControl(data ? data.isOfficial : false),
-      idApproverSub: new FormControl(data ? data.idApproverSub : null),
+      approver: new FormControl(data ? data.approver : null),
       legalEntityName: new FormControl(data ? data.legalEntityName : null),
       legalEntityAdress: new FormControl(data ? data.legalEntityAdress : null),
       vatNumber: new FormControl(data ? data.vatNumber : null),
       idNumber: new FormControl(data ? data.idNumber : null),
-      idPaymentTerm: new FormControl(data ? data.idPaymentTerm : null),
-      idTypeOfCost: new FormControl(data ? data.idTypeOfCost : null),
+      paymentTerm: new FormControl(data ? data.paymentTerm : null),
+      typeOfCost: new FormControl(data ? data.typeOfCost : null),
     });
   }
   getErrorMessage(field: string, error: any): string {
