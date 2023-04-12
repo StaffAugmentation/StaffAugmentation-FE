@@ -19,6 +19,9 @@ const routes: Routes = [
       { path: 'subcontractor', loadComponent: () => import('@modules/settings/data-type/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
       { path: 'highest-degree', loadComponent: () => import('@modules/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
       { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)},
+      { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
+      { path: 'tree-view', loadComponent: () => import('@modules/settings/tree-view/tree-view.component').then(c => c.TreeViewComponent)},
+      { path: 'role-management', loadComponent: () => import('@modules/settings/role-management/role-management.component').then(c => c.RoleManagementComponent)},
       { path: 'app-parameter', loadComponent: () => import('@modules/settings/app-parameter/app-parameter.component').then(c => c.AppParameterComponent)},
       { path: 'oerp-code', loadComponent: () => import('@modules/settings/data-type/oerp-code/oerp-code.component').then(c => c.OERPCodeComponent)},
       { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)}

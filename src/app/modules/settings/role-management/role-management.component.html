@@ -1,0 +1,103 @@
+<div class="card">
+    <div class="formgrid grid">
+        <div class="field col">
+            <div class="mb-3 w-full flex justify-content-between">
+                <span class="p-input-icon-right">
+                    <div class="p-inputgroup">
+                        <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtRole,'role')" type="text" pInputText placeholder="Search role" />
+                        <span class="p-inputgroup-addon pi pi-search"></span>
+                    </div>
+                </span>
+                <button pButton pRipple (click)="addEdit('add',0)" label="New role" icon="pi pi-plus-circle" class="border-white"></button>
+            </div>
+            <p-table #dtRole [value]="roles" [(selection)]="selectedRoles" dataKey="id" 
+                (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [paginator]="true" [rows]="20" [rowHover]="true"
+                [rowsPerPageOptions]="[20,500,1000]" [globalFilterFields]="globalFilterFields" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4rem">
+                        </th>
+                        <th *ngFor="let col of cols">
+                            {{ col.header }}
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-role>
+                    <tr (dblclick)="addEdit('edit',role)">
+                        <td>
+                            <p-tableCheckbox [value]="role"></p-tableCheckbox>
+                        </td>
+                        <td *ngFor="let col of cols">
+                            {{role[col.field]}}
+                        </td>
+                        <td>
+                            <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text" (click)="addEdit('edit',role)"></p-button>
+                            <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="delete(role.id)"></p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No role found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading roles data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="field col">
+            <div class="mb-3 w-full flex justify-content-between">
+                <span class="p-input-icon-right">
+                    <div class="p-inputgroup">
+                        <input [(ngModel)]="searchTableModel" (ngModelChange)="onGlobalFilter(dtModel,'model')" type="text" pInputText placeholder="Search model" />
+                        <span class="p-inputgroup-addon pi pi-search"></span>
+                    </div>
+                </span>
+            </div>
+            <p-treeTable #dtModel [value]="models" [lazy]="true" [columns]="colsModel" [(selection)]="selectedModels" 
+                selectionMode="multiple" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                [scrollable]="true" scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll" [globalFilterFields]="globalFilterFieldsModel">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width: 4rem"></th>
+                        <th style="width: 4rem"></th>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                    <tr>
+                        <td style="width: 4rem"  *ngFor="let col of columns; let i = index">
+                            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                        </td>
+                        <td style="width: 4rem">
+                            <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                        </td>
+                        <td *ngFor="let col of columns; let i = index">
+                            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                            {{ rowData[col.field] }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No model found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading models data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-treeTable>
+            
+        </div>
+    </div>
+</div>
+
