@@ -1,12 +1,12 @@
 export class PaymentTerm{
   id: string;
-  paymentTermValue: string;
+  value: string;
   constructor
       (
       id: string,
-      paymentTermValue: string,
+      value: string,
       ){
           this.id=id,
-          this.paymentTermValue=paymentTermValue
+          this.value=value
       }
 }

@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class RecruitmentService {
 
-  private baseUrl : string = `${environment.baseUrl}api/RecruitmentResp`;
+  private baseUrl : string = `${environment.baseUrl}api/RecruitmentResponsible`;
 
   constructor(private http: HttpClient) { }
 

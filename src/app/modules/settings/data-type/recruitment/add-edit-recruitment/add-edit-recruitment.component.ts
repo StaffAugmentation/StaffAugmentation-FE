@@ -80,8 +80,8 @@ export class AddEditRecruitmentComponent implements OnInit {
       if (this.id) {
         this.recruitmentService.updateRecruitment(new Recruitment(
           this.id,
-          this.addEditForm.value.responsibleName,
-          this.addEditForm.value.responsibleEmail
+          this.addEditForm.value.name,
+          this.addEditForm.value.email
         )
         ).subscribe({
           next: () => {
@@ -102,8 +102,8 @@ export class AddEditRecruitmentComponent implements OnInit {
       } else {
         this.recruitmentService.addRecruitment(new Recruitment(
           this.id || 0,
-          this.addEditForm.value.responsibleName,
-          this.addEditForm.value.responsibleEmail,
+          this.addEditForm.value.name,
+          this.addEditForm.value.email,
         )
         ).subscribe({
           next: () => {
@@ -126,8 +126,8 @@ export class AddEditRecruitmentComponent implements OnInit {
   }
   initForm(data: Recruitment | null): void {
     this.addEditForm = new FormGroup({
-      responsibleName: new FormControl(data ? data.responsibleName: null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      responsibleEmail: new FormControl(data ? data.responsibleEmail : null, [Validators.required, Validators.email]),
+      name: new FormControl(data ? data.name: null, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      email: new FormControl(data ? data.email : null, [Validators.required, Validators.email]),
     });
   }
   getErrorMessage(field: string, error: any): string {
@@ -138,7 +138,7 @@ export class AddEditRecruitmentComponent implements OnInit {
     if (error?.maxlength)
       return `${field} have to be less than 30 letters`;
     if (error?.email)
-    return `${field} format not valid`;  
+    return `${field} format not valid`;
     return '';
   }
   close() {

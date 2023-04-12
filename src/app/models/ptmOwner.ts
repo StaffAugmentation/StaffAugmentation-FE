@@ -1,31 +1,32 @@
+import { Approvers } from "./approvers";
+
 export class PTMOwner{
   id: number;
   valueId: string;
-  ptmOwnerBA: string;
-  ptmOwnerBICSW: string;
-  ptmOwnerVatRate: number;
+  ba?: string;
+  bicsw?: string;
+  vatRate?: number;
   isEveris: boolean;
-  idApprover: number;
-  ptmOwnerVatNumber: string;
-  approverName?: string;
+  vatNumber?: string;
+  approver?: Approvers;
   constructor
       (
         id: number,
         valueId: string,
-        ptmOwnerBA: string,
-        ptmOwnerBICSW: string,
-        ptmOwnerVatRate: number,
+        ba: string,
+        bicsw: string,
+        vatRate: number,
         isEveris: boolean,
-        idApprover: number,
-        ptmOwnerVatNumber: string,
+        vatNumber: string,
+        approver: Approvers,
       ){
           this.id=id,
           this.valueId=valueId,
-          this.ptmOwnerBA=ptmOwnerBA,
-          this.ptmOwnerBICSW=ptmOwnerBICSW,
-          this.ptmOwnerVatRate=ptmOwnerVatRate,
+          this.ba=ba,
+          this.bicsw=bicsw,
+          this.vatRate=vatRate,
           this.isEveris=isEveris,
-          this.idApprover=idApprover,
-          this.ptmOwnerVatNumber=ptmOwnerVatNumber
+          this.vatNumber=vatNumber,
+          this.approver=approver
       }
 }

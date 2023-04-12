@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
-import { ApproverService } from '@services/approver.service';
-import { Approvers } from '@models/approvers';
+import { OERPCodeService } from '@services/oerp-code.service';
+import { OERPCode } from '@models/oerp-code';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,8 +16,8 @@ import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   standalone: true,
-  selector: 'app-add-edit-approver',
-  templateUrl: './add-edit-approver.component.html',
+  selector: 'app-add-edit-oerp-code',
+  templateUrl: './add-edit-oerp-code.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -31,21 +31,21 @@ import { TabViewModule } from 'primeng/tabview';
     TabViewModule
   ]
 })
-export class AddEditApproverComponent implements OnInit {
+export class AddEditOERPCodeComponent implements OnInit {
 
   id!: number;
-  selectedValue!: Approvers;
+  selectedValue!: OERPCode;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
 
-  constructor(private ref: DynamicDialogRef, private approverService: ApproverService, private toast: MessageService, public config: DynamicDialogConfig) { }
+  constructor(private ref: DynamicDialogRef, private OERPCodeService: OERPCodeService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.id = this.config.data?.idApprover;
+    this.id = this.config.data?.id;
     this.initForm(null);
     if (this.id) {
-      this.approverService.getOne(this.id).subscribe({
+      this.OERPCodeService.getOne(this.id).subscribe({
         next: res => {
           this.selectedValue = res;
           this.initForm(res);
@@ -65,15 +65,15 @@ export class AddEditApproverComponent implements OnInit {
     if (this.addEditForm.valid) {
       this.actionLoading = true;
       if (this.id) {
-        this.approverService.updateApprover(new Approvers(
-          this.id,
-          this.addEditForm.value.firstName,
-          this.addEditForm.value.lastName
+        this.OERPCodeService.updateOERPCode(new OERPCode(
+          this.id || 0,
+          this.addEditForm.value.value,
+          this.addEditForm.value.isActive
         )
         ).subscribe({
           next: () => {
             this.actionLoading = false;
-            this.toast.add({ severity: 'success', summary: "Approver updated successfuly" });
+            this.toast.add({ severity: 'success', summary: "OERP Code updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
@@ -87,13 +87,13 @@ export class AddEditApproverComponent implements OnInit {
         });
 
       } else {
-        this.approverService.addApprover(new Approvers(
+        this.OERPCodeService.addOERPCode(new OERPCode(
           this.id || 0,
-          this.addEditForm.value.firstName,
-          this.addEditForm.value.lastName)
+          this.addEditForm.value.value,
+          this.addEditForm.value.isActive)
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "Approver added successfuly" });
+            this.toast.add({ severity: 'success', summary: "OERPCode added successfuly" });
             this.actionLoading = false;
             this.ref.close();
           },
@@ -110,19 +110,15 @@ export class AddEditApproverComponent implements OnInit {
 
     }
   }
-  initForm(data: Approvers | null): void {
+  initForm(data: OERPCode | null): void {
     this.addEditForm = new FormGroup({
-      firstName: new FormControl(data ? data.firstName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      lastName: new FormControl(data ? data.lastName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      value: new FormControl(data ? data.value : '', [Validators.required]),
+      isActive: new FormControl(data ? data.isActive : true, [Validators.required]),
     });
   }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;
-    if (error?.minlength)
-      return `${field} have to be more than 3 letters`;
-    if (error?.maxlength)
-      return `${field} have to be less than 30 letters`;
     return '';
   }
   close() {

@@ -11,26 +11,26 @@
                       text="Name is required"></p-message>
               </div>
               <div class="field">
-                  <label for="ptmOwnerBA"> <b>IBAN Number</b></label>
-                  <input type="text" pInputText placeholder="IBAN Number" formControlName="ptmOwnerBA">
+                  <label for="ba"> <b>IBAN Number</b></label>
+                  <input type="text" pInputText placeholder="IBAN Number" formControlName="ba">
               </div>
               <div class="field">
-                  <label for="ptmOwnerVatNumber"> <b>VAT number</b></label>
-                  <input type="text" pInputText placeholder="VAT number" formControlName="ptmOwnerVatNumber">
+                  <label for="vatNumber"> <b>VAT number</b></label>
+                  <input type="text" pInputText placeholder="VAT number" formControlName="vatNumber">
               </div>
               <div class="field">
-                  <label for="ptmOwnerBICSW"> <b>BIC/SW</b></label>
-                  <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="ptmOwnerBICSW">
+                  <label for="bicsw"> <b>BIC/SW</b></label>
+                  <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="bicsw">
               </div>
               <div class="field">
-                  <label for="idApprover"> <b>Approver</b></label>
-                  <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="idApprover"
-                      optionLabel="displayLabel" optionValue="id"></p-dropdown>
+                  <label for="approver"> <b>Approver</b></label>
+                  <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver"
+                      optionLabel="displayLabel"></p-dropdown>
               </div>
               <div class="field">
-                  <label for="ptmOwnerVatRate"> <b>VAT rate</b></label>
+                  <label for="vatRate"> <b>VAT rate</b></label>
                   <div class="p-inputgroup">
-                  <input decimal type="text" pInputText placeholder="VAT rate" formControlName="ptmOwnerVatRate">
+                  <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
                   <span class="p-inputgroup-addon">%</span>
                   </div>
               </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Recruitment } from '@models/recruitment';
-import { RecruitmentService } from '@services/recruitment.service';
+import { OERPCode } from '@models/oerp-code';
+import { OERPCodeService } from '@services/oerp-code.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -13,15 +13,16 @@ import { TableModule } from 'primeng/table';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
-import { AddEditRecruitmentComponent } from './add-edit-recruitment/add-edit-recruitment.component';
+import { AddEditOERPCodeComponent } from './add-edit-oerp-code/add-edit-oerp-code.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { FileExporterService } from 'src/app/services/file-exporter.service';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   standalone: true,
-  selector: 'app-recruitment',
-  templateUrl: './recruitment.component.html',
+  selector: 'app-oerp-code',
+  templateUrl: './oerp-code.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -32,43 +33,44 @@ import { FileExporterService } from 'src/app/services/file-exporter.service';
     TableModule,
     DynamicDialogModule,
     OverlayPanelModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    BadgeModule
   ]
 })
-export class RecruitmentComponent implements OnInit {
+export class OERPCodeComponent implements OnInit {
 
   isCollapsed: any = {
     advancedSearch: false,
     list: true
   };
   frameworkContracts = [];
-  listRecruitment: Recruitment[] = [];
-  selectedRecruitment!: Recruitment | null;
+  listOERPCode: OERPCode[] = [];
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'name', label: 'Responsible name' },
-      { id: 'email', label: 'Responsible email' },
+      { id: 'value', label: 'SA OERP Code' },
+      { id: 'isActive', label: 'State' },
     ],
     loading: false,
     exportLoading: false
   };
   searchTable: string = '';
 
-  constructor(private recruitmentService: RecruitmentService, private modalService: DialogService,
-    private modalAddEdit: DynamicDialogRef, private toast: MessageService,private confirmationService: ConfirmationService,
-    private fileExporter: FileExporterService) {
+  constructor(private OERPCodeService: OERPCodeService, private toast: MessageService,
+    private modalService: DialogService, private modalAddEdit: DynamicDialogRef,
+    private confirmationService: ConfirmationService, private fileExporter: FileExporterService) {
   }
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.getRecruitments();
+    this.getOERPCodes();
   }
-  getRecruitments(): void {
+  getOERPCodes(): void {
     this.tableOptions.loading = true;
-    this.recruitmentService.getAll().subscribe({
+
+    this.OERPCodeService.getAll().subscribe({
       next: (res) => {
-        this.listRecruitment = res;
+        this.listOERPCode = res;
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -80,54 +82,49 @@ export class RecruitmentComponent implements OnInit {
       }
     });
   }
-
   refresh(): void {
-    this.getRecruitments();
+    this.getOERPCodes();
   }
-
-  addEdit(action: string): void {
+  addEdit(action: string, id:number): void {
     if (action == 'add') {
-      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
-        header: `Add Recruitment`,
-        style: { width: '95%', maxWidth: '750px' }
+      this.modalAddEdit = this.modalService.open(AddEditOERPCodeComponent, {
+        header: `Add SA OERP Code`,
+        style: { width: '90%', maxWidth: '500px' }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getRecruitments();
+        this.getOERPCodes();
       });
     }
-    else if (this.selectedRecruitment?.id) {
-      this.modalAddEdit = this.modalService.open(AddEditRecruitmentComponent, {
-        header: `Edit Recruitment`,
-        style: { width: '95%', maxWidth: '750px' },
-        data: { idRecruitment: this.selectedRecruitment.id }
+    else if (id) {
+      this.modalAddEdit = this.modalService.open(AddEditOERPCodeComponent, {
+        header: `Edit SA OERP Code`,
+        style: { width: '90%', maxWidth: '500px' },
+        data: {
+          id:id
+        }
       });
       this.modalAddEdit.onClose.subscribe(res => {
-        this.getRecruitments();
+        this.getOERPCodes();
       });
     }
     else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
+      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'Select a row.' })
     }
-
   }
 
   get globalFilterFields(): string[] {
     return this.tableOptions.visibleCols.map((col: any) => col.id);
   }
-
   onGlobalFilter(table: Table): void {
     table.filterGlobal(this.searchTable, 'contains');
   }
-
   clearFilter(table: Table): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
-    this.searchTable = '';
-    this.selectedRecruitment = null;
     table.clear();
+    this.searchTable = '';
   }
 
-  delete(): void {
-    if (this.selectedRecruitment?.id) {
+  delete(id:number): void {
       this.confirmationService.confirm({
         message: 'You won\'t be able to revert this! ',
         header: 'Are you sure?',
@@ -138,11 +135,10 @@ export class RecruitmentComponent implements OnInit {
         rejectLabel: 'No, cancel',
         defaultFocus: 'reject',
         accept: () => {
-          this.recruitmentService.deleteRecruitment(this.selectedRecruitment?.id || 0).subscribe({
+          this.OERPCodeService.deleteOERPCode(id || 0).subscribe({
             next: () => {
-              this.toast.add({ severity: 'success', summary: "Recruitment deleted successfuly" });
-              this.getRecruitments();
-              this.selectedRecruitment = null;
+              this.toast.add({ severity: 'success', summary: "OERPCode deleted successfuly" });
+              this.getOERPCodes();
             },
             error: (err: any) => {
               let errMessage: string = err.error;
@@ -153,11 +149,7 @@ export class RecruitmentComponent implements OnInit {
             }
           });
         }
-
       });
-    } else {
-      this.toast.add({ severity: 'warn', summary: 'No row selected', detail: 'You have to select a row.' })
-    }
   }
 
 }

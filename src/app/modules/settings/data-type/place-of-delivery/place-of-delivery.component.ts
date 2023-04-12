@@ -171,12 +171,12 @@ export class PlaceOfDeliveryComponent implements OnInit {
       this.tableOptions.exportLoading = true;
       // let data = this.listBR.filter(br => br)
         this.fileExporter.exportExcel(this.listPlaceOfDelivery.map(PlaceOfDelivery =>{
-          let dprt : any = {...PlaceOfDelivery};
-          dprt['Value'] = PlaceOfDelivery.valueId;
-          dprt['State'] = PlaceOfDelivery.isActive;
-          delete dprt['valueId'];
-          delete dprt['isActive'];
-          return dprt;
+          let plofd : any = {...PlaceOfDelivery};
+          plofd['Value'] = PlaceOfDelivery.valueId;
+          plofd['State'] = PlaceOfDelivery.isActive;
+          delete plofd['valueId'];
+          delete plofd['isActive'];
+          return plofd;
         }),'PlaceOfDelivery').finally(()=> this.tableOptions.exportLoading = false);
       }
 

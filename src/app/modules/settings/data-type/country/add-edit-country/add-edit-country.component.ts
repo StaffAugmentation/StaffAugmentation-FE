@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
-import { ApproverService } from '@services/approver.service';
-import { Approvers } from '@models/approvers';
+import { CountryService } from '@services/country.service';
+import { Country } from '@models/country';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -16,8 +16,8 @@ import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   standalone: true,
-  selector: 'app-add-edit-approver',
-  templateUrl: './add-edit-approver.component.html',
+  selector: 'app-add-edit-country',
+  templateUrl: './add-edit-country.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -31,21 +31,21 @@ import { TabViewModule } from 'primeng/tabview';
     TabViewModule
   ]
 })
-export class AddEditApproverComponent implements OnInit {
+export class AddEditCountryComponent implements OnInit {
 
   id!: number;
-  selectedValue!: Approvers;
+  selectedValue!: Country;
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
 
-  constructor(private ref: DynamicDialogRef, private approverService: ApproverService, private toast: MessageService, public config: DynamicDialogConfig) { }
+  constructor(private ref: DynamicDialogRef, private countryService: CountryService, private toast: MessageService, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.id = this.config.data?.idApprover;
+    this.id = this.config.data?.idCountry;
     this.initForm(null);
     if (this.id) {
-      this.approverService.getOne(this.id).subscribe({
+      this.countryService.getOne(this.id).subscribe({
         next: res => {
           this.selectedValue = res;
           this.initForm(res);
@@ -65,15 +65,17 @@ export class AddEditApproverComponent implements OnInit {
     if (this.addEditForm.valid) {
       this.actionLoading = true;
       if (this.id) {
-        this.approverService.updateApprover(new Approvers(
+        this.countryService.updateCountry(new Country(
           this.id,
-          this.addEditForm.value.firstName,
-          this.addEditForm.value.lastName
+          this.addEditForm.value.countryName,
+          this.addEditForm.value.hotelCeiling,
+          this.addEditForm.value.dailyAllowance,
+          this.addEditForm.value.isVisible
         )
         ).subscribe({
           next: () => {
             this.actionLoading = false;
-            this.toast.add({ severity: 'success', summary: "Approver updated successfuly" });
+            this.toast.add({ severity: 'success', summary: "Country updated successfuly" });
             this.ref.close();
           },
           error: (err: any) => {
@@ -87,13 +89,16 @@ export class AddEditApproverComponent implements OnInit {
         });
 
       } else {
-        this.approverService.addApprover(new Approvers(
+        this.countryService.addCountry(new Country(
           this.id || 0,
-          this.addEditForm.value.firstName,
-          this.addEditForm.value.lastName)
+          this.addEditForm.value.countryName,
+          this.addEditForm.value.hotelCeiling,
+          this.addEditForm.value.dailyAllowance,
+          this.addEditForm.value.isVisible
+          )
         ).subscribe({
           next: () => {
-            this.toast.add({ severity: 'success', summary: "Approver added successfuly" });
+            this.toast.add({ severity: 'success', summary: "Country added successfuly" });
             this.actionLoading = false;
             this.ref.close();
           },
@@ -110,19 +115,17 @@ export class AddEditApproverComponent implements OnInit {
 
     }
   }
-  initForm(data: Approvers | null): void {
+  initForm(data: Country | null): void {
     this.addEditForm = new FormGroup({
-      firstName: new FormControl(data ? data.firstName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      lastName: new FormControl(data ? data.lastName : '', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      countryName: new FormControl(data ? data.countryName : null, [Validators.required]),
+      hotelCeiling: new FormControl(data ? data.hotelCeiling : null),
+      dailyAllowance: new FormControl(data ? data.dailyAllowance : null),
+      isVisible: new FormControl(data ? data.isVisible : false),
     });
   }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;
-    if (error?.minlength)
-      return `${field} have to be more than 3 letters`;
-    if (error?.maxlength)
-      return `${field} have to be less than 30 letters`;
     return '';
   }
   close() {
