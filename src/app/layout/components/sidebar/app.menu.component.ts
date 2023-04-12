@@ -35,11 +35,16 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Place Of Delivery', icon: 'pi pi-fw pi-bookmark', routerLink: ['/place-of-delivery'] },
                                     { label: 'Subcontractor', icon: 'pi pi-fw pi-bookmark', routerLink: ['/subcontractor'] },
                                     { label: 'Recruitment', icon: 'pi pi-fw pi-bookmark', routerLink: ['/recruitment'] },
+                                    { label: 'Date Picker', icon: 'pi pi-fw pi-bookmark', routerLink: ['/date-picker'] },
+                                    { label: 'App parameters management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/app-parameter']},
+                                    { label: 'Recruitment', icon: 'pi pi-fw pi-bookmark', routerLink: ['/recruitment'] },
                                     { label: 'OERP Code', icon: 'pi pi-fw pi-bookmark', routerLink: ['/oerp-code'] },
                                     { label: 'Highest Degree', icon: 'pi pi-fw pi-bookmark', routerLink: ['/highest-degree'] },
                                     { label: 'Country', icon: 'pi pi-fw pi-bookmark', routerLink: ['/country'] },
                                 ]
-                            }
+                            },
+                            { label: 'Tree View', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tree-view'] },
+                            { label: 'Role Management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/role-management'] },
                         ]
                     }
                 ]
