@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'category', loadComponent: () => import('@modules/settings/data-type/category/category.component').then(c => c.CategoryComponent) },
       { path: 'place-of-delivery', loadComponent: () => import('@modules/settings/data-type/place-of-delivery/place-of-delivery.component').then(c => c.PlaceOfDeliveryComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/settings/data-type/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
-      { path: 'highest-degree', loadComponent: () => import('@modules/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
+      { path: 'highest-degree', loadComponent: () => import('@modules/settings/data-type/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
       { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)},
       { path: 'forecasts', loadComponent: () => import('@modules/settings/data-type/forecasts/forecasts.component').then(c => c.ForecastsComponent)},
       { path: 'date-picker', loadComponent: () => import('@modules/settings/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
