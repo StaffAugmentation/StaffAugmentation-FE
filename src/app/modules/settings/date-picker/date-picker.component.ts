@@ -30,7 +30,7 @@ export class DatePickerComponent implements OnInit {
       for (let month = 0; month < 12; month++) {
         for (let day = 1; day <= 31; day++) {
           if (day !== 10 && day !== 25) {
-            const date = new Date(year, month, day);
+            let date = new Date(year, month, day);
             if (date.getMonth() === month) {
               this.disabledDates.push(date);
             }

@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'highest-degree', loadComponent: () => import('@modules/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
       { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)},
       { path: 'forecasts', loadComponent: () => import('@modules/settings/data-type/forecasts/forecasts.component').then(c => c.ForecastsComponent)},
-      { path: 'date-picker', loadComponent: () => import('@modules/settings/data-type/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
+      { path: 'date-picker', loadComponent: () => import('@modules/settings/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
       { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
       { path: 'tree-view', loadComponent: () => import('@modules/settings/tree-view/tree-view.component').then(c => c.TreeViewComponent)},
       { path: 'role-management', loadComponent: () => import('@modules/settings/role-management/role-management.component').then(c => c.RoleManagementComponent)},

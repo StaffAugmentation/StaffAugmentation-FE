@@ -5,13 +5,13 @@
             <input type="text" pInputText 
                 [class]="addEditForm.get('roleName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 placeholder="Role name" formControlName="roleName">
-            <p *ngIf="addEditForm.get('roleName')?.invalid && isSubmited" class="text-red-500 pi pi-exclamation-triangle m-2"> Role name is required</p>
+            <p-message *ngIf="addEditForm.get('roleName')?.invalid && isSubmited" severity="error" text="Role name is required"></p-message>
         </div>
         <div class="field">
             <label for="roleType"> <b>Role type</b><span class="text-red-500">*</span></label>
             <p-dropdown [options]="types" placeholder="Choose type" formControlName="roleType"
                     optionLabel="name" [class]="addEditForm.get('roleType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-            <p *ngIf="addEditForm.get('roleType')?.invalid && isSubmited" class="text-red-500 pi pi-exclamation-triangle m-2"> Role type is required</p>
+            <p-message *ngIf="addEditForm.get('roleType')?.invalid && isSubmited" severity="error" text="Role type is required"></p-message>
         </div>
     </div>
     <div class="footer">
