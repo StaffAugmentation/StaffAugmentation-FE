@@ -1,4 +1,18 @@
-.item{
-  padding: 10px;
-  margin: 10px;
+
+:host ::ng-deep .br .p-tabview .p-tabview-nav {
+  justify-content: center;
+  border-color: transparent;
+}
+:host ::ng-deep .br .p-tabview .p-tabview-nav .p-tabview-nav-link {
+  border-radius: 6px;
+  border: solid 2px #6785C1;
+  margin: 0 15px;
+}
+:host ::ng-deep .br .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+  background: #6785C1;
+  border-color: #6785C1;
+  color: #ffffff;
+}
+:host ::ng-deep .br .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+  border-color: #C7D2FE;
 }

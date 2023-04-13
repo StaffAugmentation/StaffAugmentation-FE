@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
+
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
@@ -51,11 +52,11 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
   ]
 })
 export class AddEditBrComponent implements OnInit {
+
   filteredDepartments!: any[];
   departments: any;
   source!: any[];
   status!: any[];
-  items!: MenuItem[];
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
@@ -78,30 +79,16 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  constructor(private modalAdd: DynamicDialogRef, private modalEditProfile: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+
+  constructor(
+    private modalDepartment: DynamicDialogRef,
+    private modalEditProfile: DynamicDialogRef,
+    private ref: DynamicDialogRef, 
+    public toast: MessageService, 
+    private modalService: DialogService) { }
 
   ngOnInit(): void {
     this.initForm(null);
-    this.items = [
-      {
-        label: 'General information',
-      },
-      {
-        label: 'Work order',
-      },
-      {
-        label: 'Basic characteristics',
-      },
-      {
-        label: 'Offer information',
-      },
-      {
-        label: 'Specific contract',
-      },
-      {
-        label: 'Documentation',
-      }
-    ];
 
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.getProfile();
@@ -117,6 +104,7 @@ export class AddEditBrComponent implements OnInit {
     this.isSubmited = true;
     this.ref.close();
   }
+
   filterDepartment(event: { query: any; }) {
     let filtered: any[] = [];
     let query = event.query;
@@ -130,6 +118,7 @@ export class AddEditBrComponent implements OnInit {
 
     this.filteredDepartments = filtered;
   }
+
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
       requestNumber: new FormControl(null, [Validators.required]),
@@ -153,13 +142,17 @@ export class AddEditBrComponent implements OnInit {
     });
   }
 
-  add(): void {
-    this.modalAdd = this.modalService.open(AddDepartmentComponent, {
+  addDepartment(): void {
+    this.modalDepartment = this.modalService.open(AddDepartmentComponent, {
       header: `Add department`,
-      style: { width: '95%', maxWidth: '750px' }
+      style: { width: '90%', maxWidth: '500px' }
+    });
+    this.modalDepartment.onClose.subscribe(res => {
+
     });
   }
-  EditProfile(id: number): void {
+
+  editProfile(id: number): void {
     if (id) {
       this.modalEditProfile = this.modalService.open(EditProfileComponent, {
         header: `Edit profile`,
@@ -179,6 +172,7 @@ export class AddEditBrComponent implements OnInit {
       return `${field} is required`;
     return '';
   }
+
   close() {
     this.ref.close();
   }
