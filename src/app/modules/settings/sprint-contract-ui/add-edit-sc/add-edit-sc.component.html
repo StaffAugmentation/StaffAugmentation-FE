@@ -1,0 +1,91 @@
+<div *ngIf="addEditForm">
+    <form [formGroup]="addEditForm">
+        <p-tabView orientation="left">
+            <p-tabPanel header="Business request" class="p-fluid m-0">
+                <div class="field">
+                    <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
+                    <input type="text" pInputText
+                        [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                        placeholder="Request number" formControlName="requestNumber">
+                    <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
+                        text="Request number is required"></p-message>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="requestOrExtension"> <b>Source</b></label>
+                        <input type="text" pInputText placeholder="Source" formControlName="requestOrExtension">
+                    </div>
+                    <div class="field col">
+                        <label for="scNumber"> <b>SC Number</b></label>
+                        <input type="text" pInputText placeholder="SC Number" formControlName="scNumber">
+                    </div>
+                    <div class="field col">
+                        <label for="department"> <b>Department</b></label>
+                        <input type="text" pInputText placeholder="Department" formControlName="department">
+                    </div>
+                    <div class="field col">
+                        <label for="placeOfDelivery"> <b>Place of delivery</b></label>
+                        <input type="text" pInputText placeholder="Place of delivery" formControlName="placeOfDelivery">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="frameworkContract"> <b>Framework contract</b></label>
+                        <input type="text" pInputText placeholder="Framework contract" formControlName="frameworkContract">
+                    </div>
+                    <div class="field col">
+                        <label for="signatureDate"> <b>Signature date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="signatureDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="maximumEndDate"> <b>Maximum end date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="maximumEndDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="specificClientCode"> <b>Specific client code</b></label>
+                        <input type="text" pInputText placeholder="Specific client code" formControlName="specificClientCode">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="projectStartDate"> <b>Project start date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="projectStartDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="contractStatus"> <b>Contract status</b></label>
+                        <input type="text" pInputText placeholder="Contract status" formControlName="contractStatus">
+                    </div>
+                    <div class="field col">
+                        <label for="totalPrice"> <b>Total price</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText placeholder="Total price" formControlName="totalPrice">
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <button pButton pRipple (click)="businessRequest()" label="Business request" class="border-white p-button-sm mt-8"></button>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="T&M control" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Performance" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Invoicing" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Payment" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Documentation" class="p-fluid m-0">
+            </p-tabPanel>
+        </p-tabView>
+        <div class="footer">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+            <div class="absolute bottom-3 left-0 ml-2">
+                <button pButton pRipple (click)="generateNTTDataContract()" class="p-button-sm p-button-primary " label="Generate NTT data contract"></button>
+                <button pButton pRipple (click)="terminateContract()" class="p-button-sm p-button-danger ml-2" label="Terminate contract"></button>
+            </div>
+        </div>
+    </form>
+    </div>
+    

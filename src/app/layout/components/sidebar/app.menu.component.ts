@@ -46,6 +46,7 @@ export class AppMenuComponent implements OnInit {
                             },
                             { label: 'Tree View', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tree-view'] },
                             { label: 'Role Management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/role-management'] },
+                            { label: 'Sprint Contract UI', icon: 'pi pi-fw pi-bookmark', routerLink: ['/sprint-contract-ui'] },
                         ]
                     }
                 ]
