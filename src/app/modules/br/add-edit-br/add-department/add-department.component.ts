@@ -50,7 +50,11 @@ export class AddDepartmentComponent implements OnInit {
       this.addForm.value.department
     }
   }
-
+  getErrorMessage(field: string, error: any): string {
+    if (error?.required)
+      return `${field} is required`;
+    return '';
+  }
   close() {
     this.ref.close();
   }

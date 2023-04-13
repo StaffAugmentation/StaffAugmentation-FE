@@ -1,10 +1,12 @@
-<form (ngSubmit)="onSubmit()">
+<form [formGroup]="addForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="field">
       <label for="department"> <b>Department</b><span class="text-red-500">*</span></label>
       <input type="text" pInputText
         [class]="addForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
         formControlName="department">
+        <p-message *ngIf="addForm.get('department')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('department', addForm.get('department')?.errors)"></p-message>
     </div>
   </div>
     <div class="footer">

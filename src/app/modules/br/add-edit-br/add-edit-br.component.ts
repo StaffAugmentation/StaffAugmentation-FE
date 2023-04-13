@@ -18,7 +18,10 @@ import { CardModule } from 'primeng/card';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
 import { AddDepartmentComponent } from './add-department/add-department.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @Component({
   standalone: true,
@@ -42,7 +45,9 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
     MenubarModule,
     MenuModule,
     StepsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule,
+    TableModule
   ]
 })
 export class AddEditBrComponent implements OnInit {
@@ -61,7 +66,19 @@ export class AddEditBrComponent implements OnInit {
   id: any;
   selectedDepartment: any;
   openIntended!: any[];
-  constructor(private modalAdd: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  listProfile!: any[];
+  tableOptions: any = {
+    visibleCols: [],
+    cols: [
+      { id: 'profileN', label: 'Profile Nº' },
+      { id: 'plcOnsite', label: 'Profile/level/category/onsite' },
+      { id: 'consultantName', label: 'Consultant name' },
+      { id: 'requestFS', label: 'Request form status' },
+    ],
+    loading: false,
+    exportLoading: false
+  };
+  constructor(private modalAdd: DynamicDialogRef, private modalEditProfile: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -85,7 +102,17 @@ export class AddEditBrComponent implements OnInit {
         label: 'Documentation',
       }
     ];
+
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getProfile();
   }
+  getProfile(): void {
+    this.listProfile = [
+      { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
+    ];
+  };
+
+
   onSubmit() {
     this.isSubmited = true;
     this.ref.close();
@@ -117,15 +144,34 @@ export class AddEditBrComponent implements OnInit {
       status: new FormControl(null, [Validators.required]),
       serviceType: new FormControl(null, [Validators.required]),
       source: new FormControl(null, [Validators.required]),
+      dateRf: new FormControl(null, [Validators.required]),
+      acknowlegment: new FormControl(null),
+      acknowlegmentDl: new FormControl(null),
+      yesNoDeadline: new FormControl(null, [Validators.required]),
+      proposalDeadline: new FormControl(null, [Validators.required]),
+      expectedSD: new FormControl(null),
     });
   }
 
   add(): void {
-      this.modalAdd = this.modalService.open(AddDepartmentComponent, {
-        header: `Add department`,
-        style: { width: '95%', maxWidth: '750px' }
+    this.modalAdd = this.modalService.open(AddDepartmentComponent, {
+      header: `Add department`,
+      style: { width: '95%', maxWidth: '750px' }
+    });
+  }
+  EditProfile(id: number): void {
+    if (id) {
+      this.modalEditProfile = this.modalService.open(EditProfileComponent, {
+        header: `Edit profile`,
+        style: { width: '95%', maxWidth: '1000px' },
+        data: {
+          id: id
+        }
       });
-      this.modalAdd.onClose;
+      this.modalEditProfile.onClose.subscribe(res => {
+        this.getProfile();
+      });
+    }
   }
 
   getErrorMessage(field: string, error: any): string {
@@ -137,4 +183,3 @@ export class AddEditBrComponent implements OnInit {
     this.ref.close();
   }
 }
-
