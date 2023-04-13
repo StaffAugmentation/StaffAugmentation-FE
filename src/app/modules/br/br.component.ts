@@ -1,13 +1,25 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+
+import { AddEditBrComponent } from './add-edit-br/add-edit-br.component';
+import { Table, TableModule } from 'primeng/table';
+import { FileExporterService } from 'src/app/services/file-exporter.service'
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CommonModule } from '@angular/common';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { CardModule } from 'primeng/card';
+
 import { BusinessRequestService } from 'src/app/services/business-request.service';
 import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AddEditBrComponent } from './add-edit-br/add-edit-br.component';
-import { Table } from 'primeng/table';
-import { FileExporterService } from 'src/app/services/file-exporter.service'
-
+import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 @Component({
+  standalone: true,
   selector: 'app-br',
   templateUrl: './br.component.html',
   animations: [
@@ -34,6 +46,20 @@ import { FileExporterService } from 'src/app/services/file-exporter.service'
         ]))
       ]),
     ])
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    InputTextModule,
+    MultiSelectModule,
+    CalendarModule,
+    TableModule,
+    DynamicDialogModule,
+    DropdownModule,
+    OverlayPanelModule,
+    CardModule,
+    AutoCompleteModule
   ]
 })
 export class BrComponent implements OnInit {
@@ -94,7 +120,7 @@ export class BrComponent implements OnInit {
       this.modalAddEdit = this.modalService.open(AddEditBrComponent, {
         header: `Add Business Request`,
         width: '80%',
-        height: '95%',
+        height: '90%',
         data: {
           businessRequest: {}
         }

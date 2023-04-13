@@ -18,7 +18,11 @@ import { CardModule } from 'primeng/card';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
+
 import { AddDepartmentComponent } from './add-department/add-department.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @Component({
   standalone: true,
@@ -42,15 +46,17 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
     MenubarModule,
     MenuModule,
     StepsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule,
+    TableModule
   ]
 })
 export class AddEditBrComponent implements OnInit {
+
   filteredDepartments!: any[];
   departments: any;
   source!: any[];
   status!: any[];
-  items!: MenuItem[];
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
@@ -61,35 +67,44 @@ export class AddEditBrComponent implements OnInit {
   id: any;
   selectedDepartment: any;
   openIntended!: any[];
-  constructor(private modalAdd: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  listProfile!: any[];
+  tableOptions: any = {
+    visibleCols: [],
+    cols: [
+      { id: 'profileN', label: 'Profile Nº' },
+      { id: 'plcOnsite', label: 'Profile/level/category/onsite' },
+      { id: 'consultantName', label: 'Consultant name' },
+      { id: 'requestFS', label: 'Request form status' },
+    ],
+    loading: false,
+    exportLoading: false
+  };
+
+  constructor(
+    private modalDepartment: DynamicDialogRef,
+    private modalEditProfile: DynamicDialogRef,
+    private ref: DynamicDialogRef, 
+    public toast: MessageService, 
+    private modalService: DialogService) { }
 
   ngOnInit(): void {
     this.initForm(null);
-    this.items = [
-      {
-        label: 'General information',
-      },
-      {
-        label: 'Work order',
-      },
-      {
-        label: 'Basic characteristics',
-      },
-      {
-        label: 'Offer information',
-      },
-      {
-        label: 'Specific contract',
-      },
-      {
-        label: 'Documentation',
-      }
-    ];
+
+    this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getProfile();
   }
+  getProfile(): void {
+    this.listProfile = [
+      { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
+    ];
+  };
+
+
   onSubmit() {
     this.isSubmited = true;
     this.ref.close();
   }
+
   filterDepartment(event: { query: any; }) {
     let filtered: any[] = [];
     let query = event.query;
@@ -103,6 +118,7 @@ export class AddEditBrComponent implements OnInit {
 
     this.filteredDepartments = filtered;
   }
+
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
       requestNumber: new FormControl(null, [Validators.required]),
@@ -117,15 +133,38 @@ export class AddEditBrComponent implements OnInit {
       status: new FormControl(null, [Validators.required]),
       serviceType: new FormControl(null, [Validators.required]),
       source: new FormControl(null, [Validators.required]),
+      dateRf: new FormControl(null, [Validators.required]),
+      acknowlegment: new FormControl(null),
+      acknowlegmentDl: new FormControl(null),
+      yesNoDeadline: new FormControl(null, [Validators.required]),
+      proposalDeadline: new FormControl(null, [Validators.required]),
+      expectedSD: new FormControl(null),
     });
   }
 
-  add(): void {
-      this.modalAdd = this.modalService.open(AddDepartmentComponent, {
-        header: `Add department`,
-        style: { width: '95%', maxWidth: '750px' }
+  addDepartment(): void {
+    this.modalDepartment = this.modalService.open(AddDepartmentComponent, {
+      header: `Add department`,
+      style: { width: '90%', maxWidth: '500px' }
+    });
+    this.modalDepartment.onClose.subscribe(res => {
+
+    });
+  }
+
+  editProfile(id: number): void {
+    if (id) {
+      this.modalEditProfile = this.modalService.open(EditProfileComponent, {
+        header: `Edit profile`,
+        style: { width: '95%', maxWidth: '1000px' },
+        data: {
+          id: id
+        }
       });
-      this.modalAdd.onClose;
+      this.modalEditProfile.onClose.subscribe(res => {
+        this.getProfile();
+      });
+    }
   }
 
   getErrorMessage(field: string, error: any): string {
@@ -133,8 +172,8 @@ export class AddEditBrComponent implements OnInit {
       return `${field} is required`;
     return '';
   }
+
   close() {
     this.ref.close();
   }
 }
-
