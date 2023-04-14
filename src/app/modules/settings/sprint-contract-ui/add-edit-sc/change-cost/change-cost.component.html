@@ -1,0 +1,73 @@
+<div *ngIf="addEditForm">
+    <form [formGroup]="addEditForm">
+        <p-tabView orientation="left">
+            <div class="p-fluid m-0" >
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="consultant"> <b>Consultant</b></label>
+                        <p-dropdown [options]="consultant" formControlName="consultant" optionLabel="consultantName"></p-dropdown>
+                    </div>
+                    <div class="field col">
+                        <label for="profile"> <b>Profile</b></label>
+                        <p-dropdown [options]="consultant" formControlName="profile" optionLabel="profileLeveOnsiteCategory"></p-dropdown>
+                    </div>
+                    <div class="field col">
+                        <label for="changeFrom"> <b>Change from</b><span class="text-red-500">*</span></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="changeFrom"
+                        [class]="addEditForm.get('changeFrom')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addEditForm.get('changeFrom')?.invalid && isSubmited" severity="error"
+                        text="Change from is required"></p-message>
+                    </div>
+                    <div class="field col">
+                        <label for="newConsultantCost"> <b>New consultant cost</b><span class="text-red-500">*</span></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText formControlName="newConsultantCost"
+                            [class]="addEditForm.get('newConsultantCost')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                            <p-message *ngIf="addEditForm.get('newConsultantCost')?.invalid && isSubmited" severity="error"
+                            text="New consultant cost is required"></p-message>
+                        </div>    
+                    </div>
+                    <div class="field col">
+                        <button pButton pRipple (click)="add()" label="Add" class="p-button-outlined p-button-secondary p-button-sm mt-5 w-6"></button>
+                    </div>
+                </div>
+                <span class="font-bold">Current consultant cost: {{consultant.consultantCost}}</span>
+                <div class="formgrid grid mt-5">
+                    <p-table #dtconsultantCost [value]="consultantCost" dataKey="id" [tableStyle]="{'min-width':'80rem'}">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngFor="let col of cols">
+                                    {{ col.header }}
+                                </th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-consultantCost>
+                            <tr >
+                                <td *ngFor="let col of cols">
+                                    {{consultantCost[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No data available.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading consultant cost data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-tabView>
+            
+        <div class="footer">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+        </div>
+    </form>
+</div>

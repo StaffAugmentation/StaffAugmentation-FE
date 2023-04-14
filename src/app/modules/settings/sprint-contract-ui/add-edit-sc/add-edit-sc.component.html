@@ -68,6 +68,125 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="T&M control" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="numberOfDays"> <b>Number of days</b></label>
+                        <input type="text" decimal pInputText placeholder="Number of days" formControlName="numberOfDays">
+                    </div>
+                    <div class="field col">
+                        <label for="nDaysTransformed"> <b>N days transformed</b></label>
+                        <input type="text" decimal pInputText placeholder="N days transformed" formControlName="nDaysTransformed">
+                    </div>
+                    <div class="field col">
+                        <label for="managementFee"> <b>Management fee</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText placeholder="Management fee" formControlName="managementFee">
+                        </div>
+                    </div>
+                    <div class="field col mr-8">
+                        <button pButton pRipple (click)="changeCost()" label="Change cost" icon="pi pi-chevron-down"  iconPos="right" class="border-white p-button-sm mt-5 w-10"></button>
+                    </div>
+                    <div class="field col pl-8">
+                        <label for="oerpProjectCode"> <b>OERP project code</b><span class="text-red-500">*</span></label>
+                        <input type="text" pInputText placeholder="OERP project code" formControlName="oerpProjectCode" 
+                        [class]="addEditForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addEditForm.get('oerpProjectCode')?.invalid && isSubmited" severity="error"
+                            text="OERP project code is required"></p-message>
+                    </div>    
+                    <div class="field col">    
+                        <button pButton pRipple (click)="add()" label="Add" class="p-button-outlined p-button-secondary p-button-sm mt-5 w-6"></button>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="maximumCost"> <b>Maximum cost</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input type="text" decimal pInputText placeholder="Maximum cost" formControlName="maximumCost">
+                        </div>    
+                    </div>
+                    <div class="field col">
+                        <label for="additionalBudget"> <b>Additional budget</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"></span>
+                            <input type="text" decimal pInputText placeholder="Additional budget" formControlName="additionalBudget">
+                        </div> 
+                    </div>
+                    <div class="field col">
+                        <label for="mfInvoiced"> <b>MF invoiced Y/N</b></label>
+                        <div class="mt-2">
+                        <p-radioButton name="mfInvoiced" class="mr-2" [value]="true" label="Yes"
+                        formControlName="mfInvoiced"></p-radioButton>
+                        <p-radioButton name="mfInvoiced" [value]="false" label="No"
+                        formControlName="mfInvoiced"></p-radioButton>
+                        </div>
+                    </div>
+                    <div class="field col mr-6">
+                        <p-table #dtOERP [value]="oerp" dataKey="id" [tableStyle]="{'min-width':'20rem'}">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let col of cols">
+                                        {{ col.header }}
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-oerp>
+                                <tr >
+                                    <td *ngFor="let col of cols">
+                                        {{oerp[col.field]}}
+                                    </td>
+                                    <td>
+                                        <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="delete(oerp)"></p-button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No OERP project code found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading OERP project code data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="field col mr-5">
+                    <p-table #dtOERP [value]="consultant" dataKey="id">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let col of colsConsultant">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-consultant>
+                            <tr >
+                                <td>
+                                    <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text" (click)="editConsultant(consultant)"></p-button>
+                                </td>
+                                <td *ngFor="let col of colsConsultant">
+                                    {{consultant[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No consultant found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading consultant data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </p-tabPanel>
             <p-tabPanel header="Performance" class="p-fluid m-0">
             </p-tabPanel>

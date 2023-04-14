@@ -8,8 +8,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
 import { TabViewModule } from 'primeng/tabview';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
+import { ChangeCostComponent } from './change-cost/change-cost.component';
+import { SharedModule } from '@modules/shared/shared.module';
 
 @Component({
   standalone: true,
@@ -25,7 +30,9 @@ import { CalendarModule } from 'primeng/calendar';
     TabViewModule,
     RadioButtonModule,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    TableModule,
+    SharedModule
   ]
 })
 export class AddEditScComponent implements OnInit {
@@ -35,7 +42,17 @@ export class AddEditScComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   action!: string;
-  constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig){}
+  cols:any[]=[];
+  colsConsultant:any[]=[];
+  oerp:any[]=[
+    {id:'1', oerpProjectCode:'EXT-024662-00139'}
+  ];
+  consultant:any[]=[
+    {id:'1', consultantName:'Anthony Asanka', profileLeveOnsiteCategory:'consultant ; Unique ; Far site', company:'NTT data SWISS', nOfDays:'65.00'}
+  ];
+
+  constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig, private modalService: DialogService,
+    private modalEdit: DynamicDialogRef,private toast: MessageService,private confirmationService: ConfirmationService){}
 
   ngOnInit(): void {
     this.selectedSC = this.config.data?.springContract;
@@ -44,6 +61,21 @@ export class AddEditScComponent implements OnInit {
       this.initForm(null);
     }
     this.initForm(this.selectedSC);
+
+    this.cols = [
+      { field: 'oerpProjectCode', header: 'PERP project code' },
+    ];
+
+    this.colsConsultant = [
+      { field: 'consultantName', header: 'Consultant name' },
+      { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
+      { field: 'company', header: 'Company' },
+      { field: 'nOfDays', header: 'N° of days' },
+      { field: 'consultantCost', header: 'Consultant cost' },
+      { field: 'salesPrice', header: 'Sales price' },
+      { field: 'margin', header: 'Margin' },
+      { field: 'daysPerformed', header: 'Days performed' },
+    ];
   }
 
   onSubmit(): void {
@@ -68,6 +100,14 @@ export class AddEditScComponent implements OnInit {
       projectStartDate: new FormControl(data ? data.projectStartDate : null),
       contractStatus: new FormControl(data ? data.contractStatus : null),
       totalPrice: new FormControl(data ? data.totalPrice : null),
+      numberOfDays: new FormControl(data ? data.numberOfDays : null), 
+      nDaysTransformed: new FormControl(data ? data.nDaysTransformed : null), 
+      managementFee: new FormControl(data ? data.managementFee : null),
+      oerpProjectCode: new FormControl(data ? data.oerpProjectCode : '', [Validators.required]),
+      maximumCost: new FormControl(data ? data.maximumCost : null),
+      additionalBudget: new FormControl(data ? data.additionalBudget : null),
+      mfInvoiced: new FormControl(data ? data.mfInvoiced : false),
+
     });
   }
   
@@ -82,8 +122,58 @@ export class AddEditScComponent implements OnInit {
 
   }
 
+  add(): void{
+
+  }
+
+  changeCost(): void{
+    this.modalEdit = this.modalService.open(ChangeCostComponent, {
+      header: 'Change consultant cost',
+      width: '80%',
+      height: '85%',
+      data: { consultant: this.consultant
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+
+  }
+
   close(): void {
     this.ref.close();
+  }
+
+  delete(oerp:any){
+    this.confirmationService.confirm({
+      message: 'You won\'t be able to revert this! ',
+      header: 'Are you sure?',
+      icon: 'pi pi-exclamation-circle text-yellow-500',
+      acceptButtonStyleClass: 'p-button-danger p-button-raised',
+      rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+      acceptLabel: 'Yes, delete it',
+      rejectLabel: 'No, cancel',
+      defaultFocus: 'reject',
+      accept: () => {
+        this.toast.add({ severity: 'info', summary: "Delete row", detail: oerp.oerpProjectCode });
+      },
+  
+    });
+  }
+
+  editConsultant(consultant:any):void{
+    this.modalEdit = this.modalService.open(EditConsultantComponent, {
+      header: consultant.consultantName,
+      width: '80%',
+      height: '85%',
+      data: {
+        consultant: consultant
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+  
   }
 
 }
