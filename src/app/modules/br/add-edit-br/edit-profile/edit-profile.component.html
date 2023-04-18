@@ -6,7 +6,7 @@
         <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
       </div>
       <div class="field col">
-        <label for="requestFS"> <b>Request form status</b><span class="text-red-500">*</span></label>
+        <label for="requestFS"> <b>Request form status </b><span class="text-red-500">*</span></label>
         <p-dropdown [options]="requestFS" formControlName="requestFS"
           [class]="addEditForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('requestFS')?.invalid && isSubmited" severity="error"

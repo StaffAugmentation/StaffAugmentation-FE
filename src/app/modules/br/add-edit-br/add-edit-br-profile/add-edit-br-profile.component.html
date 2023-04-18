@@ -1,0 +1,88 @@
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-2 mb-4">
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="profile"> <b>Profile </b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="profile" formControlName="profile"
+          [class]="addEditForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="addEditForm.get('profile')?.invalid && isSubmited" severity="error"
+          [text]="getErrorMessage('profile', addEditForm.get('profile')?.errors)"></p-message>
+      </div>
+      <div class="field col">
+        <label for="level"> <b>Level </b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="level" formControlName="level"
+          [class]="addEditForm.get('level')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="addEditForm.get('level')?.invalid && isSubmited" severity="error"
+          [text]="getErrorMessage('level', addEditForm.get('level')?.errors)"></p-message>
+      </div>
+      <div class="field col">
+        <label for="onFarSite"><b>On/Far Site</b></label>
+        <p-dropdown [options]="onFarSite" formControlName="onFarSite"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="category"> <b>Category </b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="category" formControlName="category"
+          [class]="addEditForm.get('category')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="addEditForm.get('category')?.invalid && isSubmited" severity="error"
+          [text]="getErrorMessage('category', addEditForm.get('category')?.errors)"></p-message>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="serviceLC"><b>Service Level Category</b></label>
+        <p-dropdown [options]="serviceLC" formControlName="serviceLC"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="company"><b>Company</b></label>
+        <p-dropdown [options]="company" formControlName="company"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="nDays"> <b>Nº Days</b></label>
+        <input type="text" pInputText formControlName="nDays">
+      </div>
+      <div class="field col">
+        <label for="salesPrice"> <b>Sales Price</b></label>
+        <div class="flex">
+          <input type="text" pInputText formControlName="salesPrice">
+          <p-dropdown style="max-width: 100px;" placeholder="€"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+          <label for="iban"> <b>IBAN Number</b></label>
+          <input type="text" [disabled]="true" pInputText formControlName="iban">
+      </div>
+      <div class="field col">
+        <label for="placeOfExecution"> <b>Place Of Execution</b></label>
+        <input type="text" pInputText formControlName="placeOfExecution">
+      </div>
+      <div class="field col ">
+        <label for="apllyCP"> <b>Apply contractor's premises</b></label>
+        <div class="flex justify-content-center align-items-center mt-2">
+          <p-inputSwitch [disabled]="true" formControlName="apllyCP"></p-inputSwitch>
+        </div>
+      </div>
+      <div class="field col">
+        <label for="apllyITE"> <b>Apply contractor's equipment</b></label>
+        <div class="flex justify-content-center align-items-center mt-2">
+          <p-inputSwitch [disabled]="true" formControlName="apllyITE"></p-inputSwitch>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="otherExpertise"> <b>Other expertise required </b><span class="text-red-500">*</span></label>
+      <textarea rows="5" cols="30" formControlName="otherExpertise" pInputTextarea [autoResize]="true"
+        [class]="addEditForm.get('otherExpertise')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
+      <p-message *ngIf="addEditForm.get('otherExpertise')?.invalid && isSubmited" severity="error"
+        [text]="getErrorMessage('otherExpertise', addEditForm.get('otherExpertise')?.errors)"></p-message>
+
+    </div>
+  </div>
+  <div class="footer">
+    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+      [loading]="actionLoading"></button>
+    <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+      label="Close"></button>
+  </div>
+</form>

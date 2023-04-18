@@ -14,10 +14,9 @@ import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 
 @Component({
-  standalone: true,
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  providers: [MessageService],
+  standalone:true,
+  selector: 'app-add-edit-profile',
+  templateUrl: './add-edit-profile.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -30,23 +29,21 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     ToastModule,
     CalendarModule,
+
   ]
 })
-export class EditProfileComponent implements OnInit {
-
-  profile!: any[];
-  requestFS!: any[];
+export class AddEditProfileComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   addEditForm!: FormGroup;
-
-  constructor(private modalAdd: DynamicDialogRef, private modalEditProfile: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  profile!: any[];
+  typeOfContract!: any[];
+  subconstractorName!: any[];
+  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
 
   ngOnInit(): void {
     this.initForm(null);
   }
-
-
 
   onSubmit() {
     this.isSubmited = true;
@@ -54,17 +51,16 @@ export class EditProfileComponent implements OnInit {
   }
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
-      profile: new FormControl(null),
-      requestFS: new FormControl(null, [Validators.required]),
-      yesNo: new FormControl(null),
-      datePSC: new FormControl(null),
-      acceptanceDate: new FormControl(null),
-      refusalDate: new FormControl(null),
-      dateFOD: new FormControl(null),
-      dateFOSC: new FormControl(null),
-      validityDate: new FormControl(null),
-      changeOfferD: new FormControl(null),
-      changeOfferS: new FormControl(null),
+      profile: new FormControl(null, [Validators.required]),
+      salesPrice: new FormControl(null),
+      numberOfDays: new FormControl(null),
+      consultantCost: new FormControl(null),
+      margin: new FormControl(null),
+      typeOfContract: new FormControl(null, [Validators.required]),
+      expectedSD: new FormControl(null),
+      subconstractorName: new FormControl(null),
+      thirdPR: new FormControl(null),
+      dayfOfTrain: new FormControl(null),
     });
   }
 

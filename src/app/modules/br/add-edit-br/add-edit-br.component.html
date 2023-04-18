@@ -1,10 +1,10 @@
 <form class="br" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <p-tabView>
+  <p-tabView class="navBar">
 
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="field">
-          <label for="requestNumber"> <b>Request number</b><span class="text-red-500">*</span></label>
+          <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
           <input type="text" pInputText formControlName="requestNumber"
             [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
           <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
@@ -12,7 +12,7 @@
         </div>
         <div class="formgrid grid">
           <div class="field col">
-            <label for="frameworkContract"> <b>Framework Contract</b><span class="text-red-500">*</span></label>
+            <label for="frameworkContract"> <b>Framework Contract </b><span class="text-red-500">*</span></label>
             <p-dropdown [options]="frameworkContract" formControlName="frameworkContract"
               [class]="addEditForm.get('frameworkContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-dropdown>
@@ -21,11 +21,10 @@
           </div>
           <div class="field col">
             <label for="cascade"><b>Cascade</b></label>
-            <p-dropdown [options]="cascade" formControlName="cascade">
-            </p-dropdown>
+            <p-dropdown [options]="cascade" formControlName="cascade"></p-dropdown>
           </div>
           <div class="field col">
-            <label for="department"><b>Department</b><span class="text-red-500">*</span></label>
+            <label for="department"><b>Department </b><span class="text-red-500">*</span></label>
             <div class="flex">
               <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredDepartments"
                 formControlName="department" (completeMethod)="filterDepartment($event)"
@@ -62,14 +61,14 @@
         </div>
         <div class="formgrid grid">
           <div class="field col">
-            <label for="status"> <b>Status</b><span class="text-red-500">*</span></label>
+            <label for="status"> <b>Status </b><span class="text-red-500">*</span></label>
             <p-dropdown [options]="status" formControlName="status"
               [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
           </div>
           <div class="field col">
-            <label for="serviceType"> <b>Service Type</b><span class="text-red-500">*</span></label>
+            <label for="serviceType"> <b>Service Type </b><span class="text-red-500">*</span></label>
             <p-dropdown [options]="serviceType" formControlName="serviceType"
               [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
@@ -77,7 +76,7 @@
           </div>
         </div>
         <div class="field">
-          <label for="source"> <b>Source</b><span class="text-red-500">*</span></label>
+          <label for="source"> <b>Source </b><span class="text-red-500">*</span></label>
           <p-dropdown [options]="source" formControlName="source"
             [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
           <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
@@ -90,7 +89,7 @@
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
           <div class="field col">
-            <label for="dateRf"> <b>Date RF received</b><span class="text-red-500">*</span></label>
+            <label for="dateRf"> <b>Date RF received </b><span class="text-red-500">*</span></label>
             <p-calendar formControlName="dateRf" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('dateRf')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
@@ -103,7 +102,7 @@
               [readonlyInput]="true"></p-calendar>
           </div>
           <div class="field col">
-            <label for="acknowlegmentDl"><b>Acknowlegment deadline</b><span class="text-red-500">*</span></label>
+            <label for="acknowlegmentDl"><b>Acknowlegment deadline </b><span class="text-red-500">*</span></label>
             <p-calendar formControlName="acknowlegmentDl" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
@@ -131,14 +130,14 @@
           </div>
         </div>
         <p-table #dtProfile [value]="listProfile" selectionMode="single" dataKey="id" [rows]="250"
-          [loading]="tableOptions.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+          [loading]="tableOptionsProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
           scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
           <ng-template pTemplate="header">
             <tr>
               <th style="width: 115px;">
               </th>
-              <th *ngFor="let col of tableOptions.visibleCols" style="min-width: 100px;">
+              <th *ngFor="let col of tableOptionsProfile.visibleCols" style="min-width: 100px;">
                 <div class="flex justify-content-between align-items-center">
                   {{col.label}}
                 </div>
@@ -151,7 +150,7 @@
                 <button (click)="editProfile(Profile.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
                   class="p-button-rounded p-button-info p-button-text"></button>
               </td>
-              <td *ngFor="let col of tableOptions.visibleCols">
+              <td *ngFor="let col of tableOptionsProfile.visibleCols">
                 {{Profile[col.id]}}
               </td>
             </tr>
@@ -171,12 +170,252 @@
     </p-tabPanel>
 
     <p-tabPanel header="Basic characteristics" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="placeOfDelivery"> <b>Place of delivery </b><span class="text-red-500">*</span></label>
+            <p-dropdown [options]="placeOfDelivery" formControlName="placeOfDelivery"
+              [class]="addEditForm.get('placeOfDelivery')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-dropdown>
+            <p-message *ngIf="addEditForm.get('placeOfDelivery')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('placeOfDelivery', addEditForm.get('placeOfDelivery')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="totalManDays"><b>Total man-days</b></label>
+            <input type="text" pInputText formControlName="totalManDays">
+          </div>
+        </div>
+      </div>
+      <p-tabView class="sideBar">
+        <p-tabPanel header="Profile/Level/Consultant" class="p-fluid m-0">
+          <p-table #dtBrProfile [value]="listBrProfile" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsBrProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="caption">
+              <div class="flex justify-content-between">
+                <span class="p-input-icon-right" style="max-width: 150px;">
+                  <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtBrProfile)" type="text" pInputText
+                    placeholder="Filter..." />
+                  <i class="pi pi-search"></i>
+                </span>
+                <div>
+                  <button type="button" pButton pRipple (click)="addEditBrProfile('add',0)" label="New profile"
+                    class="border-white"></button>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 115px;">
 
+                </th>
+                <th *ngFor="let col of tableOptionsBrProfile.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-BrProfile>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteBrProfile(BrProfile.profileN)" type="button"
+                      icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditBrProfile('edit',BrProfile.profileN)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsBrProfile.visibleCols">
+                  {{BrProfile[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No BrProfile found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading BrProfiles data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <p-table #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsConsultant.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 115px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsConsultant.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Consultant>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteConsultant(Consultant.id)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="editConsultant(Consultant.id,Consultant.name)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsConsultant.visibleCols">
+                  {{Consultant[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Consultant found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Consultants data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel header="NTT data candidate(s)" class="p-fluid m-0">
+          <p-table #dtCandidate [value]="listCandidate" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsCandidate.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 158px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsCandidate.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Candidate>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteCandidate(Candidate.code)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditCandidate('edit',Candidate.code)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                      class="p-button-rounded p-button-warning p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsCandidate.visibleCols">
+                  {{Candidate[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Candidate found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Candidates data. Please wait.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex justify-content-between">
+                <div>
+                  <button type="button" pButton pRipple class="p-button-outlined bg-white"><i
+                      class="mr-2 pi pi-user"></i>Select as consultant </button>
+                </div>
+                <div>
+                  <button type="button" icon="pi pi-plus-circle" pButton pRipple (click)="addEditCandidate('add',0)"
+                    label="New Candidate" class="p-button-outlined bg-white"></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel header="Candidate(s) partner" class="p-fluid m-0">
+          <p-table #dtPartner [value]="listPartner" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsPartner.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 158px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsPartner.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Partner>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deletePartner(Partner.code)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditPartner('edit',Partner.code)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                      class="p-button-rounded p-button-warning p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsPartner.visibleCols">
+                  {{Partner[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Partner found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Partners data. Please wait.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex justify-content-between">
+                <div>
+                  <button type="button" pButton pRipple class="p-button-outlined bg-white"><i
+                      class="mr-2 pi pi-user"></i>Select as consultant </button>
+                </div>
+                <div>
+                  <button type="button" icon="pi pi-plus-circle" pButton pRipple (click)="addEditPartner('add',0)"
+                    label="New Candidate" class="p-button-outlined bg-white"></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+      </p-tabView>
     </p-tabPanel>
 
     <p-tabPanel header="Offer information" class="p-fluid m-0">
 
     </p-tabPanel>
+
     <p-tabPanel header="Specific contract" class="p-fluid m-0">
 
     </p-tabPanel>
@@ -187,12 +426,13 @@
 
   </p-tabView>
   <div class="footer-filled">
-    <button pButton pRipple class="p-button-outlined bg-white">Communicate to partners <i class="ml-2 pi pi-envelope"></i></button>
+    <button type="button" pButton pRipple class="p-button-outlined bg-white">Communicate to partners <i
+        class="ml-2 pi pi-envelope"></i></button>
     <div>
-      <button type="submit" pButton pRipple class="p-button-sm p-button-primary mr-2" label="Save"
-        [loading]="actionLoading"></button>
       <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
-        label="Close"></button>
+      label="Close"></button>
+      <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+        [loading]="actionLoading"></button>
     </div>
   </div>
 </form>

@@ -10,14 +10,15 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { SharedModule } from '@modules/shared/shared.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
-  standalone: true,
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  providers: [MessageService],
+  standalone:true,
+  selector: 'app-add-edit-br-profile',
+  templateUrl: './add-edit-br-profile.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -30,17 +31,22 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     ToastModule,
     CalendarModule,
-  ]
-})
-export class EditProfileComponent implements OnInit {
+    InputSwitchModule,
+    InputTextareaModule
 
-  profile!: any[];
-  requestFS!: any[];
+  ]})
+export class AddEditBrProfileComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   addEditForm!: FormGroup;
+  level!: any[];
+  profile!: any[];
+  onFarSite!: any[];
+  category!: any[];
+  serviceLC!: any[];
+  company!: any[];
 
-  constructor(private modalAdd: DynamicDialogRef, private modalEditProfile: DynamicDialogRef, private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -54,17 +60,20 @@ export class EditProfileComponent implements OnInit {
   }
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
-      profile: new FormControl(null),
-      requestFS: new FormControl(null, [Validators.required]),
-      yesNo: new FormControl(null),
-      datePSC: new FormControl(null),
-      acceptanceDate: new FormControl(null),
-      refusalDate: new FormControl(null),
-      dateFOD: new FormControl(null),
-      dateFOSC: new FormControl(null),
-      validityDate: new FormControl(null),
-      changeOfferD: new FormControl(null),
-      changeOfferS: new FormControl(null),
+      profile: new FormControl(null, [Validators.required]),
+      level: new FormControl(null, [Validators.required]),
+      onFarSite: new FormControl(null),
+      category: new FormControl(null, [Validators.required]),
+      serviceLC: new FormControl(null),
+      company: new FormControl(null),
+      nDays: new FormControl(null),
+      salesPrice: new FormControl(null),
+      iban: new FormControl(null),
+      placeOfExecution: new FormControl(null),
+      apllyCP: new FormControl(null),
+      apllyITE: new FormControl(null),
+      otherExpertise: new FormControl(null, [Validators.required]),
+
     });
   }
 
