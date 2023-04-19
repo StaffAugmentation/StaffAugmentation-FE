@@ -413,15 +413,232 @@
     </p-tabPanel>
 
     <p-tabPanel header="Offer information" class="p-fluid m-0">
-
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="subtotalPrice"> <b>Subtotal price</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="subtotalPrice" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="generalBudget"> <b>General budget</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="generalBudget" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="totalPrice"> <b>Total price</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="totalPrice" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-content-end">
+          <div class="flex justify-content-between mt-2">
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary" label="General offer"></button>
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary ml-2"
+              label="General letter of intent"></button>
+          </div>
+        </div>
+      </div>
     </p-tabPanel>
 
     <p-tabPanel header="Specific contract" class="p-fluid m-0">
-
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="specificCN"> <b>Specific contract number </b><span class="text-red-500">*</span></label>
+            <p-inputNumber inputId="integeronly" formControlName="value"></p-inputNumber>
+            <p-message *ngIf="addEditForm.get('specificCN')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('specificCN', addEditForm.get('specificCN')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="dateSCR"> <b>Date SC is received </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="dateSCR" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('dateSCR')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('dateSCR')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('dateSCR', addEditForm.get('dateSCR')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="dateSCS"> <b>Date SC is signed </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="dateSCS" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('dateSCS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('dateSCS')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('dateSCS', addEditForm.get('dateSCS')?.errors)"></p-message>
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="projectSD"> <b>Project start day </b></label>
+            <p-calendar formControlName="projectSD" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+          </div>
+          <div class="field col">
+            <label for="maximumED"> <b>Maximum end date </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="maximumED" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('maximumED')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('maximumED')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('maximumED', addEditForm.get('maximumED')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <div class="field col">
+              <label for="extensionMED"> <b>Extension maximum end date </b></label>
+              <p-calendar formControlName="extensionMED" [disabledDays]="[5,6]" [showIcon]="true"
+                [readonlyInput]="true"></p-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="numberOfDays"> <b>Number of days </b><span class="text-red-500">*</span></label>
+            <p-inputNumber formControlName="numberOfDays" inputId="locale-user" [minFractionDigits]="2"
+              [class]="addEditForm.get('numberOfDays')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-inputNumber>
+            <p-message *ngIf="addEditForm.get('numberOfDays')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('numberOfDays', addEditForm.get('numberOfDays')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="additionalBudget"> <b>Additional budget</b></label>
+            <div class="flex">
+              <p-inputNumber formControlName="additionalBudget" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+              <p-dropdown style="max-width: 100px;" placeholder="€"></p-dropdown>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="specificClientC"><b>Specific client code</b></label>
+            <input type="text" pInputText formControlName="specificClientC">
+          </div>
+        </div>
+        <div class=" field flex justify-content-between">
+          <div style="width: 80%;">
+            <p-table #dtPenalty style="width: 70%;" [value]="listPenalty" selectionMode="single" dataKey="id"
+              [rows]="250" [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+              responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 115px;">
+                  </th>
+                  <th *ngFor="let col of tableOptionsPenalty.visibleCols" style="min-width: 100px;">
+                    <div class="flex justify-content-between align-items-center">
+                      {{col.label}}
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-Penalty>
+                <tr>
+                  <td class="p-0 text-center">
+                    <button (click)="editPenalty(Penalty.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
+                      class="p-button-rounded p-button-info p-button-text"></button>
+                  </td>
+                  <td *ngFor="let col of tableOptionsPenalty.visibleCols">
+                    {{Penalty[col.id]}}
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="8">No Penalty found.</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="loadingbody">
+                <tr>
+                  <td colspan="8">Loading Penaltys data. Please wait.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="flex justify-content-end">
+            <button type="button" style="max-width: 100px; height: 40px;" pButton pRipple
+              class="p-button-sm p-button-primary mt-4" label="Create SC"></button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="generalComment"> <b>General comment</b></label>
+          <textarea rows="5" cols="30" formControlName="generalComment" pInputTextarea [autoResize]="true"></textarea>
+        </div>
+      </div>
     </p-tabPanel>
 
-    <p-tabPanel header="Specific contract" class="p-fluid m-0">
+    <p-tabPanel header="Documentation" class="p-fluid m-0">
+      <div class="field">
+        <div class="flex justify-content-between">
+          <div></div>
+          <div>
+            <button pButton pRipple label="Export all" icon="pi pi-download"
+              class="p-button-warning hover:bg-yellow-600 border-white">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true"
+          accept="image/*">
+          <ng-template pTemplate="toolbar">
+            <div class="py-3">Drag and drop file(s)</div>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+      <div class="field">
+        <p-table #dtFile  [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
+          [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
 
+              </th>
+              <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
+                <div class="flex justify-content-between align-items-center">
+                  {{col.label}}
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-File>
+            <tr>
+              <td>
+                <button pButton pRipple (click)="deleteCandidate(File.id)" type="button" icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"></button>
+                <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                  class="p-button-rounded p-button-warning p-button-text"></button>
+              </td>
+              <td *ngFor="let col of tableOptionsFile.visibleCols">
+                {{File[col.id]}}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="8">No File found.</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+            <tr>
+              <td colspan="8">Loading Files data. Please wait.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </p-tabPanel>
 
   </p-tabView>
@@ -430,7 +647,7 @@
         class="ml-2 pi pi-envelope"></i></button>
     <div>
       <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
-      label="Close"></button>
+        label="Close"></button>
       <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
         [loading]="actionLoading"></button>
     </div>

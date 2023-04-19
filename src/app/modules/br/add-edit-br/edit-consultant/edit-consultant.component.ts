@@ -33,7 +33,7 @@ import { AddEditProfileComponent } from './add-edit-profile/add-edit-profile.com
   ]
 })
 export class EditConsultantComponent implements OnInit {
-  EditForm!: FormGroup;
+  editForm!: FormGroup;
   actionLoading: boolean = false;
   listProfile!: any[];
   tableOptionsProfile: any = {
@@ -77,7 +77,7 @@ export class EditConsultantComponent implements OnInit {
     this.ref.close();
   }
   initForm(data: null): void {
-    this.EditForm = new FormGroup({
+    this.editForm = new FormGroup({
       ressourcePhone: new FormControl(null),
       ressourceEmail: new FormControl(null),
       vatNumber: new FormControl(null),

@@ -19,6 +19,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { Table } from 'primeng/table';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -26,6 +29,8 @@ import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-pro
 import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { AddEditPartnerComponent } from './add-edit-partner/add-edit-partner.component';
+import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
+
 
 
 @Component({
@@ -50,7 +55,10 @@ import { AddEditPartnerComponent } from './add-edit-partner/add-edit-partner.com
     AutoCompleteModule,
     CalendarModule,
     TableModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputNumberModule,
+    InputTextareaModule,
+    FileUploadModule
   ]
 })
 export class AddEditBrComponent implements OnInit {
@@ -137,7 +145,33 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+  listPenalty!: any[];
+  tableOptionsPenalty: any = {
+    visibleCols: [],
+    cols: [
+      { id: 'profileN', label: 'Profile Nº' },
+      { id: 'plcOnsite', label: 'Profile/level/category/onsite' },
+      { id: 'consultantName', label: 'Consultant name' },
+      { id: 'penaltyDays', label: 'Penalty days' },
+      { id: 'penalty', label: 'Penalty' },
+      { id: 'penaltyComment', label: 'Penalty comment' },
+    ],
+    loading: false,
+    exportLoading: false
+  };
+  uploadedFiles: any[]=[]
+  listFile!: any[];
+  tableOptionsFile: any = {
+    visibleCols: [],
+    cols: [
+      { id: 'fileName', label: 'File name' },
+      { id: 'appName', label: 'App name' },
+      { id: 'docType', label: 'Document type' },
 
+    ],
+    loading: false,
+    exportLoading: false
+  };
   constructor(
     private modalDepartment: DynamicDialogRef,
     private modalEditProfile: DynamicDialogRef,
@@ -145,6 +179,7 @@ export class AddEditBrComponent implements OnInit {
     private modalEditConsultant: DynamicDialogRef,
     private modalAddEditCandidate: DynamicDialogRef,
     private modalAddEditPartner: DynamicDialogRef,
+    private modalEditPenalty: DynamicDialogRef,
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
@@ -158,11 +193,15 @@ export class AddEditBrComponent implements OnInit {
     this.tableOptionsConsultant.visibleCols = this.tableOptionsConsultant.cols;
     this.tableOptionsCandidate.visibleCols = this.tableOptionsCandidate.cols;
     this.tableOptionsPartner.visibleCols = this.tableOptionsPartner.cols;
+    this.tableOptionsPenalty.visibleCols = this.tableOptionsPenalty.cols;
+    this.tableOptionsFile.visibleCols = this.tableOptionsFile.cols;
     this.getProfile();
     this.getBrProfile();
     this.getConsultant();
     this.getCandidate();
     this.getPartner();
+    this.getPenalty();
+    this.getFile();
 
   }
   getProfile(): void {
@@ -187,6 +226,19 @@ export class AddEditBrComponent implements OnInit {
   };
   getPartner(): void {
     this.listPartner = [];
+  };
+  getPenalty(): void {
+    this.listPenalty = [
+      { profileN: 20207, plcOnsite: 'TE;3;3;On site', consultantName: 'Alexandru Tasca', penaltyDays: '',  penalty: '', penaltyComment: '' }
+    ];
+  };
+  getFile(): void {
+    this.listFile = [
+      {fileName: "L1.10612 - 023521 - FO.pdf", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Formal Offer"},
+      {fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Client Contract/PO Draft"},
+      {fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Client Contract/PO Draft"},
+      {fileName: "L1.10612 - 023521 - FO.pdf", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Formal Offer"},
+    ];
   };
 
   onSubmit() {
@@ -230,6 +282,19 @@ export class AddEditBrComponent implements OnInit {
       expectedSD: new FormControl(null),
       placeOfDelivery: new FormControl(null, [Validators.required]),
       totalManDays: new FormControl(null),
+      subtotalPrice: new FormControl(null),
+      generalBudget: new FormControl(null),
+      totalPrice: new FormControl(null),
+      specificCN: new FormControl(null, [Validators.required]),
+      dateSCR: new FormControl(null, [Validators.required]),
+      dateSCS: new FormControl(null, [Validators.required]),
+      projectSD: new FormControl(null),
+      maximumED: new FormControl(null, [Validators.required]),
+      extensionMED: new FormControl(null),
+      numberOfDays: new FormControl(null, [Validators.required]),
+      additionalBudget: new FormControl(null),
+      specificClientC: new FormControl(null),
+      generalComment: new FormControl(null),
     });
   }
 
@@ -393,6 +458,20 @@ export class AddEditBrComponent implements OnInit {
       rejectLabel: 'No, cancel',
       defaultFocus: 'reject',
     });
+  }
+  editPenalty(id: number): void {
+    if (id) {
+      this.modalEditPenalty = this.modalService.open(EditPenaltyComponent, {
+        header: `Edit penalty`,
+        style: { width: '95%', maxWidth: '1000px' },
+        data: {
+          id: id
+        }
+      });
+      this.modalEditPenalty.onClose.subscribe(res => {
+        this.getPenalty();
+      });
+    }
   }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)

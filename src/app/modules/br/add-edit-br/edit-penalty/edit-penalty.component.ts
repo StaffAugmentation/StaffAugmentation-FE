@@ -6,18 +6,18 @@ import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { MessageModule } from 'primeng/message';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
+
 
 @Component({
-  standalone: true,
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  providers: [MessageService],
+  standalone:true,
+  selector: 'app-edit-penalty',
+  templateUrl: './edit-penalty.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -29,17 +29,14 @@ import { CalendarModule } from 'primeng/calendar';
     SharedModule,
     DropdownModule,
     ToastModule,
-    CalendarModule,
+    InputNumberModule
   ]
 })
-export class EditProfileComponent implements OnInit {
-
+export class EditPenaltyComponent implements OnInit {
   profile!: any[];
-  requestFS!: any[];
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   editForm!: FormGroup;
-
   constructor(private ref: DynamicDialogRef, public toast: MessageService) { }
 
   ngOnInit(): void {
@@ -53,16 +50,8 @@ export class EditProfileComponent implements OnInit {
   initForm(data: null): void {
     this.editForm = new FormGroup({
       profile: new FormControl(null),
-      requestFS: new FormControl(null, [Validators.required]),
-      yesNo: new FormControl(null),
-      datePSC: new FormControl(null),
-      acceptanceDate: new FormControl(null),
-      refusalDate: new FormControl(null),
-      dateFOD: new FormControl(null),
-      dateFOSC: new FormControl(null),
-      validityDate: new FormControl(null),
-      changeOfferD: new FormControl(null),
-      changeOfferS: new FormControl(null),
+      penaltyAmount: new FormControl(null),
+      penaltyComment: new FormControl(null),
     });
   }
 

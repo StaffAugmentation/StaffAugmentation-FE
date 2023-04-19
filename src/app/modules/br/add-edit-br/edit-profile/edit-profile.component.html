@@ -1,4 +1,4 @@
-<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
       <div class="field col">
@@ -8,9 +8,9 @@
       <div class="field col">
         <label for="requestFS"> <b>Request form status </b><span class="text-red-500">*</span></label>
         <p-dropdown [options]="requestFS" formControlName="requestFS"
-          [class]="addEditForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-        <p-message *ngIf="addEditForm.get('requestFS')?.invalid && isSubmited" severity="error"
-          [text]="getErrorMessage('requestFS', addEditForm.get('requestFS')?.errors)"></p-message>
+          [class]="editForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="editForm.get('requestFS')?.invalid && isSubmited" severity="error"
+          [text]="getErrorMessage('requestFS', editForm.get('requestFS')?.errors)"></p-message>
       </div>
     </div>
     <div class="formgrid grid">
