@@ -24,6 +24,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AddProvisionComponent } from './add-provision/add-provision.component';
 import { AddMonthComponent } from './add-month/add-month.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/generate-ntt-data-contract.component';
 
 @Component({
   standalone: true,
@@ -265,7 +266,18 @@ export class AddEditScComponent implements OnInit {
 
   }
   generateNTTDataContract():void {
-
+    this.modalEdit = this.modalService.open(GenerateNttDataContractComponent, {
+      header: 'Ntt data contract details',
+      width: '80%',
+      height: '85%',
+      data: { 
+        consultant: this.selectedSC,
+        action:this.action
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   add(): void{

@@ -1,0 +1,92 @@
+<div *ngIf="addForm">
+    <form [formGroup]="addForm">
+        <p-tabView orientation="left">
+            <p-tabPanel header="Contract detail" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Consultant name</label>
+                        <input type="text" pInputText formControlName="consultantName">
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">Sent date<span class="text-red-500">*</span></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="sentDate"
+                            [class]="addForm.get('sentDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addForm.get('sentDate')?.invalid && isSubmited" severity="error"
+                            text="Sent date is required"></p-message>
+                    </div>   
+                    <div class="field col">
+                        <label class="font-bold">Signature date</label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="signatureDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">Maximum end date<span class="text-red-500">*</span></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="maximumEndDate"
+                            [class]="addForm.get('maximumEndDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addForm.get('maximumEndDate')?.invalid && isSubmited" severity="error"
+                            text="Maximum end date is required"></p-message>
+                    </div>
+                </div>   
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Status<span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="status" formControlName="status" optionLabel="status"
+                            [class]="addForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                        <p-message *ngIf="addForm.get('status')?.invalid && isSubmited" severity="error"
+                            text="Status is required"></p-message>
+                    </div>
+                    <div class="field col">
+                        <label class="pt-2 font-bold">Specific provision(s)</label>
+                        <input type="text" pInputText formControlName="specificProvision">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Comment</label>
+                        <textarea pInputTextarea rows="5" cols="145" formControlName="comment"></textarea>  
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="History" class="p-fluid m-0">
+                <div class="field col">
+                    <p-table #dtContract [value]="contracts" dataKey="id" [rows]="20" [rowHover]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4rem">
+                        </th>
+                        <th *ngFor="let col of cols">
+                            {{ col.header }}
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-contract>
+                    <tr>
+                        <td *ngFor="let col of cols">
+                            {{contract[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No contract found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading contract data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+                    
+                </div>    
+            </p-tabPanel>
+        </p-tabView>
+        <div class="footer">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+            <div class="absolute bottom-3 left-0 ml-2">
+                <button pButton pRipple (click)="downloadNTTDataContract()" class="p-button-sm p-button-primary " label="Download NTT data contract"></button>
+            </div>
+        </div>
+    </form>
+</div>                
