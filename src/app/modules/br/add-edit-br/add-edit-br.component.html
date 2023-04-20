@@ -196,7 +196,7 @@
             <ng-template pTemplate="caption">
               <div class="flex justify-content-between">
                 <span class="p-input-icon-right" style="max-width: 150px;">
-                  <input [(ngModel)]="searchTable" (ngModelChange)="onGlobalFilter(dtBrProfile)" type="text" pInputText
+                  <input formControlName="searchTable" (onChange)="onGlobalFilter(dtBrProfile)" type="text" pInputText
                     placeholder="Filter..." />
                   <i class="pi pi-search"></i>
                 </span>
@@ -455,7 +455,7 @@
         <div class="formgrid grid">
           <div class="field col">
             <label for="specificCN"> <b>Specific contract number </b><span class="text-red-500">*</span></label>
-            <p-inputNumber inputId="integeronly" formControlName="value"></p-inputNumber>
+            <p-inputNumber inputId="integeronly" formControlName="specificCN"></p-inputNumber>
             <p-message *ngIf="addEditForm.get('specificCN')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('specificCN', addEditForm.get('specificCN')?.errors)"></p-message>
           </div>
@@ -512,7 +512,7 @@
             <div class="flex">
               <p-inputNumber formControlName="additionalBudget" inputId="locale-us" mode="decimal" locale="en-US"
                 [minFractionDigits]="2"> </p-inputNumber>
-              <p-dropdown style="max-width: 100px;" placeholder="€"></p-dropdown>
+              <p-dropdown  placeholder="€"></p-dropdown>
             </div>
           </div>
           <div class="field col">
@@ -522,7 +522,7 @@
         </div>
         <div class=" field flex justify-content-between">
           <div style="width: 80%;">
-            <p-table #dtPenalty style="width: 70%;" [value]="listPenalty" selectionMode="single" dataKey="id"
+            <p-table #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id"
               [rows]="250" [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
               [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
@@ -598,46 +598,57 @@
         </p-fileUpload>
       </div>
       <div class="field">
-        <p-table #dtFile  [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
-          [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>
+        <p-table #dtFile [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
+        [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
 
-              </th>
-              <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
-                <div class="flex justify-content-between align-items-center">
-                  {{col.label}}
-                </div>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-File>
-            <tr>
-              <td>
-                <button pButton pRipple (click)="deleteCandidate(File.id)" type="button" icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-text"></button>
-                <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
-                  class="p-button-rounded p-button-warning p-button-text"></button>
-              </td>
-              <td *ngFor="let col of tableOptionsFile.visibleCols">
+            </th>
+            <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
+              <div class="flex justify-content-between align-items-center">
+                {{col.label}}
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-File let-editing="editing">
+          <tr [pEditableRow]="File">
+            <td>
+              <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                class="p-button-rounded p-button-warning p-button-text"></button>
+              <button pButton pRipple (click)="deleteFile(File.id)" type="button" icon="pi pi-trash"
+                class="p-button-rounded p-button-danger p-button-text"></button>
+            </td>
+            <td *ngFor="let col of tableOptionsFile.visibleCols" [pEditableColumn]="File[col.id]"
+              pEditableColumnField="col.id">
+              <ng-container *ngIf="col.id!=='docType'">
                 {{File[col.id]}}
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="8">No File found.</td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="loadingbody">
-            <tr>
-              <td colspan="8">Loading Files data. Please wait.</td>
-            </tr>
-          </ng-template>
-        </p-table>
+              </ng-container>
+              <p-cellEditor *ngIf="col.id=='docType'">
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" formControlName="File[col.id]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{File[col.id]}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No File found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">Loading Files data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
       </div>
     </p-tabPanel>
 

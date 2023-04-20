@@ -91,7 +91,6 @@ export class AddEditBrComponent implements OnInit {
   };
   placeOfDelivery!: any[];
   listBrProfile!: any[];
-  searchTable: string = '';
   tableOptionsBrProfile: any = {
     visibleCols: [],
     cols: [
@@ -295,6 +294,7 @@ export class AddEditBrComponent implements OnInit {
       additionalBudget: new FormControl(null),
       specificClientC: new FormControl(null),
       generalComment: new FormControl(null),
+      searchTable: new FormControl(null),
     });
   }
 
@@ -472,6 +472,18 @@ export class AddEditBrComponent implements OnInit {
         this.getPenalty();
       });
     }
+  }
+  deleteFile(id:number): void {
+    this.confirmationService.confirm({
+      message: 'You won\'t be able to revert this! ',
+      header: 'Are you sure?',
+      icon: 'pi pi-exclamation-circle text-yellow-500',
+      acceptButtonStyleClass: 'p-button-danger p-button-raised',
+      rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+      acceptLabel: 'Yes, delete it',
+      rejectLabel: 'No, cancel',
+      defaultFocus: 'reject',
+    });
   }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
