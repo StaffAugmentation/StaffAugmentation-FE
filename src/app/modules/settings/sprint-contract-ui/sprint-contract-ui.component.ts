@@ -126,7 +126,7 @@ export class SprintContractUiComponent implements OnInit {
     if(action == 'add'){
       this.modalAddEdit = this.modalService.open(AddEditScComponent, {
         header: `Add Sprint Contract`,
-        width: '85%',
+        width: '90%',
         height: '85%',
         data: {
           action:'add'
@@ -139,7 +139,7 @@ export class SprintContractUiComponent implements OnInit {
     else if(this.selectedSC?.id){
       this.modalAddEdit = this.modalService.open(AddEditScComponent, {
         header: 'Edit '+this.selectedSC.requestNumber,
-        width: '85%',
+        width: '90%',
         height: '85%',
         data: {
           springContract: this.selectedSC

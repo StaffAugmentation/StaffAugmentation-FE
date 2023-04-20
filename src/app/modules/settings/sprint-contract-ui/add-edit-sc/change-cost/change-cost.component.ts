@@ -43,7 +43,6 @@ export class ChangeCostComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultant = this.config.data?.consultant;
-    console.log(this.consultant);
     this.initForm(this.consultant);
     this.cols=[
       { field: 'consultantName', header: 'Consultant name' },
