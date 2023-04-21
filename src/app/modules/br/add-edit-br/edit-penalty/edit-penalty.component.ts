@@ -4,18 +4,20 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
-import { TabViewModule } from 'primeng/tabview';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SharedModule } from '@modules/shared/shared.module';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedModule } from '@modules/shared/shared.module'
+import { InputNumberModule } from 'primeng/inputnumber';
+
 
 @Component({
   standalone:true,
-  selector: 'app-add-department',
-  templateUrl: './add-department.component.html',
+  selector: 'app-edit-penalty',
+  templateUrl: './edit-penalty.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -23,33 +25,36 @@ import { SharedModule } from '@modules/shared/shared.module'
     InputTextModule,
     FieldsetModule,
     MessageModule,
-    TabViewModule,
-    RadioButtonModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    DropdownModule,
+    ToastModule,
+    InputNumberModule
   ]
 })
-export class AddDepartmentComponent implements OnInit {
-
-  id!: number;
-  addForm!: FormGroup;
+export class EditPenaltyComponent implements OnInit {
+  profile!: any[];
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private toast: MessageService,) { }
+  actionLoading: boolean = false;
+  editForm!: FormGroup;
+  constructor(private ref: DynamicDialogRef, public toast: MessageService) { }
 
   ngOnInit(): void {
-
-    this.addForm = new FormGroup({
-      department: new FormControl(null, [Validators.required]),
-    });
-
+    this.initForm(null);
   }
 
   onSubmit() {
     this.isSubmited = true;
-    if (this.addForm.valid) {
-      this.addForm.value.department
-    }
+    this.ref.close();
   }
+  initForm(data: null): void {
+    this.editForm = new FormGroup({
+      profile: new FormControl(null),
+      penaltyAmount: new FormControl(null),
+      penaltyComment: new FormControl(null),
+    });
+  }
+
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;

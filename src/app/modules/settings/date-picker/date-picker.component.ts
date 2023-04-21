@@ -26,18 +26,18 @@ export class DatePickerComponent implements OnInit {
   }
 
   getDisabledDates():void{
-    for (let year = 1900; year <= 4900; year++) {
-      for (let month = 0; month < 12; month++) {
-        for (let day = 1; day <= 31; day++) {
-          if (day !== 10 && day !== 25) {
-            const date = new Date(year, month, day);
-            if (date.getMonth() === month) {
-              this.disabledDates.push(date);
-            }
-          }
-        }
-      }
-    }
+    // for (let year = 1900; year <= 2300; year++) {
+    //   for (let month = 0; month < 12; month++) {
+    //     for (let day = 1; day <= 31; day++) {
+    //       if (day !== 10 && day !== 25) {
+    //         let date = new Date(year, month, day);
+    //         if (date.getMonth() === month) {
+    //           this.disabledDates.push(date);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
 }

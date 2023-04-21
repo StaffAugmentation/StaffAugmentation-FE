@@ -1,0 +1,73 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-2 mb-4">
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="profile"><b>Profile</b></label>
+        <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="requestFS"> <b>Request form status </b><span class="text-red-500">*</span></label>
+        <p-dropdown [options]="requestFS" formControlName="requestFS"
+          [class]="editForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+        <p-message *ngIf="editForm.get('requestFS')?.invalid && isSubmited" severity="error"
+          [text]="getErrorMessage('requestFS', editForm.get('requestFS')?.errors)"></p-message>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="yesNo"><b>Yes/No sent to customer</b></label>
+        <p-calendar formControlName="yesNo" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="datePSC"><b>Date proposal is submitted to customer</b></label>
+        <p-calendar formControlName="datePSC" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="acceptanceDate"><b>Acceptance date</b></label>
+        <p-calendar formControlName="acceptanceDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="refusalDate"><b>Refusal date</b></label>
+        <p-calendar formControlName="refusalDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="dateFOD"><b>Date FO deadline</b></label>
+        <p-calendar formControlName="dateFOD" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="dateFOSC"><b>Date FO is submitted to customer</b></label>
+        <p-calendar formControlName="dateFOSC" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="validityDate"><b>Validity date</b></label>
+        <p-calendar formControlName="validityDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="changeOfferD"><b>Change offer deadline</b></label>
+        <p-calendar formControlName="changeOfferD" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+      </div>
+      <div class="field col">
+        <label for="changeOfferS"><b>Change offer submission</b></label>
+        <div class="p-inputgroup">
+          <p-calendar formControlName="changeOfferS" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+          <span class="p-inputgroup-addon">
+              <i class="pi pi-history"></i>
+          </span>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+      [loading]="actionLoading"></button>
+    <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+      label="Close"></button>
+  </div>
+</form>

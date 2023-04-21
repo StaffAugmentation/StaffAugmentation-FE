@@ -1,0 +1,34 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div class="p-fluid p-2 mb-4">
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="profile"><b>Profile</b></label>
+        <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
+      </div>
+      <div class="field col">
+        <label for="penaltyDays"><b>Penalty days</b></label>
+        <input type="text" pInputText formControlName="penaltyDays">
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="penaltyAmount"> <b>Penalty amount</b></label>
+        <div class="flex">
+          <p-inputNumber formControlName="penaltyAmount" inputId="locale-us" mode="decimal" locale="en-US"
+          [minFractionDigits]="2"> </p-inputNumber>
+          <p-dropdown style="max-width: 200px;" placeholder="€"></p-dropdown>
+        </div>
+      </div>
+      <div class="field col">
+        <label for="penaltyComment"><b>Penalty comment</b></label>
+        <input type="text" pInputText formControlName="penaltyComment">
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+      [loading]="actionLoading"></button>
+    <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+      label="Close"></button>
+  </div>
+</form>

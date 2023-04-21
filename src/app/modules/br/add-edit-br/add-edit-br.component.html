@@ -1,96 +1,666 @@
-<div class="flex justify-content-center align-items-center mb-3">
-  <ng-container *ngFor="let item of items">
-    <p-button class="item" label={{item.label}}></p-button>
-  </ng-container>
-</div>
-<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <div class="p-fluid p-2 mb-4">
-    <div class="field">
-      <label for="requestNumber"> <b>Request number</b><span class="text-red-500">*</span></label>
-      <input type="text" pInputText formControlName="requestNumber"
-        [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
-      <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
-        [text]="getErrorMessage('requestNumber', addEditForm.get('requestNumber')?.errors)"></p-message>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
-        <label for="frameworkContract"> <b>Framework Contract</b><span class="text-red-500">*</span></label>
-        <p-dropdown [options]="frameworkContract" formControlName="frameworkContract"
-          [class]="addEditForm.get('frameworkContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
-        </p-dropdown>
-        <p-message *ngIf="addEditForm.get('frameworkContract')?.invalid && isSubmited" severity="error"
-          [text]="getErrorMessage('frameworkContract', addEditForm.get('frameworkContract')?.errors)"></p-message>
-      </div>
-      <div class="field col">
-        <label for="cascade"><b>Cascade</b></label>
-        <p-dropdown [options]="cascade" formControlName="Cascade">
-        </p-dropdown>
-      </div>
-      <div class="field col">
-        <label for="department"><b>Department</b><span class="text-red-500">*</span></label>
-        <div class="p-inputgroup">
-          <p-autoComplete [readonly]="false" [suggestions]="filteredDepartments" formControlName="department"
-            (completeMethod)="filterDepartment($event)"
-            [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-autoComplete>
-          <button (click)="add()" class="p-inputgroup-addon">
-            <i class="pi pi-plus-circle"></i>
-          </button>
-          <p-message *ngIf="addEditForm.get('department')?.invalid && isSubmited" severity="error"
-            [text]="getErrorMessage('department', addEditForm.get('department')?.errors)"></p-message>
+<form class="br" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+  <p-tabView class="navBar">
+
+    <p-tabPanel header="General information" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="field">
+          <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
+          <input type="text" pInputText formControlName="requestNumber"
+            [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+          <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
+            [text]="getErrorMessage('requestNumber', addEditForm.get('requestNumber')?.errors)"></p-message>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="frameworkContract"> <b>Framework Contract </b><span class="text-red-500">*</span></label>
+            <p-dropdown [options]="frameworkContract" formControlName="frameworkContract"
+              [class]="addEditForm.get('frameworkContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-dropdown>
+            <p-message *ngIf="addEditForm.get('frameworkContract')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('frameworkContract', addEditForm.get('frameworkContract')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="cascade"><b>Cascade</b></label>
+            <p-dropdown [options]="cascade" formControlName="cascade"></p-dropdown>
+          </div>
+          <div class="field col">
+            <label for="department"><b>Department </b><span class="text-red-500">*</span></label>
+            <div class="flex">
+              <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredDepartments"
+                formControlName="department" (completeMethod)="filterDepartment($event)"
+                [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+              </p-autoComplete>
+              <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined"
+                icon="pi pi-plus"></button>
+            </div>
+            <p-message *ngIf="addEditForm.get('department')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('department', addEditForm.get('department')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="departmentEmail"><b>Department Email</b></label>
+            <input type="email7" pInputText formControlName="departmentEmail">
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="contactName"> <b>Contact Name</b></label>
+            <input type="text" pInputText formControlName="contactName">
+          </div>
+          <div class="field col">
+            <label for="technicalContact"><b>Technical Contact</b></label>
+            <input type="text" pInputText formControlName="technicalContact">
+          </div>
+          <div class="field col">
+            <label for="openIntended"><b>Open/Intended</b></label>
+            <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
+          </div>
+          <div class="field col">
+            <label for="comment"><b>Comment</b></label>
+            <input type="text" pInputText formControlName="comment">
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="status"> <b>Status </b><span class="text-red-500">*</span></label>
+            <p-dropdown [options]="status" formControlName="status"
+              [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="serviceType"> <b>Service Type </b><span class="text-red-500">*</span></label>
+            <p-dropdown [options]="serviceType" formControlName="serviceType"
+              [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('serviceType', addEditForm.get('serviceType')?.errors)"></p-message>
+          </div>
+        </div>
+        <div class="field">
+          <label for="source"> <b>Source </b><span class="text-red-500">*</span></label>
+          <p-dropdown [options]="source" formControlName="source"
+            [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+          <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
+            [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
         </div>
       </div>
-      <div class="field col">
-        <label for="departmentEmail"><b>Department Email</b></label>
-        <input type="email7" pInputText formControlName="departmentEmail">
-      </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
-        <label for="contactName"> <b>Contact Name</b></label>
-        <input type="text" pInputText formControlName="contactName">
-      </div>
-      <div class="field col">
-        <label for="technicalContact"><b>Technical Contact</b></label>
-        <input type="text" pInputText formControlName="technicalContact">
-      </div>
-      <div class="field col">
-        <label for="openIntended"><b>Open/Intended</b></label>
-        <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
-      </div>
-      <div class="field col">
-        <label for="comment"><b>Comment</b></label>
-        <input type="text" pInputText formControlName="comment">
-      </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
-        <label for="status"> <b>Status</b><span class="text-red-500">*</span></label>
-        <p-dropdown [options]="status" formControlName="status"
-          [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-        <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
-          [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
-      </div>
-      <div class="field col">
-        <label for="serviceType"> <b>Service Type</b><span class="text-red-500">*</span></label>
-        <p-dropdown [options]="serviceType" formControlName="serviceType"
-          [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-        <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
-          [text]="getErrorMessage('serviceType', addEditForm.get('serviceType')?.errors)"></p-message>
-      </div>
-    </div>
-    <div class="field">
-      <label for="source"> <b>Source</b><span class="text-red-500">*</span></label>
-      <p-dropdown [options]="source" formControlName="source"
-        [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-      <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
-        [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
-    </div>
-  </div>
+    </p-tabPanel>
 
-  <div class="footer">
-    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
-      [loading]="actionLoading"></button>
-    <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
-      label="Close"></button>
+    <p-tabPanel header="Work order" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="dateRf"> <b>Date RF received </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="dateRf" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('dateRf')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('dateRf')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('dateRf', addEditForm.get('dateRf')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="acknowlegment"><b>Acknowlegment</b></label>
+            <p-calendar formControlName="acknowlegment" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+          </div>
+          <div class="field col">
+            <label for="acknowlegmentDl"><b>Acknowlegment deadline </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="acknowlegmentDl" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="yesNoDeadline"><b>Yes/No (Deadline)</b></label>
+            <p-calendar formControlName="yesNoDeadline" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('yesNoDeadline')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('yesNoDeadline')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('yesNoDeadline', addEditForm.get('yesNoDeadline')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="proposalDeadline"><b>Proposal (Deadline)</b></label>
+            <p-calendar formControlName="proposalDeadline" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+            <p-message *ngIf="addEditForm.get('proposalDeadline')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('proposalDeadline', addEditForm.get('proposalDeadline')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="expectedSD"><b>Expected start date</b></label>
+            <p-calendar formControlName="expectedSD" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+          </div>
+        </div>
+        <p-table #dtProfile [value]="listProfile" selectionMode="single" dataKey="id" [rows]="250"
+          [loading]="tableOptionsProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 115px;">
+              </th>
+              <th *ngFor="let col of tableOptionsProfile.visibleCols" style="min-width: 100px;">
+                <div class="flex justify-content-between align-items-center">
+                  {{col.label}}
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-Profile>
+            <tr>
+              <td class="p-0 text-center">
+                <button (click)="editProfile(Profile.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
+                  class="p-button-rounded p-button-info p-button-text"></button>
+              </td>
+              <td *ngFor="let col of tableOptionsProfile.visibleCols">
+                {{Profile[col.id]}}
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="8">No Profile found.</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+            <tr>
+              <td colspan="8">Loading Profiles data. Please wait.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Basic characteristics" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="placeOfDelivery"> <b>Place of delivery </b><span class="text-red-500">*</span></label>
+            <p-dropdown [options]="placeOfDelivery" formControlName="placeOfDelivery"
+              [class]="addEditForm.get('placeOfDelivery')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-dropdown>
+            <p-message *ngIf="addEditForm.get('placeOfDelivery')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('placeOfDelivery', addEditForm.get('placeOfDelivery')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="totalManDays"><b>Total man-days</b></label>
+            <input type="text" pInputText formControlName="totalManDays">
+          </div>
+        </div>
+      </div>
+      <p-tabView class="sideBar">
+        <p-tabPanel header="Profile/Level/Consultant" class="p-fluid m-0">
+          <p-table #dtBrProfile [value]="listBrProfile" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsBrProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="caption">
+              <div class="flex justify-content-between">
+                <span class="p-input-icon-right" style="max-width: 150px;">
+                  <input formControlName="searchTable" (onChange)="onGlobalFilter(dtBrProfile)" type="text" pInputText
+                    placeholder="Filter..." />
+                  <i class="pi pi-search"></i>
+                </span>
+                <div>
+                  <button type="button" pButton pRipple (click)="addEditBrProfile('add',0)" label="New profile"
+                    class="border-white"></button>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 115px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsBrProfile.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-BrProfile>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteBrProfile(BrProfile.profileN)" type="button"
+                      icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditBrProfile('edit',BrProfile.profileN)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsBrProfile.visibleCols">
+                  {{BrProfile[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No BrProfile found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading BrProfiles data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <p-table #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsConsultant.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 115px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsConsultant.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Consultant>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteConsultant(Consultant.id)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="editConsultant(Consultant.id,Consultant.name)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsConsultant.visibleCols">
+                  {{Consultant[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Consultant found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Consultants data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel header="NTT data candidate(s)" class="p-fluid m-0">
+          <p-table #dtCandidate [value]="listCandidate" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsCandidate.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 158px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsCandidate.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Candidate>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deleteCandidate(Candidate.code)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditCandidate('edit',Candidate.code)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                      class="p-button-rounded p-button-warning p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsCandidate.visibleCols">
+                  {{Candidate[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Candidate found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Candidates data. Please wait.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex justify-content-between">
+                <div>
+                  <button type="button" pButton pRipple class="p-button-outlined bg-white"><i
+                      class="mr-2 pi pi-user"></i>Select as consultant </button>
+                </div>
+                <div>
+                  <button type="button" icon="pi pi-plus-circle" pButton pRipple (click)="addEditCandidate('add',0)"
+                    label="New Candidate" class="p-button-outlined bg-white"></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+        <p-tabPanel header="Candidate(s) partner" class="p-fluid m-0">
+          <p-table #dtPartner [value]="listPartner" selectionMode="single" dataKey="id" [rows]="250"
+            [loading]="tableOptionsPartner.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 158px;">
+
+                </th>
+                <th *ngFor="let col of tableOptionsPartner.visibleCols" style="min-width: 80px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Partner>
+              <tr>
+                <td>
+                  <div>
+                    <button pButton pRipple (click)="deletePartner(Partner.code)" type="button" icon="pi pi-trash"
+                      class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple (click)="addEditPartner('edit',Partner.code)" type="button"
+                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                      class="p-button-rounded p-button-warning p-button-text"></button>
+                  </div>
+                </td>
+                <td *ngFor="let col of tableOptionsPartner.visibleCols">
+                  {{Partner[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Partner found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Partners data. Please wait.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex justify-content-between">
+                <div>
+                  <button type="button" pButton pRipple class="p-button-outlined bg-white"><i
+                      class="mr-2 pi pi-user"></i>Select as consultant </button>
+                </div>
+                <div>
+                  <button type="button" icon="pi pi-plus-circle" pButton pRipple (click)="addEditPartner('add',0)"
+                    label="New Candidate" class="p-button-outlined bg-white"></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-table>
+        </p-tabPanel>
+
+      </p-tabView>
+    </p-tabPanel>
+
+    <p-tabPanel header="Offer information" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="subtotalPrice"> <b>Subtotal price</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="subtotalPrice" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="generalBudget"> <b>General budget</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="generalBudget" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="totalPrice"> <b>Total price</b></label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">€</span>
+              <p-inputNumber formControlName="totalPrice" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-content-end">
+          <div class="flex justify-content-between mt-2">
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary" label="General offer"></button>
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary ml-2"
+              label="General letter of intent"></button>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Specific contract" class="p-fluid m-0">
+      <div class="p-fluid p-2 mb-4">
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="specificCN"> <b>Specific contract number </b><span class="text-red-500">*</span></label>
+            <p-inputNumber inputId="integeronly" formControlName="specificCN"></p-inputNumber>
+            <p-message *ngIf="addEditForm.get('specificCN')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('specificCN', addEditForm.get('specificCN')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="dateSCR"> <b>Date SC is received </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="dateSCR" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('dateSCR')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('dateSCR')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('dateSCR', addEditForm.get('dateSCR')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="dateSCS"> <b>Date SC is signed </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="dateSCS" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('dateSCS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('dateSCS')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('dateSCS', addEditForm.get('dateSCS')?.errors)"></p-message>
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="projectSD"> <b>Project start day </b></label>
+            <p-calendar formControlName="projectSD" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
+          </div>
+          <div class="field col">
+            <label for="maximumED"> <b>Maximum end date </b><span class="text-red-500">*</span></label>
+            <p-calendar formControlName="maximumED" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
+              [class]="addEditForm.get('maximumED')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-calendar>
+            <p-message *ngIf="addEditForm.get('maximumED')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('maximumED', addEditForm.get('maximumED')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <div class="field col">
+              <label for="extensionMED"> <b>Extension maximum end date </b></label>
+              <p-calendar formControlName="extensionMED" [disabledDays]="[5,6]" [showIcon]="true"
+                [readonlyInput]="true"></p-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="numberOfDays"> <b>Number of days </b><span class="text-red-500">*</span></label>
+            <p-inputNumber formControlName="numberOfDays" inputId="locale-user" [minFractionDigits]="2"
+              [class]="addEditForm.get('numberOfDays')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            </p-inputNumber>
+            <p-message *ngIf="addEditForm.get('numberOfDays')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('numberOfDays', addEditForm.get('numberOfDays')?.errors)"></p-message>
+          </div>
+          <div class="field col">
+            <label for="additionalBudget"> <b>Additional budget</b></label>
+            <div class="flex">
+              <p-inputNumber formControlName="additionalBudget" inputId="locale-us" mode="decimal" locale="en-US"
+                [minFractionDigits]="2"> </p-inputNumber>
+              <p-dropdown  placeholder="€"></p-dropdown>
+            </div>
+          </div>
+          <div class="field col">
+            <label for="specificClientC"><b>Specific client code</b></label>
+            <input type="text" pInputText formControlName="specificClientC">
+          </div>
+        </div>
+        <div class=" field flex justify-content-between">
+          <div style="width: 80%;">
+            <p-table #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id"
+              [rows]="250" [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+              responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 115px;">
+                  </th>
+                  <th *ngFor="let col of tableOptionsPenalty.visibleCols" style="min-width: 100px;">
+                    <div class="flex justify-content-between align-items-center">
+                      {{col.label}}
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-Penalty>
+                <tr>
+                  <td class="p-0 text-center">
+                    <button (click)="editPenalty(Penalty.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
+                      class="p-button-rounded p-button-info p-button-text"></button>
+                  </td>
+                  <td *ngFor="let col of tableOptionsPenalty.visibleCols">
+                    {{Penalty[col.id]}}
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="8">No Penalty found.</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="loadingbody">
+                <tr>
+                  <td colspan="8">Loading Penaltys data. Please wait.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="flex justify-content-end">
+            <button type="button" style="max-width: 100px; height: 40px;" pButton pRipple
+              class="p-button-sm p-button-primary mt-4" label="Create SC"></button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="generalComment"> <b>General comment</b></label>
+          <textarea rows="5" cols="30" formControlName="generalComment" pInputTextarea [autoResize]="true"></textarea>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Documentation" class="p-fluid m-0">
+      <div class="field">
+        <div class="flex justify-content-between">
+          <div></div>
+          <div>
+            <button pButton pRipple label="Export all" icon="pi pi-download"
+              class="p-button-warning hover:bg-yellow-600 border-white">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true"
+          accept="image/*">
+          <ng-template pTemplate="toolbar">
+            <div class="py-3">Drag and drop file(s)</div>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+      <div class="field">
+        <p-table #dtFile [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
+        [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+
+            </th>
+            <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
+              <div class="flex justify-content-between align-items-center">
+                {{col.label}}
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-File let-editing="editing">
+          <tr [pEditableRow]="File">
+            <td>
+              <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                class="p-button-rounded p-button-warning p-button-text"></button>
+              <button pButton pRipple (click)="deleteFile(File.id)" type="button" icon="pi pi-trash"
+                class="p-button-rounded p-button-danger p-button-text"></button>
+            </td>
+            <td *ngFor="let col of tableOptionsFile.visibleCols" [pEditableColumn]="File[col.id]"
+              pEditableColumnField="col.id">
+              <ng-container *ngIf="col.id!=='docType'">
+                {{File[col.id]}}
+              </ng-container>
+              <p-cellEditor *ngIf="col.id=='docType'">
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" formControlName="File[col.id]">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{File[col.id]}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">No File found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="8">Loading Files data. Please wait.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      </div>
+    </p-tabPanel>
+
+  </p-tabView>
+  <div class="footer-filled">
+    <button type="button" pButton pRipple class="p-button-outlined bg-white">Communicate to partners <i
+        class="ml-2 pi pi-envelope"></i></button>
+    <div>
+      <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+        label="Close"></button>
+      <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+        [loading]="actionLoading"></button>
+    </div>
   </div>
 </form>

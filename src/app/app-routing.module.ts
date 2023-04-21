@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', component: AppLayoutComponent,
     children: [
       { path: '', loadComponent: () => import('@modules/home/home.component').then(c => c.HomeComponent) },
-      { path: 'business-request', loadChildren: ()=> import('@modules/br/br.module').then(m => m.BrModule) },
+      { path: 'business-request', loadComponent: ()=> import('@modules/br/br.component').then(c => c.BrComponent) },
       {
         path: 'sprint-contract',
         children: [
@@ -25,10 +25,11 @@ const routes: Routes = [
       { path: 'category', loadComponent: () => import('@modules/settings/data-type/category/category.component').then(c => c.CategoryComponent) },
       { path: 'place-of-delivery', loadComponent: () => import('@modules/settings/data-type/place-of-delivery/place-of-delivery.component').then(c => c.PlaceOfDeliveryComponent) },
       { path: 'subcontractor', loadComponent: () => import('@modules/settings/data-type/subcontractor/subcontractor.component').then(c => c.SubcontractorComponent) },
-      { path: 'highest-degree', loadComponent: () => import('@modules/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
+      { path: 'highest-degree', loadComponent: () => import('@modules/settings/data-type/highest-degree/highest-degree.component').then(c => c.HighestDegreeComponent) },
       { path: 'recruitment', loadComponent: () => import('@modules/settings/data-type/recruitment/recruitment.component').then(c => c.RecruitmentComponent)},
       { path: 'forecasts', loadComponent: () => import('@modules/settings/data-type/forecasts/forecasts.component').then(c => c.ForecastsComponent)},
-      { path: 'date-picker', loadComponent: () => import('@modules/settings/data-type/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
+      { path: 'date-picker', loadComponent: () => import('@modules/settings/date-picker/date-picker.component').then(c => c.DatePickerComponent)},
+      { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
       { path: 'tree-view', loadComponent: () => import('@modules/settings/tree-view/tree-view.component').then(c => c.TreeViewComponent)},
       { path: 'role-management', loadComponent: () => import('@modules/settings/role-management/role-management.component').then(c => c.RoleManagementComponent)},
       { path: 'app-parameter', loadComponent: () => import('@modules/settings/app-parameter/app-parameter.component').then(c => c.AppParameterComponent)},

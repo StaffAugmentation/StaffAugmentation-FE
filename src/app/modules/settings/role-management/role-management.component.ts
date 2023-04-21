@@ -124,7 +124,7 @@ export class RoleManagementComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEdit = this.modalService.open(AddEditRoleManagementComponent, {
         header: `Add`,
-        style: { width: '85%', maxWidth: '750px',height:'55%'}
+        style: { width: '85%', maxWidth: '500px'}
       });
       this.modalAddEdit.onClose.subscribe(res => {
         this.ngOnInit();
@@ -133,7 +133,7 @@ export class RoleManagementComponent implements OnInit {
     else if (role) {
       this.modalAddEdit = this.modalService.open(AddEditRoleManagementComponent, {
         header: `Edit`,
-        style: { width: '85%', maxWidth: '750px',height:'55%'},
+        style: { width: '85%', maxWidth: '500px'},
         data: { role: role}
       });
       this.modalAddEdit.onClose.subscribe(res => {

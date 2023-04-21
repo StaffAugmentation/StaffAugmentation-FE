@@ -6249,3 +6249,19 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   flex-direction: row-reverse;
   padding: 0 12px;
 }
+.footer-filled{
+  position: fixed;
+  bottom: 0;
+  right: 0px;
+  left: 0px;
+  height: 60px;
+  width: 100%;
+  z-index: 102;
+  background-color: var(--surface-ground);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
