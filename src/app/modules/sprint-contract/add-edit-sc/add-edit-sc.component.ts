@@ -86,54 +86,54 @@ export class AddEditScComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   action!: string;
-  invoice:any[]=[];
-  processForPayment: any[]=[];
-  purchaseOrder: any[]=[];
-  cost: any[]=[];
-  cols: any[]=[];
-  colsConsultant: any[]=[];
-  colsPerformance: any[]=[];
-  colsPerformances: any[]=[];
-  colsGeneral: any[]=[];
+  invoice: any[] = [];
+  processForPayment: any[] = [];
+  purchaseOrder: any[] = [];
+  cost: any[] = [];
+  cols: any[] = [];
+  colsConsultant: any[] = [];
+  colsPerformance: any[] = [];
+  colsPerformances: any[] = [];
+  colsGeneral: any[] = [];
   selectedPerformances: any;
   selectedGenerals: any;
-  general: any[]=[];
-  performance: TreeNode[]= [
+  general: any[] = [];
+  performance: TreeNode[] = [
     {
-      data: {action: 'Anthony Puech [Project Manager;9;Near site'},
+      data: { action: 'Anthony Puech [Project Manager;9;Near site' },
       children: [
         {
-          data: { id: '2', month: 'January/2023', forecast:'6.000000', daysWorked:'5.000000', remainingDays:'140.000000', oerpProjectCode:'EXT-012133-00167' }
-        },
-        { 
-          data: { id: '3', month: 'February/2023', forecast:'18.000000', daysWorked:'3.000000', remainingDays:'137.000000', oerpProjectCode:'EXT-012133-00167' } 
+          data: { id: '2', month: 'January/2023', forecast: '6.000000', daysWorked: '5.000000', remainingDays: '140.000000', oerpProjectCode: 'EXT-012133-00167' }
         },
         {
-          data: { id: '4', month: 'March/2023', forecast:'18.000000', daysWorked:'0.000000', remainingDays:'137.000000', oerpProjectCode:'EXT-012133-00167' }
+          data: { id: '3', month: 'February/2023', forecast: '18.000000', daysWorked: '3.000000', remainingDays: '137.000000', oerpProjectCode: 'EXT-012133-00167' }
+        },
+        {
+          data: { id: '4', month: 'March/2023', forecast: '18.000000', daysWorked: '0.000000', remainingDays: '137.000000', oerpProjectCode: 'EXT-012133-00167' }
         },
       ]
-    }    
+    }
   ];
-  oerp: any[]=[
-    {id:'1', oerpProjectCode:'EXT-024662-00139'}
+  oerp: any[] = [
+    { id: '1', oerpProjectCode: 'EXT-024662-00139' }
   ];
-  consultant:any[]=[
-    {id:'1', consultantName:'Anthony Asanka', profileLeveOnsiteCategory:'consultant ; Unique ; Far site', company:'NTT data SWISS', nOfDays:'65.00'}
+  consultant: any[] = [
+    { id: '1', consultantName: 'Anthony Asanka', profileLeveOnsiteCategory: 'consultant ; Unique ; Far site', company: 'NTT data SWISS', nOfDays: '65.00' }
   ];
 
   constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig, private modalService: DialogService,
-    private modalEdit: DynamicDialogRef,private toast: MessageService,private confirmationService: ConfirmationService){}
+    private modalEdit: DynamicDialogRef, private toast: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.selectedSC = this.config.data?.springContract;
     this.action = this.config.data?.action;
-    if(this.action=='add'){
+    if (this.action == 'add') {
       this.initForm(null);
     }
     this.initForm(this.selectedSC);
 
     this.cols = [
-      { field: 'oerpProjectCode', header: 'PERP project code' },
+      { field: 'oerpProjectCode', header: 'OERP project code' },
     ];
 
     this.colsConsultant = [
@@ -153,11 +153,11 @@ export class AddEditScComponent implements OnInit {
     ];
 
     this.processForPayment = [
-      { label: 'Consultant payment process'}
+      { label: 'Consultant payment process' }
     ];
 
     this.purchaseOrder = [
-      { label: 'Consultant PO'}
+      { label: 'Consultant PO' }
     ];
 
     this.colsPerformance = [
@@ -214,10 +214,10 @@ export class AddEditScComponent implements OnInit {
     ];
   }
 
-  expandChildren(node:TreeNode){
-    if(node.children){
-      node.expanded=true;
-      for(let cn of node.children){
+  expandChildren(node: TreeNode) {
+    if (node.children) {
+      node.expanded = true;
+      for (let cn of node.children) {
         this.expandChildren(cn);
       }
     }
@@ -231,9 +231,9 @@ export class AddEditScComponent implements OnInit {
     }
   }
 
-  initForm(data:any | null):void {
+  initForm(data: any | null): void {
     this.addEditForm = new FormGroup({
-      requestNumber : new FormControl(data ? data.requestNumber : '', [Validators.required]),
+      requestNumber: new FormControl(data ? data.requestNumber : '', [Validators.required]),
       requestOrExtension: new FormControl(data ? data.requestOrExtension : null),
       scNumber: new FormControl(data ? data.scNumber : null),
       department: new FormControl(data ? data.department : null),
@@ -245,8 +245,8 @@ export class AddEditScComponent implements OnInit {
       projectStartDate: new FormControl(data ? data.projectStartDate : null),
       contractStatus: new FormControl(data ? data.contractStatus : null),
       totalPrice: new FormControl(data ? data.totalPrice : null),
-      numberOfDays: new FormControl(data ? data.numberOfDays : null), 
-      nDaysTransformed: new FormControl(data ? data.nDaysTransformed : null), 
+      numberOfDays: new FormControl(data ? data.numberOfDays : null),
+      nDaysTransformed: new FormControl(data ? data.nDaysTransformed : null),
       managementFee: new FormControl(data ? data.managementFee : null),
       oerpProjectCode: new FormControl(data ? data.oerpProjectCode : '', [Validators.required]),
       maximumCost: new FormControl(data ? data.maximumCost : null),
@@ -257,22 +257,21 @@ export class AddEditScComponent implements OnInit {
 
     });
   }
-  
-  businessRequest():void {
+
+  businessRequest(): void {
 
   }
 
-  terminateContract():void {
+  terminateContract(): void {
 
   }
-  generateNTTDataContract():void {
+  generateNTTDataContract(): void {
     this.modalEdit = this.modalService.open(GenerateNttDataContractComponent, {
-      header: 'Ntt data contract details',
-      width: '80%',
-      height: '85%',
-      data: { 
+      header: 'NTT data contract details',
+      style: { width: '90%', maxWidth: '800px' },
+      data: {
         consultant: this.selectedSC,
-        action:this.action
+        action: this.action
       }
     });
     this.modalEdit.onClose.subscribe(() => {
@@ -280,17 +279,15 @@ export class AddEditScComponent implements OnInit {
     });
   }
 
-  add(): void{
+  add(): void {
 
   }
 
-  changeCost(): void{
+  changeCost(): void {
     this.modalEdit = this.modalService.open(ChangeCostComponent, {
       header: 'Change consultant cost',
-      width: '80%',
-      height: '85%',
-      data: { consultant: this.consultant
-      }
+      style: { width: '90%', maxWidth: '800px' },
+      data: { consultant: this.consultant }
     });
     this.modalEdit.onClose.subscribe(() => {
       this.ngOnInit();
@@ -302,7 +299,7 @@ export class AddEditScComponent implements OnInit {
     this.ref.close();
   }
 
-  delete(oerp:any){
+  delete(oerp: any) {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -315,15 +312,14 @@ export class AddEditScComponent implements OnInit {
       accept: () => {
         this.toast.add({ severity: 'info', summary: "Delete row", detail: oerp.oerpProjectCode });
       },
-  
+
     });
   }
 
-  editConsultant(consultant:any):void{
+  editConsultant(consultant: any): void {
     this.modalEdit = this.modalService.open(EditConsultantComponent, {
       header: consultant.consultantName,
-      width: '80%',
-      height: '85%',
+      style: { width: '80%', maxWidth: '1100px' },
       data: {
         consultant: consultant
       }
@@ -331,49 +327,49 @@ export class AddEditScComponent implements OnInit {
     this.modalEdit.onClose.subscribe(() => {
       this.ngOnInit();
     });
-  
-  }
-
-  transformForExtraServices():void{
 
   }
 
-  generateTsTemplate():void{
+  transformForExtraServices(): void {
 
   }
 
-  generateInvoice():void{
+  generateTsTemplate(): void {
 
   }
 
-  processPayment():void{
+  generateInvoice(): void {
 
   }
 
-  purchaseOrders():void{
+  processPayment(): void {
 
   }
 
-  addEditDaysWorked(action:string,row:any):void{
+  purchaseOrders(): void {
+
+  }
+
+  addEditDaysWorked(action: string, row: any): void {
     if (action == 'add') {
       this.modalEdit = this.modalService.open(AddEditDaysWorkedComponent, {
         header: 'Add days worked',
         width: '70%',
         height: '60%',
-        data:{
-          action:'add'
+        data: {
+          action: 'add'
         }
       });
       this.modalEdit.onClose.subscribe(() => {
         this.ngOnInit();
       });
-    }else{
+    } else {
       this.modalEdit = this.modalService.open(AddEditDaysWorkedComponent, {
         header: 'Edit days worked',
         width: '70%',
         height: '60%',
-        data:{
-          data:row
+        data: {
+          data: row
         }
       });
       this.modalEdit.onClose.subscribe(() => {
@@ -382,7 +378,7 @@ export class AddEditScComponent implements OnInit {
     }
   }
 
-  deleteDaysWorked(row:any){
+  deleteDaysWorked(row: any) {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -395,11 +391,11 @@ export class AddEditScComponent implements OnInit {
       accept: () => {
         this.toast.add({ severity: 'info', summary: "Delete row", detail: row.month });
       },
-  
+
     });
   }
 
-  addMonth():void{
+  addMonth(): void {
     this.modalEdit = this.modalService.open(AddMonthComponent, {
       header: 'Add days worked',
       width: '70%',
@@ -410,7 +406,7 @@ export class AddEditScComponent implements OnInit {
     });
   }
 
-  addLine():void{
+  addLine(): void {
     this.modalEdit = this.modalService.open(AddProvisionComponent, {
       header: 'Add provision',
       width: '70%',
@@ -421,19 +417,19 @@ export class AddEditScComponent implements OnInit {
     });
   }
 
-  nodeSelect(event:any) {
+  nodeSelect(event: any) {
     this.toast.add({ severity: 'info', summary: 'row Selected', detail: event.node.data.month });
   }
 
-  nodeUnselect(event:any) {
-      this.toast.add({ severity: 'warn', summary: 'row Unselected', detail: event.node.data.month });
+  nodeUnselect(event: any) {
+    this.toast.add({ severity: 'warn', summary: 'row Unselected', detail: event.node.data.month });
   }
 
-  edit(general:any):void{
+  edit(general: any): void {
     this.toast.add({ severity: 'info', summary: "Edit row", detail: general.consultantName });
   }
 
-  deleteGeneral(general:any){
+  deleteGeneral(general: any) {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -446,7 +442,7 @@ export class AddEditScComponent implements OnInit {
       accept: () => {
         this.toast.add({ severity: 'info', summary: "Delete row", detail: general.consultantName });
       },
-  
+
     });
   }
 }

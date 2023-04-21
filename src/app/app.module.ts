@@ -25,7 +25,7 @@ import { Dropdown } from 'primeng/dropdown';
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService,ForecastsService],
+  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService, ForecastsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

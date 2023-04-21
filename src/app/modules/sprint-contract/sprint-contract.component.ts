@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
-import { FileExporterService } from 'src/app/services/file-exporter.service';
+import { FileExporterService } from '@services/file-exporter.service';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,8 +21,8 @@ import { AddEditScComponent } from './add-edit-sc/add-edit-sc.component';
 
 @Component({
   standalone: true,
-  selector: 'app-sprint-contract-ui',
-  templateUrl: './sprint-contract-ui.component.html',
+  selector: 'app-sprint-contract',
+  templateUrl: './sprint-contract.component.html',
   imports: [
     FormsModule,
     ButtonModule,
@@ -63,7 +63,7 @@ import { AddEditScComponent } from './add-edit-sc/add-edit-sc.component';
     ])
   ]
 })
-export class SprintContractUiComponent implements OnInit {
+export class SprintContractComponent implements OnInit {
 
   advancedSearch: any = {
     requestNumber: '',
@@ -171,17 +171,17 @@ export class SprintContractUiComponent implements OnInit {
 
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
-    this.fileExporter.exportExcel(this.listSC.map(SpringContractUI => {
+    this.fileExporter.exportExcel(this.listSC.map(SpringContract => {
       let contract: any ={
-        'Request number' : SpringContractUI.requestNumber,
-        'Request or extension' : SpringContractUI.requestOrExtension,
-        'SC number' : SpringContractUI.scNumber,
-        'Department' : SpringContractUI.department,
-        'Consultant' :SpringContractUI.consultant,
-        'Sales price': SpringContractUI.salesPrice
+        'Request number' : SpringContract.requestNumber,
+        'Request or extension' : SpringContract.requestOrExtension,
+        'SC number' : SpringContract.scNumber,
+        'Department' : SpringContract.department,
+        'Consultant' :SpringContract.consultant,
+        'Sales price': SpringContract.salesPrice
       }
       return contract;
-    }), 'SpringContractUI').finally(() => this.tableOptions.exportLoading = false);
+    }), 'SpringContract').finally(() => this.tableOptions.exportLoading = false);
   }
   refresh(){
     this.ngOnInit();

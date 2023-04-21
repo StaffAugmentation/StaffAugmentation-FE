@@ -7,6 +7,14 @@ const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('@modules/home/home.component').then(c => c.HomeComponent) },
       { path: 'business-request', loadChildren: ()=> import('@modules/br/br.module').then(m => m.BrModule) },
+      {
+        path: 'sprint-contract',
+        children: [
+          { path: '', loadComponent: () => import('@modules/sprint-contract-home/sprint-contract-home.component').then(c => c.SprintContractHomeComponent) },
+          { path: 'TM', loadComponent: () => import('@modules/sprint-contract/sprint-contract.component').then(c => c.SprintContractComponent)},
+          { path: 'PTM', loadComponent: () => import('@modules/sprint-contract/sprint-contract.component').then(c => c.SprintContractComponent)},
+        ]
+      },
       { path: 'company', loadComponent: () => import('@modules/settings/data-type/company/company.component').then(c => c.CompanyComponent) },
       { path: 'department', loadComponent: () => import('@modules/settings/data-type/department/department.component').then(c => c.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/settings/data-type/approver/approver.component').then(c => c.ApproverComponent) },
@@ -26,7 +34,6 @@ const routes: Routes = [
       { path: 'app-parameter', loadComponent: () => import('@modules/settings/app-parameter/app-parameter.component').then(c => c.AppParameterComponent)},
       { path: 'oerp-code', loadComponent: () => import('@modules/settings/data-type/oerp-code/oerp-code.component').then(c => c.OERPCodeComponent)},
       { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
-      { path: 'sprint-contract-ui', loadComponent: () => import('@modules/settings/sprint-contract-ui/sprint-contract-ui.component').then(c => c.SprintContractUiComponent)},
     ]
   }
 ];

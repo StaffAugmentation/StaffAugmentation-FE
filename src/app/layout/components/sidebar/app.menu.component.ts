@@ -19,6 +19,13 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
                     { label: 'Business Request', icon: 'pi pi-fw pi-shopping-bag', routerLink: ['/business-request'] },
                     {
+                        label: 'SC Control', icon: 'pi pi-fw pi-th-large',
+                        items: [
+                            { label: 'T&M Control', icon: 'pi pi-fw pi-bookmark', routerLink: ['/sprint-contract/TM'] },
+                            { label: 'PTM Control', icon: 'pi pi-fw pi-bookmark', routerLink: ['/sprint-contract/PTM'] },
+                        ]
+                    },
+                    {
                         label: 'Settings', icon: 'pi pi-fw pi-cog',
                         items: [
                             {
@@ -37,7 +44,7 @@ export class AppMenuComponent implements OnInit {
                                     { label: 'Recruitment', icon: 'pi pi-fw pi-bookmark', routerLink: ['/recruitment'] },
                                     { label: 'Forecasts', icon: 'pi pi-fw pi-bookmark', routerLink: ['/forecasts'] },
                                     { label: 'Date Picker', icon: 'pi pi-fw pi-bookmark', routerLink: ['/date-picker'] },
-                                    { label: 'App parameters management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/app-parameter']},
+                                    { label: 'App parameters management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/app-parameter'] },
                                     { label: 'Recruitment', icon: 'pi pi-fw pi-bookmark', routerLink: ['/recruitment'] },
                                     { label: 'OERP Code', icon: 'pi pi-fw pi-bookmark', routerLink: ['/oerp-code'] },
                                     { label: 'Highest Degree', icon: 'pi pi-fw pi-bookmark', routerLink: ['/highest-degree'] },
@@ -46,7 +53,6 @@ export class AppMenuComponent implements OnInit {
                             },
                             { label: 'Tree View', icon: 'pi pi-fw pi-bookmark', routerLink: ['/tree-view'] },
                             { label: 'Role Management', icon: 'pi pi-fw pi-bookmark', routerLink: ['/role-management'] },
-                            { label: 'Sprint Contract UI', icon: 'pi pi-fw pi-bookmark', routerLink: ['/sprint-contract-ui'] },
                         ]
                     }
                 ]
