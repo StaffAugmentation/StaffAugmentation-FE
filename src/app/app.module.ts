@@ -24,7 +24,7 @@ import { ForecastsService } from '@services/forecasts.service';
     ToastModule,
     ConfirmDialogModule
   ],
-  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService,ForecastsService],
+  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService, ForecastsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

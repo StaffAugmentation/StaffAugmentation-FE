@@ -7,6 +7,14 @@ const routes: Routes = [
     children: [
       { path: '', loadComponent: () => import('@modules/home/home.component').then(c => c.HomeComponent) },
       { path: 'business-request', loadComponent: ()=> import('@modules/br/br.component').then(c => c.BrComponent) },
+      {
+        path: 'sprint-contract',
+        children: [
+          { path: '', loadComponent: () => import('@modules/sprint-contract-home/sprint-contract-home.component').then(c => c.SprintContractHomeComponent) },
+          { path: 'TM', loadComponent: () => import('@modules/sprint-contract/sprint-contract.component').then(c => c.SprintContractComponent)},
+          { path: 'PTM', loadComponent: () => import('@modules/sprint-contract/sprint-contract.component').then(c => c.SprintContractComponent)},
+        ]
+      },
       { path: 'company', loadComponent: () => import('@modules/settings/data-type/company/company.component').then(c => c.CompanyComponent) },
       { path: 'department', loadComponent: () => import('@modules/settings/data-type/department/department.component').then(c => c.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/settings/data-type/approver/approver.component').then(c => c.ApproverComponent) },
@@ -26,7 +34,7 @@ const routes: Routes = [
       { path: 'role-management', loadComponent: () => import('@modules/settings/role-management/role-management.component').then(c => c.RoleManagementComponent)},
       { path: 'app-parameter', loadComponent: () => import('@modules/settings/app-parameter/app-parameter.component').then(c => c.AppParameterComponent)},
       { path: 'oerp-code', loadComponent: () => import('@modules/settings/data-type/oerp-code/oerp-code.component').then(c => c.OERPCodeComponent)},
-      { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)}
+      { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
     ]
   }
 ];
