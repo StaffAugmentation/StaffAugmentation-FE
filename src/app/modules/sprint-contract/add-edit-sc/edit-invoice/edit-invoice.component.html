@@ -1,0 +1,194 @@
+<div *ngIf="addForm">
+    <form [formGroup]="addForm">
+        <p-tabView orientation="left">
+            <p-tabPanel header="Invoice" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Invoicing period</label>
+                        <div class="p-inputgroup">
+                            <input type="text" pInputText formControlName="invoicingPeriodStart">
+                            <span class="p-inputgroup-addon">to</span>
+                            <input type="text" pInputText formControlName="invoicingPeriodEnd">
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">invoice date<span class="text-red-500">*</span></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="invoiceDate"
+                            [class]="addForm.get('invoiceDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addForm.get('invoiceDate')?.invalid && isSubmited" severity="error"
+                            text="Invoice date is required"></p-message>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Client<span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="clients" formControlName="client" optionLabel="client"
+                            [class]="addForm.get('client')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                        <p-message *ngIf="addForm.get('client')?.invalid && isSubmited" severity="error"
+                            text="Client is required"></p-message>
+                    </div>
+                    <div class="field col">
+                        <label class="pt-2 font-bold">Ntt data entity<span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="nttDataEntity"
+                            [class]="addForm.get('nttDataEntity')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addForm.get('nttDataEntity')?.invalid && isSubmited" severity="error"
+                            text="Ntt data entity is required"></p-message>    
+                    </div>
+                    <div class="field col">
+                        <label class="pt-2 font-bold">Client/PO number</label>
+                        <input type="text" pInputText formControlName="clientPoNumber"> 
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">OERP invoice code</label>
+                        <input type="text" pInputText formControlName="oerpInvoiceCode"> 
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">Id draft</label>
+                        <input type="text" pInputText formControlName="idDraft"> 
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">MF to be deducted</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input type="text" decimal pInputText formControlName="mfToBeDeducted">
+                        </div> 
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">Invoice amount<span class="text-red-500">*</span></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input type="text" decimal pInputText formControlName="totalAmount"
+                            [class]="addForm.get('totalAmount')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addForm.get('totalAmount')?.invalid && isSubmited" severity="error"
+                            text="Invoice amount is required"></p-message>   
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label class="font-bold">OERP Inv.amount</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input type="text" decimal pInputText formControlName="oerpInvAmount">
+                        </div> 
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Invoice description</label>
+                        <textarea pInputTextarea formControlName="invoiceComment"></textarea> 
+                    </div>
+                    <div class="field col mt-5">
+                        <p-table #dtOerp [value]="oerp" dataKey="id" styleClass="p-datatable-gridlines" 
+                            responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let col of cols">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-oerp>
+                                <tr>
+                                    <td *ngFor="let col of cols">
+                                        {{oerp[col.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table> 
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Details" class="p-fluid m-0 pb-4">
+                <div class="pb-6">
+                    <label class="font-bold">Normal Performances</label>
+                    <p-table #dtPerformance [value]="performances" dataKey="id" styleClass="p-datatable-gridlines"
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngFor="let col of colsPerformance">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-performance>
+                            <tr >
+                                <td *ngFor="let col of colsPerformance">
+                                    {{performance[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="pb-6">
+                    <label class="font-bold">Povision of services - Performances</label>
+                    <p-table #dtProvisionPerformance [value]="provisionPerformances" dataKey="id" styleClass="p-datatable-gridlines"
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngFor="let col of colsProvisionPerformance">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-provisionPerformance>
+                            <tr >
+                                <td *ngFor="let col of colsProvisionPerformance">
+                                    {{provisionPerformance[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="pb-6">
+                    <label class="font-bold">Povision of services - General</label>
+                    <p-table #dtGeneral [value]="generals" dataKey="id" styleClass="p-datatable-gridlines"
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngFor="let col of colsGeneral">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-general>
+                            <tr >
+                                <td *ngFor="let col of colsGeneral">
+                                    {{general[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+        <div class="footer">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
+                [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton
+                class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+            <div class="absolute bottom-3 left-0 ml-2">
+                <button pButton pRipple (click)="downloadFiles()" class="p-button-sm p-button-warning " icon="pi pi-download"
+                    label="Download files"></button>
+                <button pButton pRipple class="p-button-outlined p-button-sm p-button-secondary ml-2" (click)="generateCreditNote()" 
+                    label="Generate credit note"></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card flex justify-content-center">
+    <p-dialog [(visible)]="visible" [style]="{ width: '30vw' }">
+        <div class="text-center">
+            <p class="pi pi-exclamation-circle text-yellow-500 text-6xl font-bold"></p>
+            <p class="text-4xl font-bold">Credit invoice</p>
+            <p>What would you like to do ?</p>
+            <p-dropdown appendTo="body" [options]="creditInvoice" optionLabel="name"></p-dropdown>
+            <div class="mt-4">
+                <button pButton pRipple (click)="visible = false" label="Yes" class="p-button-sm p-button-primary mr-2 w-3"></button>
+                <button pButton pRipple (click)="visible = false" label="No" class="p-button-sm p-button-danger w-3"></button>
+            </div>
+        </div>    
+    </p-dialog>
+</div>

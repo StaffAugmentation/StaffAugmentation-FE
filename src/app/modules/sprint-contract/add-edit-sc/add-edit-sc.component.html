@@ -276,7 +276,7 @@
                                         <p-button icon="pi pi-credit-card"
                                             styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
                                     </ng-container>
-                                    <ng-container *ngIf="col.field == 'action' && rowData[col.field]">
+                                    <ng-container>
                                         <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 "></p-treeTableToggler>
                                         {{ rowData[col.field]}}
                                     </ng-container>
@@ -324,7 +324,7 @@
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 4rem"></th>
-                                        <th style="width: 15rem" *ngFor="let col of columns">
+                                        <th style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns">
                                             {{ col.header }}
                                         </th>
                                     </tr>
@@ -334,7 +334,7 @@
                                         <td style="width: 4rem">
                                             <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
                                         </td>
-                                        <td *ngFor="let col of columns; let i = index">
+                                        <td style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns; let i = index">
                                             <p-treeTableToggler [rowNode]="rowNode"
                                                 *ngIf="i === 0"></p-treeTableToggler>
                                             {{ rowData[col.field] }}
@@ -397,7 +397,37 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Invoicing" class="p-fluid m-0">
+            <p-tabPanel header="Invoicing" >
+                <div class="col formgrid grid">
+                    <div class="field col-12 md:col-2 mt-3">
+                        <label for="maximumCost"> <b>Remaining amount</b></label>
+                    </div>
+                    <div class="field col-12 md:col-2">    
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input type="text" decimal pInputText formControlName="remainingAmount">
+                        </div>
+                    </div>
+                </div>    
+                <div>
+                    <p-table #dtInvoice [value]="invoices" dataKey="id" styleClass="p-datatable-gridlines"
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th *ngFor="let col of colsInvoice">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-invoice>
+                            <tr (dblclick)="editInvoice(invoice)">
+                                <td *ngFor="let col of colsInvoice">
+                                    {{invoice[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </p-tabPanel>
             <p-tabPanel header="Payment" class="p-fluid m-0">
             </p-tabPanel>
