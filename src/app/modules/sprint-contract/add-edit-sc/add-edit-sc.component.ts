@@ -27,6 +27,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/generate-ntt-data-contract.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { EditPaymentComponent } from './edit-payment/edit-payment.component';
+import {FileUploadModule} from 'primeng/fileupload';
+import {HttpClientModule} from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -48,7 +50,9 @@ import { EditPaymentComponent } from './edit-payment/edit-payment.component';
     DropdownModule,
     TreeTableModule,
     InputTextareaModule,
-    SplitButtonModule
+    SplitButtonModule,
+    FileUploadModule,
+    HttpClientModule
 
   ],
   animations: [
@@ -130,6 +134,8 @@ export class AddEditScComponent implements OnInit {
   consultant: any[] = [
     { id: '1', consultantName: 'Anthony Asanka', profileLeveOnsiteCategory: 'consultant ; Unique ; Far site', company: 'NTT data SWISS', nOfDays: '65.00' }
   ];
+  documentations:any[]=[];
+  colsDocumentation:any[]=[];
 
   constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig, private modalService: DialogService,
     private modalEdit: DynamicDialogRef, private toast: MessageService, private confirmationService: ConfirmationService) { }
@@ -237,6 +243,23 @@ export class AddEditScComponent implements OnInit {
       { field: 'totalAmount', header: 'Total amount' },
       { field: 'invoiceReference', header: 'Invoice reference' },
       { field: 'paymentSchedule', header: 'Payment schedule' },
+    ];
+
+    this.colsDocumentation = [
+      { field: 'requestNumber', header: 'Request number' },
+      { field: 'requestOrExtension', header: 'Request or extension' },
+      { field: 'scNumber', header: 'SC number' },
+      { field: 'department', header: 'Department' },
+      { field: 'consultant', header: 'Consultant' },
+      { field: 'salesPrice', header: 'Sales price' },
+      { field: 'placeOfDelivery', header: 'Place of delivery' },
+      { field: 'frameworkContract', header: 'Framework contract'},
+      { field: 'signatureDate', header: 'Signature date'},
+      { field: 'maximumEndDate', header: 'Maximum end date' },
+      { field: 'specificClientCode', header: 'Specific client code' },
+      { field: 'projectStartDate', header: 'Project start date' },
+      { field: 'contractStatus', header: 'Contract status'},
+      { field: 'totalPrice', header: 'Total price'}
     ];
   }
 
@@ -504,4 +527,31 @@ export class AddEditScComponent implements OnInit {
     });
 
   }
+
+  downloadAll():void{
+
+  }
+
+  downloadFile(documentation:any):void{
+
+  }
+
+  deleteDocumentation(documentation:any):void{
+    this.confirmationService.confirm({
+      message: 'You won\'t be able to revert this! ',
+      header: 'Are you sure?',
+      icon: 'pi pi-exclamation-circle text-yellow-500',
+      acceptButtonStyleClass: 'p-button-danger p-button-raised',
+      rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+      acceptLabel: 'Yes, delete it',
+      rejectLabel: 'No, cancel',
+      defaultFocus: 'reject',
+      accept: () => {
+        this.toast.add({ severity: 'info', summary: "Delete row", detail: documentation.consultantName });
+      },
+
+    });
+
+  }
+
 }

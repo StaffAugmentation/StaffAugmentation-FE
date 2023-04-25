@@ -521,6 +521,45 @@
                 </p-tabView>    
             </p-tabPanel>
             <p-tabPanel header="Documentation" class="p-fluid m-0">
+                <div class="flex flex-row-reverse">
+                    <button pButton pRipple (click)="downloadAll()" class="p-button-sm p-button-warning w-2" icon="pi pi-download"
+                    label="Download all"></button>
+                </div>  
+                <div class="field col">
+                    <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true" class="flex align-items-center justify-content-center"></p-fileUpload>
+                    <p-table #dtDocumentation [value]="documentations" styleClass="p-datatable-gridlines" class="m-5">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 9rem">
+                                </th>
+                                <th *ngFor="let col of colsDocumentation">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-documentation>
+                            <tr>
+                                <td>
+                                    <p-button icon="pi pi-download" styleClass="p-button-warning p-button-text p-0" (click)="downloadFile(documentation)"></p-button>
+                                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text p-0" (click)="deleteDocumentation(documentation)"></p-button>
+                                </td>
+                                <td *ngFor="let col of colsDocumentation">
+                                    {{documentation[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No data found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>     
             </p-tabPanel>
         </p-tabView>
         <div class="footer">
