@@ -26,6 +26,7 @@ import { AddMonthComponent } from './add-month/add-month.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/generate-ntt-data-contract.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
+import { EditPaymentComponent } from './edit-payment/edit-payment.component';
 
 @Component({
   standalone: true,
@@ -103,6 +104,10 @@ export class AddEditScComponent implements OnInit {
     {id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice:'Client invoice' }
   ];
   colsInvoice: any[] = [];
+  payments: any[] = [
+    {id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule:'10/04/2023' }
+  ];
+  colsPayment: any[] = [];
   performance: TreeNode[] = [
     {
       data: { action: 'Anthony Puech [Project Manager;9;Near site' },
@@ -226,6 +231,13 @@ export class AddEditScComponent implements OnInit {
       { field: 'invoiceComment', header: 'Invoice comment' },
       { field: 'typeInvoice', header: 'Type invoice' },
     ];
+
+    this.colsPayment = [
+      { field: 'invoicingPeriod', header: 'Invoicing period' },
+      { field: 'totalAmount', header: 'Total amount' },
+      { field: 'invoiceReference', header: 'Invoice reference' },
+      { field: 'paymentSchedule', header: 'Payment schedule' },
+    ];
   }
 
   expandChildren(node: TreeNode) {
@@ -269,7 +281,11 @@ export class AddEditScComponent implements OnInit {
       purchaseOrder: new FormControl(data ? data.purchaseOrder :null),
       performanceComment: new FormControl(data ? data.performanceComment :null),
       remainingAmount: new FormControl({value:data ? data.remainingAmount :null,disabled:true}),
-
+      poReference: new FormControl(data ? data.poReference :null),
+      poEndDate: new FormControl({value:data ? data.poEndDate :null,disabled:true}),
+      poTotalAmount: new FormControl({value:data ? data.poTotalAmount :null,disabled:true}),
+      poRemainingAmount: new FormControl({value:data ? data.poRemainingAmount :null,disabled:true}),
+      
     });
   }
 
@@ -467,6 +483,20 @@ export class AddEditScComponent implements OnInit {
       style: { width: '90%', maxWidth: '900px' },
       data: {
         invoice: invoice
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+
+  }
+
+  editPayment(payment: any):void{
+    this.modalEdit = this.modalService.open(EditPaymentComponent, {
+      header: 'Consultant payment process',
+      style: { width: '95%', maxWidth: '1000px', height: '85%' },
+      data: {
+        payment: payment
       }
     });
     this.modalEdit.onClose.subscribe(() => {
