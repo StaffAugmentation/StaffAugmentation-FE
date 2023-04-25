@@ -27,8 +27,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/generate-ntt-data-contract.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { EditPaymentComponent } from './edit-payment/edit-payment.component';
-import {FileUploadModule} from 'primeng/fileupload';
-import {HttpClientModule} from '@angular/common/http';
+import { FileUploadModule} from 'primeng/fileupload';
+import { HttpClientModule} from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -53,7 +53,6 @@ import {HttpClientModule} from '@angular/common/http';
     SplitButtonModule,
     FileUploadModule,
     HttpClientModule
-
   ],
   animations: [
     trigger('showHide', [
