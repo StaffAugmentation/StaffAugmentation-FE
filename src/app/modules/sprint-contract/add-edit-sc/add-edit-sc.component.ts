@@ -25,6 +25,10 @@ import { AddProvisionComponent } from './add-provision/add-provision.component';
 import { AddMonthComponent } from './add-month/add-month.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/generate-ntt-data-contract.component';
+import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
+import { EditPaymentComponent } from './edit-payment/edit-payment.component';
+import { FileUploadModule} from 'primeng/fileupload';
+import { HttpClientModule} from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -46,8 +50,9 @@ import { GenerateNttDataContractComponent } from './generate-ntt-data-contract/g
     DropdownModule,
     TreeTableModule,
     InputTextareaModule,
-    SplitButtonModule
-
+    SplitButtonModule,
+    FileUploadModule,
+    HttpClientModule
   ],
   animations: [
     trigger('showHide', [
@@ -98,6 +103,14 @@ export class AddEditScComponent implements OnInit {
   selectedPerformances: any;
   selectedGenerals: any;
   general: any[] = [];
+  invoices: any[] = [
+    {id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice:'Client invoice' }
+  ];
+  colsInvoice: any[] = [];
+  payments: any[] = [
+    {id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule:'10/04/2023' }
+  ];
+  colsPayment: any[] = [];
   performance: TreeNode[] = [
     {
       data: { action: 'Anthony Puech [Project Manager;9;Near site' },
@@ -120,6 +133,8 @@ export class AddEditScComponent implements OnInit {
   consultant: any[] = [
     { id: '1', consultantName: 'Anthony Asanka', profileLeveOnsiteCategory: 'consultant ; Unique ; Far site', company: 'NTT data SWISS', nOfDays: '65.00' }
   ];
+  documentations:any[]=[];
+  colsDocumentation:any[]=[];
 
   constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig, private modalService: DialogService,
     private modalEdit: DynamicDialogRef, private toast: MessageService, private confirmationService: ConfirmationService) { }
@@ -212,6 +227,39 @@ export class AddEditScComponent implements OnInit {
       { field: 'invoicingStatus', header: 'Invoicing status' },
       { field: 'mfInvoicingStatus', header: 'MF invoicing status' },
     ];
+
+    this.colsInvoice = [
+      { field: 'invoicingPeriod', header: 'Invoicing period' },
+      { field: 'totalAmount', header: 'Total amount' },
+      { field: 'oerpInvoiceCode', header: 'OERP invoice code' },
+      { field: 'invoiceDate', header: 'Invoice date' },
+      { field: 'invoiceComment', header: 'Invoice comment' },
+      { field: 'typeInvoice', header: 'Type invoice' },
+    ];
+
+    this.colsPayment = [
+      { field: 'invoicingPeriod', header: 'Invoicing period' },
+      { field: 'totalAmount', header: 'Total amount' },
+      { field: 'invoiceReference', header: 'Invoice reference' },
+      { field: 'paymentSchedule', header: 'Payment schedule' },
+    ];
+
+    this.colsDocumentation = [
+      { field: 'requestNumber', header: 'Request number' },
+      { field: 'requestOrExtension', header: 'Request or extension' },
+      { field: 'scNumber', header: 'SC number' },
+      { field: 'department', header: 'Department' },
+      { field: 'consultant', header: 'Consultant' },
+      { field: 'salesPrice', header: 'Sales price' },
+      { field: 'placeOfDelivery', header: 'Place of delivery' },
+      { field: 'frameworkContract', header: 'Framework contract'},
+      { field: 'signatureDate', header: 'Signature date'},
+      { field: 'maximumEndDate', header: 'Maximum end date' },
+      { field: 'specificClientCode', header: 'Specific client code' },
+      { field: 'projectStartDate', header: 'Project start date' },
+      { field: 'contractStatus', header: 'Contract status'},
+      { field: 'totalPrice', header: 'Total price'}
+    ];
   }
 
   expandChildren(node: TreeNode) {
@@ -252,9 +300,14 @@ export class AddEditScComponent implements OnInit {
       maximumCost: new FormControl(data ? data.maximumCost : null),
       additionalBudget: new FormControl(data ? data.additionalBudget : null),
       mfInvoiced: new FormControl(data ? data.mfInvoiced : false),
-      purchaseOrder: new FormControl(null),
-      performanceComment: new FormControl(null),
-
+      purchaseOrder: new FormControl(data ? data.purchaseOrder :null),
+      performanceComment: new FormControl(data ? data.performanceComment :null),
+      remainingAmount: new FormControl({value:data ? data.remainingAmount :null,disabled:true}),
+      poReference: new FormControl(data ? data.poReference :null),
+      poEndDate: new FormControl({value:data ? data.poEndDate :null,disabled:true}),
+      poTotalAmount: new FormControl({value:data ? data.poTotalAmount :null,disabled:true}),
+      poRemainingAmount: new FormControl({value:data ? data.poRemainingAmount :null,disabled:true}),
+      
     });
   }
 
@@ -445,4 +498,61 @@ export class AddEditScComponent implements OnInit {
 
     });
   }
+
+  editInvoice(invoice: any):void{
+    this.modalEdit = this.modalService.open(EditInvoiceComponent, {
+      header: invoice.typeInvoice,
+      style: { width: '90%', maxWidth: '900px' },
+      maskStyleClass : 'centred-header',
+      data: {
+        invoice: invoice
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+
+  }
+
+  editPayment(payment: any):void{
+    this.modalEdit = this.modalService.open(EditPaymentComponent, {
+      header: 'Consultant payment process',
+      style: { width: '95%', maxWidth: '1000px', height: '85%' },
+      maskStyleClass : 'centred-header',
+      data: {
+        payment: payment
+      }
+    });
+    this.modalEdit.onClose.subscribe(() => {
+      this.ngOnInit();
+    });
+
+  }
+
+  downloadAll():void{
+
+  }
+
+  downloadFile(documentation:any):void{
+
+  }
+
+  deleteDocumentation(documentation:any):void{
+    this.confirmationService.confirm({
+      message: 'You won\'t be able to revert this! ',
+      header: 'Are you sure?',
+      icon: 'pi pi-exclamation-circle text-yellow-500',
+      acceptButtonStyleClass: 'p-button-danger p-button-raised',
+      rejectButtonStyleClass: 'p-button-secondary p-button-raised',
+      acceptLabel: 'Yes, delete it',
+      rejectLabel: 'No, cancel',
+      defaultFocus: 'reject',
+      accept: () => {
+        this.toast.add({ severity: 'info', summary: "Delete row", detail: documentation.consultantName });
+      },
+
+    });
+
+  }
+
 }
