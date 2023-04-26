@@ -25,3 +25,6 @@ $gutter: 1rem; //for primeflex grid system
 
     border-bottom: 1px solid var(--primary-color);
 }
+p-autoComplete.grouped button {
+    border-radius: 0;
+}

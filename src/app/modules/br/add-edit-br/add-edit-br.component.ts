@@ -164,8 +164,7 @@ export class AddEditBrComponent implements OnInit {
     cols: [
       { id: 'fileName', label: 'File name' },
       { id: 'appName', label: 'App name' },
-      { id: 'docType', label: 'Document type' },
-
+      { id: 'docType', label: 'Document type' }
     ],
     loading: false,
     exportLoading: false
@@ -465,6 +464,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalEditPenalty = this.modalService.open(EditPenaltyComponent, {
         header: `Edit penalty`,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }

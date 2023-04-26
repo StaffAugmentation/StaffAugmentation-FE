@@ -245,21 +245,10 @@ export class AddEditScComponent implements OnInit {
     ];
 
     this.colsDocumentation = [
-      { field: 'requestNumber', header: 'Request number' },
-      { field: 'requestOrExtension', header: 'Request or extension' },
-      { field: 'scNumber', header: 'SC number' },
-      { field: 'department', header: 'Department' },
-      { field: 'consultant', header: 'Consultant' },
-      { field: 'salesPrice', header: 'Sales price' },
-      { field: 'placeOfDelivery', header: 'Place of delivery' },
-      { field: 'frameworkContract', header: 'Framework contract' },
-      { field: 'signatureDate', header: 'Signature date' },
-      { field: 'maximumEndDate', header: 'Maximum end date' },
-      { field: 'specificClientCode', header: 'Specific client code' },
-      { field: 'projectStartDate', header: 'Project start date' },
-      { field: 'contractStatus', header: 'Contract status' },
-      { field: 'totalPrice', header: 'Total price' }
-    ];
+        { field: 'fileName', header: 'File name' },
+        { field: 'appName', header: 'App name' },
+        { field: 'docType', header: 'Document type' }
+      ];
   }
 
   expandChildren(node: TreeNode) {
@@ -410,8 +399,7 @@ export class AddEditScComponent implements OnInit {
     if (action == 'add') {
       this.modalEdit = this.modalService.open(AddEditDaysWorkedComponent, {
         header: 'Add days worked',
-        width: '70%',
-        height: '60%',
+        style: { width: '80%', maxWidth: '900px' },
         maskStyleClass: 'centred-header',
         data: {
           action: 'add'
@@ -423,8 +411,7 @@ export class AddEditScComponent implements OnInit {
     } else {
       this.modalEdit = this.modalService.open(AddEditDaysWorkedComponent, {
         header: 'Edit days worked',
-        width: '70%',
-        height: '60%',
+        style: { width: '80%', maxWidth: '900px' },
         maskStyleClass: 'centred-header',
         data: {
           data: row
@@ -456,8 +443,8 @@ export class AddEditScComponent implements OnInit {
   addMonth(): void {
     this.modalEdit = this.modalService.open(AddMonthComponent, {
       header: 'Add days worked',
-      width: '70%',
-      height: '60%',
+      style: { width: '70%', maxWidth: '900px' },
+      maskStyleClass: 'centred-header',
     });
     this.modalEdit.onClose.subscribe(() => {
       this.ngOnInit();
@@ -467,8 +454,8 @@ export class AddEditScComponent implements OnInit {
   addLine(): void {
     this.modalEdit = this.modalService.open(AddProvisionComponent, {
       header: 'Add provision',
-      width: '70%',
-      height: '60%',
+      style: { width: '80%', maxWidth: '900px' },
+      maskStyleClass: 'centred-header',
     });
     this.modalEdit.onClose.subscribe(() => {
       this.ngOnInit();

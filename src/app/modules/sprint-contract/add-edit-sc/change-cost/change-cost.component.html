@@ -1,7 +1,7 @@
 <div *ngIf="addEditForm">
-    <form [formGroup]="addEditForm" class="py-4">
+    <form [formGroup]="addEditForm" class="pt-4 pb-5">
         <div class="p-fluid m-0">
-            <div class="flex">
+            <div class="grid px-3">
                 <div class="field mb-0 col-12 md:col-3 p-1">
                     <label for="consultant" class="font-semibold">Consultant</label>
                     <p-dropdown [options]="consultant" formControlName="consultant"
@@ -67,7 +67,6 @@
                 </p-table>
             </div>
         </div>
-
         <div class="footer">
             <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
                 [loading]="actionLoading"></button>

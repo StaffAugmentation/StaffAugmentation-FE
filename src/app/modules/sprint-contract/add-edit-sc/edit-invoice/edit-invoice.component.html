@@ -81,7 +81,7 @@
                         <textarea pInputTextarea formControlName="invoiceComment"></textarea>
                     </div>
                     <div class="field col mb-0">
-                        <label ></label>
+                        <label></label>
                         <p-table #dtOerp [value]="oerp" dataKey="id" styleClass="p-datatable-gridlines"
                             responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
                             <ng-template pTemplate="header">
@@ -217,10 +217,10 @@
                     (click)="generateCreditNote()" label="Generate credit note"></button>
             </div>
             <div class="flex">
-                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
-                    label="Save" [loading]="actionLoading"></button>
                 <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
                     label="Close"></button>
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
+                    label="Save" [loading]="actionLoading"></button>
             </div>
         </div>
     </form>

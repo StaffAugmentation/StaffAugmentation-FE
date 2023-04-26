@@ -25,11 +25,11 @@
           <div class="field col">
             <label for="department"><b>Department </b><span class="text-red-500">*</span></label>
             <div class="flex">
-              <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredDepartments"
+              <p-autoComplete class="grouped" [dropdown]="true" [readonly]="false" [suggestions]="filteredDepartments"
                 formControlName="department" (completeMethod)="filterDepartment($event)"
                 [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
               </p-autoComplete>
-              <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined"
+              <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined" style="border-radius: 0 7px 7px 0;"
                 icon="pi pi-plus"></button>
             </div>
             <p-message *ngIf="addEditForm.get('department')?.invalid && isSubmited" severity="error"

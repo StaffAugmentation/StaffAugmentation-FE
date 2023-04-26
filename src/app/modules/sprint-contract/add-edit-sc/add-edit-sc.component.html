@@ -296,17 +296,12 @@
                             class="p-button-text p-2"></button>
                     </div>
                     <div [@showHide]="isCollapsed.performance ? 'true' : 'false'" class="grid p-fluid">
-                        <div class="formgrid grid mt-3 col-offset-8">
-                            <div class="field col">
-                                <p-splitButton label="Purchase order" [model]="purchaseOrder"
-                                    (onClick)="purchaseOrders()"
-                                    styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
-                            </div>
-                            <div class="field col">
-                                <button pButton pRipple (click)="addMonth()"
-                                    class="p-button-outlined p-button-sm p-button-primary w-10rem"
-                                    icon="pi pi-plus-circle" label="Add month"></button>
-                            </div>
+                        <div class="flex justify-content-end w-full mb-2">
+                            <p-splitButton label="Purchase order" [model]="purchaseOrder" (onClick)="purchaseOrders()"
+                                styleClass="p-button-sm p-button-primary w-12rem mr-2"></p-splitButton>
+                            <button pButton pRipple (click)="addMonth()"
+                                class="p-button-outlined p-button-sm p-button-primary w-10rem" icon="pi pi-plus-circle"
+                                label="Add month"></button>
                         </div>
                         <div class="formgrid grid">
                             <p-treeTable #dtPerformance [columns]="colsPerformances"
@@ -358,12 +353,10 @@
                             class="p-button-text p-2"></button>
                     </div>
                     <div [@showHide]="isCollapsed.general ? 'true' : 'false'" class="grid p-fluid">
-                        <div class="formgrid grid mt-3 col-offset-10">
-                            <div class="field col">
-                                <button pButton pRipple (click)="addLine()"
+                        <div class="flex justify-content-end w-full mb-2">
+                            <button pButton pRipple (click)="addLine()"
                                     class="p-button-outlined p-button-sm p-button-primary w-10rem"
                                     icon="pi pi-plus-circle" label="Add line"></button>
-                            </div>
                         </div>
                         <div class="formgrid grid">
                             <p-table #dtGeneral [value]="general" [lazy]="true" [scrollable]="true"
@@ -571,8 +564,8 @@
             <div class="flex">
                 <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
                     label="Close"></button>
-                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary"
-                    label="Save" [loading]="actionLoading"></button>
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
+                    [loading]="actionLoading"></button>
             </div>
         </div>
     </form>

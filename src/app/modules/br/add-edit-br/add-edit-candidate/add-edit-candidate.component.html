@@ -26,9 +26,9 @@
         <div class="flex">
           <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredRecruitments"
             formControlName="recruitment" (completeMethod)="filterRecruitment($event)"
-            [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid grouped' : 'grouped'">
           </p-autoComplete>
-          <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus"></button>
+          <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus" style="border-radius: 0 7px 7px 0;"></button>
         </div>
       </div>
       <div class="field col">
