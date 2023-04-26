@@ -213,87 +213,81 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Performance" class="p-fluid m-0">
-                <div class="formgrid grid">
-                    <div class="field col">
+                <div class="flex justify-content-between mb-3">
+                    <div class="flex">
                         <p-splitButton label="Generate invoice" [model]="invoice" (onClick)="generateInvoice()"
-                            styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
-                    </div>
-                    <div class="field col pr-7">
+                            styleClass="p-button-sm p-button-primary w-auto text-sm mr-2"></p-splitButton>
                         <p-splitButton label="Process for payment" [model]="processForPayment"
                             (onClick)="processPayment()"
-                            styleClass="p-button-sm p-button-primary w-14rem"></p-splitButton>
+                            styleClass="p-button-sm p-button-primary w-auto"></p-splitButton>
                     </div>
-                    <div class="field col pl-6">
+                    <div class="flex text-sm">
                         <p-splitButton label="Purchase order" [model]="purchaseOrder" (onClick)="purchaseOrders()"
-                            styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
-                    </div>
-                    <div class="field col">
+                            class="p-button-sm p-button-primary w-auto text-sm mr-2"></p-splitButton>
                         <button pButton pRipple (click)="transformForExtraServices()"
-                            class="p-button-sm p-button-primary w-14rem" label="Transform for Extra services"></button>
-                    </div>
-                    <div class="field col">
+                            class="p-button-sm p-button-primary w-auto mr-2"
+                            label="Transform for Extra services"></button>
                         <button pButton pRipple (click)="generateTsTemplate()"
-                            class="p-button-sm p-button-primary w-12rem" label="Generate TS template"></button>
-                    </div>
-                    <div class="field col">
+                            class="p-button-sm p-button-primary w-auto mr-2" label="Generate TS template"></button>
                         <button pButton pRipple (click)="addEditDaysWorked('add',0)"
-                            class="p-button-outlined p-button-sm p-button-primary w-5rem" icon="pi pi-plus-circle"
+                            class="p-button-outlined p-button-sm p-button-primary w-auto" icon="pi pi-plus-circle"
                             label="Add"></button>
                     </div>
                 </div>
-                <p-treeTable #dtPerformance [value]="performance" [columns]="colsPerformance" 
-                        [(selection)]="selectedPerformances" selectionMode="multiple"
-                        (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
-                        responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px"
-                        styleClass="p-treetable-gridlines">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th class="w-4rem"></th>
-                                <th style="width: 21rem" *ngFor="let col of columns">
-                                    {{ col.header }}
-                                </th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-                            <tr (dblclick)="addEditDaysWorked('edit',rowData)">
-                                <td class="w-4rem p-0 text-center">
-                                    <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                <p-treeTable [className]="'performance'" #dtPerformance [value]="performance"
+                    [columns]="colsPerformance" [(selection)]="selectedPerformances" selectionMode="multiple"
+                    (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                    responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px"
+                    styleClass="p-treetable-gridlines">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th class="w-4rem"></th>
+                            <th [style]="{minWidth: (col.field == 'action' ? '25rem' : '100px'), width: 'fit-content'}"
+                                *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                        <tr (dblclick)="addEditDaysWorked('edit',rowData)">
+                            <td class="w-4rem p-0 text-center">
+                                <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                            </td>
+                            <ng-container *ngFor="let col of columns; let i = index">
+                                <td *ngIf="col.field == 'action' && !rowData[col.field]">
+                                    <p-button icon="pi pi-trash"
+                                        styleClass="p-button-danger p-button-text p-button-sm p-0"
+                                        (click)="deleteDaysWorked(rowData)"></p-button>
+                                    <p-button icon="pi pi-pencil"
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"
+                                        (click)="addEditDaysWorked('edit',rowData)"></p-button>
+                                    <p-button icon="pi pi-arrow-circle-down"
+                                        styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-upload"
+                                        styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-bookmark"
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-credit-card"
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
                                 </td>
-                                <td style="width: 21rem"  *ngFor="let col of columns; let i = index">
-                                    <ng-container *ngIf="col.field == 'action' && !rowData[col.field]">
-                                        <p-button icon="pi pi-trash"
-                                            styleClass="p-button-danger p-button-text p-button-sm p-0"
-                                            (click)="deleteDaysWorked(rowData)"></p-button>
-                                        <p-button icon="pi pi-pencil"
-                                            styleClass="p-button-info p-button-text p-button-sm p-0"
-                                            (click)="addEditDaysWorked('edit',rowData)"></p-button>
-                                        <p-button icon="pi pi-arrow-circle-down"
-                                            styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
-                                        <p-button icon="pi pi-upload"
-                                            styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
-                                        <p-button icon="pi pi-bookmark"
-                                            styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
-                                        <p-button icon="pi pi-credit-card"
-                                            styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
-                                    </ng-container>
-                                    <ng-container>
-                                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 "></p-treeTableToggler>
-                                        {{ rowData[col.field]}}
-                                    </ng-container>
+                                <td *ngIf="col.field != 'action' || rowData[col.field]">
+                                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 "></p-treeTableToggler>
+                                    {{ rowData[col.field]}}
                                 </td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="emptymessage">
-                            <tr>
-                                <td colspan="8">No performance found.</td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="loadingbody">
-                            <tr>
-                                <td colspan="8">Loading performances data. Please wait.</td>
-                            </tr>
-                        </ng-template>
-                    </p-treeTable>
+                            </ng-container>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No performance found.</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr>
+                            <td colspan="8">Loading performances data. Please wait.</td>
+                        </tr>
+                    </ng-template>
+                </p-treeTable>
                 <div class="card mt-4">
                     <div class="flex justify-content-between align-items-center">
                         <h5 class="mb-0">Provision of services - Performances</h5>
@@ -323,7 +317,8 @@
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 4rem"></th>
-                                        <th style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns">
+                                        <th style="min-width: 80px !important; width: fit-content !important;"
+                                            *ngFor="let col of columns">
                                             {{ col.header }}
                                         </th>
                                     </tr>
@@ -333,7 +328,8 @@
                                         <td style="width: 4rem">
                                             <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
                                         </td>
-                                        <td style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns; let i = index">
+                                        <td style="min-width: 80px !important; width: fit-content !important;"
+                                            *ngFor="let col of columns; let i = index">
                                             <p-treeTableToggler [rowNode]="rowNode"
                                                 *ngIf="i === 0"></p-treeTableToggler>
                                             {{ rowData[col.field] }}
@@ -416,18 +412,18 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Invoicing" >
+            <p-tabPanel header="Invoicing">
                 <div class="col formgrid grid">
                     <div class="field col-12 md:col-2 mt-3">
                         <label for="maximumCost"> <b>Remaining amount</b></label>
                     </div>
-                    <div class="field col-12 md:col-2">    
+                    <div class="field col-12 md:col-2">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">€</span>
                             <input type="text" decimal pInputText formControlName="remainingAmount">
                         </div>
                     </div>
-                </div>    
+                </div>
                 <div>
                     <p-table #dtInvoice [value]="invoices" dataKey="id" styleClass="p-datatable-gridlines"
                         responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
@@ -458,7 +454,7 @@
                     </p-table>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Payment" class="p-fluid m-0"> 
+            <p-tabPanel header="Payment" class="p-fluid m-0">
                 <p-tabView orientation="vertical">
                     <p-tabPanel header="Consultant payment process">
                         <div class="formgrid grid">
@@ -475,21 +471,22 @@
                                 <div class="p-inputgroup">
                                     <span class="p-inputgroup-addon">€</span>
                                     <input decimal type="text" pInputText formControlName="poTotalAmount">
-                            
+
                                 </div>
-                            </div>    
+                            </div>
                             <div class="field col">
                                 <label class="font-bold">PO remaining amount</label>
                                 <div class="p-inputgroup">
                                     <span class="p-inputgroup-addon">€</span>
                                     <input decimal type="text" pInputText formControlName="poRemainingAmount">
-                            
+
                                 </div>
                             </div>
                         </div>
                         <div>
                             <p-table #dtPayment [value]="payments" dataKey="id" styleClass="p-datatable-gridlines"
-                                responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                                responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
+                                scrollHeight="400px">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th *ngFor="let col of colsPayment">
@@ -515,17 +512,18 @@
                                     </tr>
                                 </ng-template>
                             </p-table>
-                        </div>    
+                        </div>
                     </p-tabPanel>
-                </p-tabView>    
+                </p-tabView>
             </p-tabPanel>
             <p-tabPanel header="Documentation" class="p-fluid m-0">
                 <div class="flex flex-row-reverse">
-                    <button pButton pRipple (click)="downloadAll()" class="p-button-sm p-button-warning w-2" icon="pi pi-download"
-                    label="Download all"></button>
-                </div>  
+                    <button pButton pRipple (click)="downloadAll()" class="p-button-sm p-button-warning w-2"
+                        icon="pi pi-download" label="Download all"></button>
+                </div>
                 <div class="field col">
-                    <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true" class="flex align-items-center justify-content-center"></p-fileUpload>
+                    <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true"
+                        class="flex align-items-center justify-content-center"></p-fileUpload>
                     <p-table #dtDocumentation [value]="documentations" styleClass="p-datatable-gridlines" class="m-5">
                         <ng-template pTemplate="header">
                             <tr>
@@ -539,8 +537,10 @@
                         <ng-template pTemplate="body" let-documentation>
                             <tr>
                                 <td>
-                                    <p-button icon="pi pi-download" styleClass="p-button-warning p-button-text p-0" (click)="downloadFile(documentation)"></p-button>
-                                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text p-0" (click)="deleteDocumentation(documentation)"></p-button>
+                                    <p-button icon="pi pi-download" styleClass="p-button-warning p-button-text p-0"
+                                        (click)="downloadFile(documentation)"></p-button>
+                                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text p-0"
+                                        (click)="deleteDocumentation(documentation)"></p-button>
                                 </td>
                                 <td *ngFor="let col of colsDocumentation">
                                     {{documentation[col.field]}}
@@ -558,19 +558,21 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                </div>     
+                </div>
             </p-tabPanel>
         </p-tabView>
-        <div class="footer">
-            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
-                [loading]="actionLoading"></button>
-            <button (click)="close()" type="button" pButton
-                class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
-            <div class="absolute bottom-3 left-0 ml-2">
+        <div class="footer-filled">
+            <div class="flex">
                 <button pButton pRipple (click)="generateNTTDataContract()" class="p-button-sm p-button-primary "
                     label="Generate NTT data contract"></button>
                 <button pButton pRipple (click)="terminateContract()" class="p-button-sm p-button-danger ml-2"
                     label="Terminate contract"></button>
+            </div>
+            <div class="flex">
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2" label="Save"
+                    [loading]="actionLoading"></button>
+                <button (click)="close()" type="button" pButton
+                    class="p-button-sm p-button-secondary" label="Close"></button>
             </div>
         </div>
     </form>

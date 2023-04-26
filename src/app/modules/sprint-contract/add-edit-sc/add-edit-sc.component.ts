@@ -503,6 +503,7 @@ export class AddEditScComponent implements OnInit {
     this.modalEdit = this.modalService.open(EditInvoiceComponent, {
       header: invoice.typeInvoice,
       style: { width: '90%', maxWidth: '900px' },
+      maskStyleClass : 'centred-header',
       data: {
         invoice: invoice
       }
@@ -517,6 +518,7 @@ export class AddEditScComponent implements OnInit {
     this.modalEdit = this.modalService.open(EditPaymentComponent, {
       header: 'Consultant payment process',
       style: { width: '95%', maxWidth: '1000px', height: '85%' },
+      maskStyleClass : 'centred-header',
       data: {
         payment: payment
       }
