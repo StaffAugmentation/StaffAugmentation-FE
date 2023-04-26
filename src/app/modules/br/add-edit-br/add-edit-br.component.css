@@ -7,6 +7,8 @@
   border-radius: 6px;
   border: solid 2px #6785C1;
   margin: 0 15px;
+  padding: 10px 15px;
+  font-weight: 600;
 }
 :host ::ng-deep .br .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
   background: #6785C1;

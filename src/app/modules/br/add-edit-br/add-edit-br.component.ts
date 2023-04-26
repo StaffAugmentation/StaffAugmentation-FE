@@ -157,7 +157,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  uploadedFiles: any[]=[]
+  uploadedFiles: any[] = []
   listFile!: any[];
   tableOptionsFile: any = {
     visibleCols: [],
@@ -209,12 +209,12 @@ export class AddEditBrComponent implements OnInit {
   };
   getBrProfile(): void {
     this.listBrProfile = [
-      { profileN: 20208, profile: 'AA', level: 2, category: 3, onFarSite: 'On site',  nDays: 60.00000, salesPrice: '504.09 €', subtotal:'30.24540 €' }
+      { profileN: 20208, profile: 'AA', level: 2, category: 3, onFarSite: 'On site', nDays: 60.00000, salesPrice: '504.09 €', subtotal: '30.24540 €' }
     ];
   };
   getConsultant(): void {
     this.listConsultant = [
-      { id: 1, name: 'Narasimharaju Medara', employeeNumber:'' }
+      { id: 1, name: 'Narasimharaju Medara', employeeNumber: '' }
     ];
   };
   getCandidate(): void {
@@ -227,15 +227,15 @@ export class AddEditBrComponent implements OnInit {
   };
   getPenalty(): void {
     this.listPenalty = [
-      { profileN: 20207, plcOnsite: 'TE;3;3;On site', consultantName: 'Alexandru Tasca', penaltyDays: '',  penalty: '', penaltyComment: '' }
+      { profileN: 20207, plcOnsite: 'TE;3;3;On site', consultantName: 'Alexandru Tasca', penaltyDays: '', penalty: '', penaltyComment: '' }
     ];
   };
   getFile(): void {
     this.listFile = [
-      {fileName: "L1.10612 - 023521 - FO.pdf", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Formal Offer"},
-      {fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Client Contract/PO Draft"},
-      {fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Client Contract/PO Draft"},
-      {fileName: "L1.10612 - 023521 - FO.pdf", appName:"DIGITTM-027521-MOD-01-600017889-R", docType:"Formal Offer"},
+      { fileName: "L1.10612 - 023521 - FO.pdf", appName: "DIGITTM-027521-MOD-01-600017889-R", docType: "Formal Offer" },
+      { fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName: "DIGITTM-027521-MOD-01-600017889-R", docType: "Client Contract/PO Draft" },
+      { fileName: "L1.10612 - DIGITT-027521-DIGITTM-027186-MO", appName: "DIGITTM-027521-MOD-01-600017889-R", docType: "Client Contract/PO Draft" },
+      { fileName: "L1.10612 - 023521 - FO.pdf", appName: "DIGITTM-027521-MOD-01-600017889-R", docType: "Formal Offer" },
     ];
   };
 
@@ -280,9 +280,9 @@ export class AddEditBrComponent implements OnInit {
       expectedSD: new FormControl(null),
       placeOfDelivery: new FormControl(null, [Validators.required]),
       totalManDays: new FormControl(null),
-      subtotalPrice: new FormControl({value: null, disabled: true}),
-      generalBudget: new FormControl({value: null, disabled: true}),
-      totalPrice: new FormControl({value: null, disabled: true}),
+      subtotalPrice: new FormControl({ value: null, disabled: true }),
+      generalBudget: new FormControl({ value: null, disabled: true }),
+      totalPrice: new FormControl({ value: null, disabled: true }),
       specificCN: new FormControl(null, [Validators.required]),
       dateSCR: new FormControl(null, [Validators.required]),
       dateSCS: new FormControl(null, [Validators.required]),
@@ -300,7 +300,8 @@ export class AddEditBrComponent implements OnInit {
   addDepartment(): void {
     this.modalDepartment = this.modalService.open(AddDepartmentComponent, {
       header: `Add department`,
-      style: { width: '90%', maxWidth: '500px' }
+      style: { width: '90%', maxWidth: '500px' },
+      maskStyleClass: 'centred-header'
     });
     this.modalDepartment.onClose.subscribe(res => {
 
@@ -312,6 +313,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalEditProfile = this.modalService.open(EditProfileComponent, {
         header: `Edit profile`,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }
@@ -322,7 +324,7 @@ export class AddEditBrComponent implements OnInit {
     }
   }
 
-  addEditBrProfile(action: string, id:number): void {
+  addEditBrProfile(action: string, id: number): void {
     if (action == 'add') {
       this.modalAddEditBrProfile = this.modalService.open(AddEditBrProfileComponent, {
         header: `Add profile`,
@@ -337,7 +339,7 @@ export class AddEditBrComponent implements OnInit {
         header: `Edit profile`,
         style: { width: '95%', maxWidth: '1000px' },
         data: {
-          id:id
+          id: id
         }
       });
       this.modalAddEditBrProfile.onClose.subscribe(res => {
@@ -346,7 +348,7 @@ export class AddEditBrComponent implements OnInit {
     }
   }
 
-  deleteBrProfile(id:number): void {
+  deleteBrProfile(id: number): void {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -359,7 +361,7 @@ export class AddEditBrComponent implements OnInit {
     });
   }
 
-  editConsultant(id: number,name: string): void {
+  editConsultant(id: number, name: string): void {
     if (id) {
       this.modalEditConsultant = this.modalService.open(EditConsultantComponent, {
         header: name,
@@ -374,7 +376,7 @@ export class AddEditBrComponent implements OnInit {
     }
   }
 
-  deleteConsultant(id:number): void {
+  deleteConsultant(id: number): void {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -386,7 +388,7 @@ export class AddEditBrComponent implements OnInit {
       defaultFocus: 'reject',
     });
   }
-  addEditCandidate(action: string, id:number): void {
+  addEditCandidate(action: string, id: number): void {
     if (action == 'add') {
       this.modalAddEditCandidate = this.modalService.open(AddEditCandidateComponent, {
         header: `Add candidate`,
@@ -401,7 +403,7 @@ export class AddEditBrComponent implements OnInit {
         header: `Edit candidate`,
         style: { width: '95%', maxWidth: '1000px' },
         data: {
-          id:id
+          id: id
         }
       });
       this.modalAddEditCandidate.onClose.subscribe(res => {
@@ -410,7 +412,7 @@ export class AddEditBrComponent implements OnInit {
     }
   }
 
-  deleteCandidate(id:number): void {
+  deleteCandidate(id: number): void {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -422,7 +424,7 @@ export class AddEditBrComponent implements OnInit {
       defaultFocus: 'reject',
     });
   }
-  addEditPartner(action: string, id:number): void {
+  addEditPartner(action: string, id: number): void {
     if (action == 'add') {
       this.modalAddEditPartner = this.modalService.open(AddEditCandidateComponent, {
         header: `Add Partner`,
@@ -437,7 +439,7 @@ export class AddEditBrComponent implements OnInit {
         header: `Edit Partner`,
         style: { width: '95%', maxWidth: '1000px' },
         data: {
-          id:id
+          id: id
         }
       });
       this.modalAddEditPartner.onClose.subscribe(res => {
@@ -446,7 +448,7 @@ export class AddEditBrComponent implements OnInit {
     }
   }
 
-  deletePartner(id:number): void {
+  deletePartner(id: number): void {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',
@@ -472,7 +474,7 @@ export class AddEditBrComponent implements OnInit {
       });
     }
   }
-  deleteFile(id:number): void {
+  deleteFile(id: number): void {
     this.confirmationService.confirm({
       message: 'You won\'t be able to revert this! ',
       header: 'Are you sure?',

@@ -1,19 +1,19 @@
 <div *ngIf="addEditForm">
-    <form [formGroup]="addEditForm">
+    <form [formGroup]="addEditForm" class="py-4">
         <div class="p-fluid m-0">
             <div class="flex">
                 <div class="field mb-0 col-12 md:col-3 p-1">
-                    <label for="consultant">Consultant</label>
+                    <label for="consultant" class="font-semibold">Consultant</label>
                     <p-dropdown [options]="consultant" formControlName="consultant"
                         optionLabel="consultantName"></p-dropdown>
                 </div>
                 <div class="field mb-0 col-12 md:col-3 p-1">
-                    <label for="profile">Profile</label>
+                    <label for="profile" class="font-semibold">Profile</label>
                     <p-dropdown [options]="consultant" formControlName="profile"
                         optionLabel="profileLeveOnsiteCategory"></p-dropdown>
                 </div>
                 <div class="field mb-0 col-12 md:col-2 p-1">
-                    <label for="changeFrom">Change from<span class="text-red-500">*</span></label>
+                    <label for="changeFrom" class="font-semibold">Change from<span class="text-red-500">*</span></label>
                     <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="changeFrom"
                         [class]="addEditForm.get('changeFrom')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
                     <p-message *ngIf="addEditForm.get('changeFrom')?.invalid && isSubmited" severity="error"
@@ -21,8 +21,7 @@
                 </div>
                 <div class="field mb-0 col-12 md:col-4 p-1 flex">
                     <div class="field pr-2">
-                        <label for="newConsultantCost"> <b>New consultant cost</b><span
-                                class="text-red-500">*</span></label>
+                        <label for="newConsultantCost" class="font-semibold"> New consultant cost<span class="text-red-500">*</span></label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">CHF</span>
                             <input decimal type="text" pInputText formControlName="newConsultantCost"
@@ -38,7 +37,7 @@
                 </div>
             </div>
             <div class="field">
-                <label>Current consultant cost: {{consultant.consultantCost}}</label>
+                <label class="font-semibold">Current consultant cost: {{consultant.consultantCost}}</label>
                 <p-table #dtconsultantCost [value]="consultantCost" dataKey="id" responsiveLayout="scroll">
                     <ng-template pTemplate="header">
                         <tr>
@@ -72,8 +71,8 @@
         <div class="footer">
             <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
                 [loading]="actionLoading"></button>
-            <button (click)="close()" type="button" pButton
-                class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
+                label="Close"></button>
         </div>
     </form>
 </div>

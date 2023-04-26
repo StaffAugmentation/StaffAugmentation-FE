@@ -1,5 +1,5 @@
 <div *ngIf="addForm">
-    <form [formGroup]="addForm">
+    <form [formGroup]="addForm" class="pb-4">
         <p-tabView orientation="left">
             <p-tabPanel header="Contract detail" class="p-fluid m-0">
                 <div class="formgrid grid">
@@ -48,7 +48,8 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="History" class="p-fluid m-0 pb-4">
-                <p-table #dtContract [value]="contracts" dataKey="id" [rows]="20" [rowHover]="true" responsiveLayout="scroll">
+                <p-table #dtContract [value]="contracts" dataKey="id" [rows]="20" [rowHover]="true"
+                    responsiveLayout="scroll">
                     <ng-template pTemplate="header">
                         <tr>
                             <th *ngFor="let col of cols" class="min-w-max">
@@ -76,14 +77,14 @@
                 </p-table>
             </p-tabPanel>
         </p-tabView>
-        <div class="footer">
-            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
-                [loading]="actionLoading"></button>
-            <button (click)="close()" type="button" pButton
-                class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
-            <div class="absolute bottom-3 left-0 ml-2">
-                <button pButton pRipple (click)="downloadNTTDataContract()" class="p-button-sm p-button-primary "
-                    label="Download NTT data contract"></button>
+        <div class="footer-filled">
+            <button pButton pRipple (click)="downloadNTTDataContract()" class="p-button-sm p-button-primary "
+                label="Download NTT data contract"></button>
+            <div class="flex">
+                <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
+                    label="Close"></button>
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
+                    [loading]="actionLoading"></button>
             </div>
         </div>
     </form>

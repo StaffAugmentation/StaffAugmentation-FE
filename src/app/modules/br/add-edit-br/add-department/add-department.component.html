@@ -1,7 +1,7 @@
 <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="field">
-      <label for="department"> <b>Department </b><span class="text-red-500">*</span></label>
+      <label for="department" class="font-semibold"> Department <span class="text-red-500">*</span></label>
       <input type="text" pInputText
         [class]="addForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
         formControlName="department">
@@ -11,7 +11,7 @@
   </div>
     <div class="footer">
       <button type="submit" pButton class="p-button-sm p-button-primary ml-2" label="Save"></button>
-      <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary"
+      <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
         label="Close"></button>&nbsp;
     </div>
 </form>
