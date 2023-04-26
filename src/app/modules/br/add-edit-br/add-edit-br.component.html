@@ -1,6 +1,5 @@
 <form class="br" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <p-tabView class="navBar">
-
+  <p-tabView>
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="field">
@@ -220,13 +219,11 @@
             </ng-template>
             <ng-template pTemplate="body" let-BrProfile>
               <tr>
-                <td>
-                  <div>
-                    <button pButton pRipple (click)="deleteBrProfile(BrProfile.profileN)" type="button"
-                      icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text"></button>
-                    <button pButton pRipple (click)="addEditBrProfile('edit',BrProfile.profileN)" type="button"
-                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
-                  </div>
+                <td class="p-0 text-center">
+                  <button pButton pRipple (click)="deleteBrProfile(BrProfile.profileN)" type="button" icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger p-button-text"></button>
+                  <button pButton pRipple (click)="addEditBrProfile('edit',BrProfile.profileN)" type="button"
+                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsBrProfile.visibleCols">
                   {{BrProfile[col.id]}}
@@ -263,13 +260,11 @@
             </ng-template>
             <ng-template pTemplate="body" let-Consultant>
               <tr>
-                <td>
-                  <div>
-                    <button pButton pRipple (click)="deleteConsultant(Consultant.id)" type="button" icon="pi pi-trash"
-                      class="p-button-rounded p-button-danger p-button-text"></button>
-                    <button pButton pRipple (click)="editConsultant(Consultant.id,Consultant.name)" type="button"
-                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
-                  </div>
+                <td class="p-0 text-center">
+                  <button pButton pRipple (click)="deleteConsultant(Consultant.id)" type="button" icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger p-button-text"></button>
+                  <button pButton pRipple (click)="editConsultant(Consultant.id,Consultant.name)" type="button"
+                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsConsultant.visibleCols">
                   {{Consultant[col.id]}}
@@ -309,15 +304,13 @@
             </ng-template>
             <ng-template pTemplate="body" let-Candidate>
               <tr>
-                <td>
-                  <div>
-                    <button pButton pRipple (click)="deleteCandidate(Candidate.code)" type="button" icon="pi pi-trash"
-                      class="p-button-rounded p-button-danger p-button-text"></button>
-                    <button pButton pRipple (click)="addEditCandidate('edit',Candidate.code)" type="button"
-                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
-                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
-                      class="p-button-rounded p-button-warning p-button-text"></button>
-                  </div>
+                <td class="p-0 text-center">
+                  <button pButton pRipple (click)="deleteCandidate(Candidate.code)" type="button" icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger p-button-text p-0"></button>
+                  <button pButton pRipple (click)="addEditCandidate('edit',Candidate.code)" type="button"
+                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                    class="p-button-rounded p-button-warning p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsCandidate.visibleCols">
                   {{Candidate[col.id]}}
@@ -369,15 +362,13 @@
             </ng-template>
             <ng-template pTemplate="body" let-Partner>
               <tr>
-                <td>
-                  <div>
-                    <button pButton pRipple (click)="deletePartner(Partner.code)" type="button" icon="pi pi-trash"
-                      class="p-button-rounded p-button-danger p-button-text"></button>
-                    <button pButton pRipple (click)="addEditPartner('edit',Partner.code)" type="button"
-                      icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
-                    <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
-                      class="p-button-rounded p-button-warning p-button-text"></button>
-                  </div>
+                <td class="p-0 text-center">
+                  <button pButton pRipple (click)="deletePartner(Partner.code)" type="button" icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger p-button-text"></button>
+                  <button pButton pRipple (click)="addEditPartner('edit',Partner.code)" type="button"
+                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                  <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                    class="p-button-rounded p-button-warning p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsPartner.visibleCols">
                   {{Partner[col.id]}}
@@ -419,24 +410,24 @@
             <label for="subtotalPrice"> <b>Subtotal price</b></label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
-              <p-inputNumber formControlName="subtotalPrice" inputId="locale-us" mode="decimal" locale="en-US"
-                [minFractionDigits]="2"> </p-inputNumber>
+              <p-inputNumber formControlName="subtotalPrice" inputId="locale-us" mode="decimal" locale="en-US" decimal>
+              </p-inputNumber>
             </div>
           </div>
           <div class="field col">
             <label for="generalBudget"> <b>General budget</b></label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
-              <p-inputNumber formControlName="generalBudget" inputId="locale-us" mode="decimal" locale="en-US"
-                [minFractionDigits]="2"> </p-inputNumber>
+              <p-inputNumber formControlName="generalBudget" inputId="locale-us" mode="decimal" locale="en-US" decimal>
+              </p-inputNumber>
             </div>
           </div>
           <div class="field col">
             <label for="totalPrice"> <b>Total price</b></label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
-              <p-inputNumber formControlName="totalPrice" inputId="locale-us" mode="decimal" locale="en-US"
-                [minFractionDigits]="2"> </p-inputNumber>
+              <p-inputNumber formControlName="totalPrice" inputId="locale-us" mode="decimal" locale="en-US" decimal>
+              </p-inputNumber>
             </div>
           </div>
         </div>
@@ -491,17 +482,15 @@
               [text]="getErrorMessage('maximumED', addEditForm.get('maximumED')?.errors)"></p-message>
           </div>
           <div class="field col">
-            <div class="field col">
-              <label for="extensionMED"> <b>Extension maximum end date </b></label>
-              <p-calendar formControlName="extensionMED" [disabledDays]="[5,6]" [showIcon]="true"
-                [readonlyInput]="true"></p-calendar>
-            </div>
+            <label for="extensionMED"> <b>Extension maximum end date </b></label>
+            <p-calendar formControlName="extensionMED" [disabledDays]="[5,6]" [showIcon]="true"
+              [readonlyInput]="true"></p-calendar>
           </div>
         </div>
         <div class="formgrid grid">
           <div class="field col">
             <label for="numberOfDays"> <b>Number of days </b><span class="text-red-500">*</span></label>
-            <p-inputNumber formControlName="numberOfDays" inputId="locale-user" [minFractionDigits]="2"
+            <p-inputNumber formControlName="numberOfDays" inputId="locale-user" decimal
               [class]="addEditForm.get('numberOfDays')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-inputNumber>
             <p-message *ngIf="addEditForm.get('numberOfDays')?.invalid && isSubmited" severity="error"
@@ -511,8 +500,8 @@
             <label for="additionalBudget"> <b>Additional budget</b></label>
             <div class="flex">
               <p-inputNumber formControlName="additionalBudget" inputId="locale-us" mode="decimal" locale="en-US"
-                [minFractionDigits]="2"> </p-inputNumber>
-              <p-dropdown  placeholder="€"></p-dropdown>
+                decimal> </p-inputNumber>
+              <p-dropdown placeholder="€"></p-dropdown>
             </div>
           </div>
           <div class="field col">
@@ -522,8 +511,8 @@
         </div>
         <div class=" field flex justify-content-between">
           <div style="width: 80%;">
-            <p-table #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id"
-              [rows]="250" [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            <p-table #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id" [rows]="250"
+              [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
               [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
               responsiveLayout="scroll">
@@ -568,7 +557,7 @@
         </div>
         <div class="field">
           <label for="generalComment"> <b>General comment</b></label>
-          <textarea rows="5" cols="30" formControlName="generalComment" pInputTextarea [autoResize]="true"></textarea>
+          <textarea rows="5" cols="30" formControlName="generalComment" pInputTextarea></textarea>
         </div>
       </div>
     </p-tabPanel>
@@ -599,56 +588,56 @@
       </div>
       <div class="field">
         <p-table #dtFile [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
-        [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>
+          [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
 
-            </th>
-            <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
-              <div class="flex justify-content-between align-items-center">
-                {{col.label}}
-              </div>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-File let-editing="editing">
-          <tr [pEditableRow]="File">
-            <td>
-              <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
-                class="p-button-rounded p-button-warning p-button-text"></button>
-              <button pButton pRipple (click)="deleteFile(File.id)" type="button" icon="pi pi-trash"
-                class="p-button-rounded p-button-danger p-button-text"></button>
-            </td>
-            <td *ngFor="let col of tableOptionsFile.visibleCols" [pEditableColumn]="File[col.id]"
-              pEditableColumnField="col.id">
-              <ng-container *ngIf="col.id!=='docType'">
-                {{File[col.id]}}
-              </ng-container>
-              <p-cellEditor *ngIf="col.id=='docType'">
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" formControlName="File[col.id]">
-                </ng-template>
-                <ng-template pTemplate="output">
+              </th>
+              <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
+                <div class="flex justify-content-between align-items-center">
+                  {{col.label}}
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-File let-editing="editing">
+            <tr [pEditableRow]="File">
+              <td class="p-0 text-center">
+                <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
+                  class="p-button-rounded p-button-warning p-button-text"></button>
+                <button pButton pRipple (click)="deleteFile(File.id)" type="button" icon="pi pi-trash"
+                  class="p-button-rounded p-button-danger p-button-text"></button>
+              </td>
+              <td *ngFor="let col of tableOptionsFile.visibleCols" [pEditableColumn]="File[col.id]"
+                pEditableColumnField="col.id">
+                <ng-container *ngIf="col.id!=='docType'">
                   {{File[col.id]}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="8">No File found.</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="loadingbody">
-          <tr>
-            <td colspan="8">Loading Files data. Please wait.</td>
-          </tr>
-        </ng-template>
-      </p-table>
+                </ng-container>
+                <p-cellEditor *ngIf="col.id=='docType'">
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" formControlName="File[col.id]">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{File[col.id]}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="8">No File found.</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+            <tr>
+              <td colspan="8">Loading Files data. Please wait.</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </p-tabPanel>
 

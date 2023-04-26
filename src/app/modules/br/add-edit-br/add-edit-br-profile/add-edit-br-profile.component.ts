@@ -68,10 +68,10 @@ export class AddEditBrProfileComponent implements OnInit {
       company: new FormControl(null),
       nDays: new FormControl(null),
       salesPrice: new FormControl(null),
-      iban: new FormControl(null),
+      iban: new FormControl({value: null, disabled: true}),
       placeOfExecution: new FormControl(null),
-      apllyCP: new FormControl(null),
-      apllyITE: new FormControl(null),
+      apllyCP: new FormControl({value: null, disabled: true}),
+      apllyITE: new FormControl({value: null, disabled: true}),
       otherExpertise: new FormControl(null, [Validators.required]),
 
     });

@@ -44,14 +44,14 @@
         <label for="salesPrice"> <b>Sales Price</b></label>
         <div class="flex">
           <input type="text" pInputText formControlName="salesPrice">
-          <p-dropdown style="max-width: 100px;" placeholder="€"></p-dropdown>
+          <p-dropdown placeholder="€"></p-dropdown>
         </div>
       </div>
     </div>
     <div class="formgrid grid">
       <div class="field col">
           <label for="iban"> <b>IBAN Number</b></label>
-          <input type="text" [disabled]="true" pInputText formControlName="iban">
+          <input type="text" pInputText formControlName="iban">
       </div>
       <div class="field col">
         <label for="placeOfExecution"> <b>Place Of Execution</b></label>
@@ -60,19 +60,19 @@
       <div class="field col ">
         <label for="apllyCP"> <b>Apply contractor's premises</b></label>
         <div class="flex justify-content-center align-items-center mt-2">
-          <p-inputSwitch [disabled]="true" formControlName="apllyCP"></p-inputSwitch>
+          <p-inputSwitch formControlName="apllyCP"></p-inputSwitch>
         </div>
       </div>
       <div class="field col">
         <label for="apllyITE"> <b>Apply contractor's equipment</b></label>
         <div class="flex justify-content-center align-items-center mt-2">
-          <p-inputSwitch [disabled]="true" formControlName="apllyITE"></p-inputSwitch>
+          <p-inputSwitch formControlName="apllyITE"></p-inputSwitch>
         </div>
       </div>
     </div>
     <div class="field">
       <label for="otherExpertise"> <b>Other expertise required </b><span class="text-red-500">*</span></label>
-      <textarea rows="5" cols="30" formControlName="otherExpertise" pInputTextarea [autoResize]="true"
+      <textarea rows="5" cols="30" formControlName="otherExpertise" pInputTextarea
         [class]="addEditForm.get('otherExpertise')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       <p-message *ngIf="addEditForm.get('otherExpertise')?.invalid && isSubmited" severity="error"
         [text]="getErrorMessage('otherExpertise', addEditForm.get('otherExpertise')?.errors)"></p-message>

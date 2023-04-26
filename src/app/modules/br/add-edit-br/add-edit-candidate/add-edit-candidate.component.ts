@@ -87,13 +87,13 @@ export class AddEditCandidateComponent implements OnInit {
       recruitment: new FormControl(null),
       resourceType: new FormControl(null),
       checked: new FormControl(null),
-      subconstractor: new FormControl(null),
+      subconstractor: new FormControl({value: null, disabled: true}),
       availabilityD: new FormControl(null),
-      foA: new FormControl(null),
-      proposalC: new FormControl(null),
-      draftA: new FormControl(null),
+      foA: new FormControl({value: null, disabled: true}),
+      proposalC: new FormControl({value: null, disabled: true}),
+      draftA: new FormControl({value: null, disabled: true}),
       detailI: new FormControl(null),
-      comment: new FormControl(null),
+      comment: new FormControl({value: null, disabled: true}),
     });
   }
 

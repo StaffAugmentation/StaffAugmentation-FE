@@ -78,14 +78,14 @@ export class EditConsultantComponent implements OnInit {
   }
   initForm(data: null): void {
     this.editForm = new FormGroup({
-      ressourcePhone: new FormControl(null),
-      ressourceEmail: new FormControl(null),
-      vatNumber: new FormControl(null),
-      nationality: new FormControl(null),
-      legalEN: new FormControl(null),
-      idNumber: new FormControl(null),
-      legalEA: new FormControl(null),
-      employeeNumber: new FormControl(null),
+      ressourcePhone: new FormControl({value: null, disabled: true}),
+      ressourceEmail: new FormControl({value: null, disabled: true}),
+      vatNumber: new FormControl({value: null, disabled: true}),
+      nationality: new FormControl({value: null, disabled: true}),
+      legalEN: new FormControl({value: null, disabled: true}),
+      idNumber: new FormControl({value: null, disabled: true}),
+      legalEA: new FormControl({value: null, disabled: true}),
+      employeeNumber: new FormControl({value: null, disabled: true}),
     });
   }
   addEditProfile(action: string, id:number): void {

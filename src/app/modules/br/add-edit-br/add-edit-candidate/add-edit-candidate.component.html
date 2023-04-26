@@ -57,7 +57,7 @@
           <label for="foA"> <b>FO approval</b></label>
         </div>
         <div class="flex justify-content-center align-items-center">
-          <p-inputSwitch [disabled]="true" formControlName="foA"></p-inputSwitch>
+          <p-inputSwitch formControlName="foA"></p-inputSwitch>
         </div>
       </div>
       <div class="field col">
@@ -65,7 +65,7 @@
           <label for="proposalC"> <b>Proposal Completed</b></label>
         </div>
         <div class="flex justify-content-center align-items-center">
-          <p-inputSwitch [disabled]="true" formControlName="proposalC"></p-inputSwitch>
+          <p-inputSwitch formControlName="proposalC"></p-inputSwitch>
         </div>
       </div>
       <div class="field col">
@@ -73,19 +73,19 @@
           <label for="draftA"> <b>Draft approval</b></label>
         </div>
         <div class="flex justify-content-center align-items-center ">
-          <p-inputSwitch [disabled]="true" formControlName="draftA"></p-inputSwitch>
+          <p-inputSwitch formControlName="draftA"></p-inputSwitch>
         </div>
       </div>
     </div>
     <div class="formgrid grid">
       <div class="field col">
         <label for="detailI"> <b>Detail interview</b></label>
-        <textarea rows="5" cols="30" formControlName="detailI" pInputTextarea [autoResize]="true"
+        <textarea rows="5" cols="30" formControlName="detailI" pInputTextarea
           [class]="addEditForm.get('detailI')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
       <div class="field col">
         <label for="comment"> <b>Comment</b></label>
-        <textarea [disabled]="true" rows="5" cols="30" formControlName="comment" pInputTextarea [autoResize]="true"
+        <textarea rows="5" cols="30" formControlName="comment" pInputTextarea 
           [class]="addEditForm.get('comment')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
     </div>

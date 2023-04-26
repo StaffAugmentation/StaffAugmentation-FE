@@ -28,7 +28,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-profile.component';
 import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
-import { AddEditPartnerComponent } from './add-edit-partner/add-edit-partner.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
 
 
@@ -281,9 +280,9 @@ export class AddEditBrComponent implements OnInit {
       expectedSD: new FormControl(null),
       placeOfDelivery: new FormControl(null, [Validators.required]),
       totalManDays: new FormControl(null),
-      subtotalPrice: new FormControl(null),
-      generalBudget: new FormControl(null),
-      totalPrice: new FormControl(null),
+      subtotalPrice: new FormControl({value: null, disabled: true}),
+      generalBudget: new FormControl({value: null, disabled: true}),
+      totalPrice: new FormControl({value: null, disabled: true}),
       specificCN: new FormControl(null, [Validators.required]),
       dateSCR: new FormControl(null, [Validators.required]),
       dateSCS: new FormControl(null, [Validators.required]),
@@ -425,7 +424,7 @@ export class AddEditBrComponent implements OnInit {
   }
   addEditPartner(action: string, id:number): void {
     if (action == 'add') {
-      this.modalAddEditPartner = this.modalService.open(AddEditPartnerComponent, {
+      this.modalAddEditPartner = this.modalService.open(AddEditCandidateComponent, {
         header: `Add Partner`,
         style: { width: '95%', maxWidth: '1000px' }
       });
@@ -434,7 +433,7 @@ export class AddEditBrComponent implements OnInit {
       });
     }
     else if (id) {
-      this.modalAddEditPartner = this.modalService.open(AddEditPartnerComponent, {
+      this.modalAddEditPartner = this.modalService.open(AddEditCandidateComponent, {
         header: `Edit Partner`,
         style: { width: '95%', maxWidth: '1000px' },
         data: {

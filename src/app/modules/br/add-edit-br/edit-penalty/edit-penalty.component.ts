@@ -49,7 +49,8 @@ export class EditPenaltyComponent implements OnInit {
   }
   initForm(data: null): void {
     this.editForm = new FormGroup({
-      profile: new FormControl(null),
+      profile: new FormControl({value: null, disabled: true}),
+      penaltyDays: new FormControl(null),
       penaltyAmount: new FormControl(null),
       penaltyComment: new FormControl(null),
     });

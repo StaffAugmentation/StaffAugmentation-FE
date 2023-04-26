@@ -52,14 +52,14 @@ export class AddEditProfileComponent implements OnInit {
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
       profile: new FormControl(null, [Validators.required]),
-      salesPrice: new FormControl(null),
-      numberOfDays: new FormControl(null),
+      salesPrice: new FormControl({value: null, disabled: true}),
+      numberOfDays: new FormControl({value: null, disabled: true}),
       consultantCost: new FormControl(null),
       margin: new FormControl(null),
       typeOfContract: new FormControl(null, [Validators.required]),
       expectedSD: new FormControl(null),
-      subconstractorName: new FormControl(null),
-      thirdPR: new FormControl(null),
+      subconstractorName: new FormControl({value: null, disabled: true}),
+      thirdPR: new FormControl({value: null, disabled: true}),
       dayfOfTrain: new FormControl(null),
     });
   }
