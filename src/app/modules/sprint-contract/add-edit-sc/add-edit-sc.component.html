@@ -1,0 +1,420 @@
+<div *ngIf="addEditForm">
+    <form [formGroup]="addEditForm">
+        <p-tabView orientation="left">
+            <p-tabPanel header="Business request" class="p-fluid m-0">
+                <div class="field">
+                    <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
+                    <input type="text" pInputText
+                        [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
+                        placeholder="Request number" formControlName="requestNumber">
+                    <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
+                        text="Request number is required"></p-message>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="requestOrExtension"> <b>Source</b></label>
+                        <input type="text" pInputText placeholder="Source" formControlName="requestOrExtension">
+                    </div>
+                    <div class="field col">
+                        <label for="scNumber"> <b>SC Number</b></label>
+                        <input type="text" pInputText placeholder="SC Number" formControlName="scNumber">
+                    </div>
+                    <div class="field col">
+                        <label for="department"> <b>Department</b></label>
+                        <input type="text" pInputText placeholder="Department" formControlName="department">
+                    </div>
+                    <div class="field col">
+                        <label for="placeOfDelivery"> <b>Place of delivery</b></label>
+                        <input type="text" pInputText placeholder="Place of delivery" formControlName="placeOfDelivery">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="frameworkContract"> <b>Framework contract</b></label>
+                        <input type="text" pInputText placeholder="Framework contract"
+                            formControlName="frameworkContract">
+                    </div>
+                    <div class="field col">
+                        <label for="signatureDate"> <b>Signature date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true"
+                            formControlName="signatureDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="maximumEndDate"> <b>Maximum end date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true"
+                            formControlName="maximumEndDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="specificClientCode"> <b>Specific client code</b></label>
+                        <input type="text" pInputText placeholder="Specific client code"
+                            formControlName="specificClientCode">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="projectStartDate"> <b>Project start date</b></label>
+                        <p-calendar [showIcon]="true" [readonlyInput]="true"
+                            formControlName="projectStartDate"></p-calendar>
+                    </div>
+                    <div class="field col">
+                        <label for="contractStatus"> <b>Contract status</b></label>
+                        <input type="text" pInputText placeholder="Contract status" formControlName="contractStatus">
+                    </div>
+                    <div class="field col">
+                        <label for="totalPrice"> <b>Total price</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText placeholder="Total price"
+                                formControlName="totalPrice">
+                        </div>
+                    </div>
+                    <div class="field col text-right">
+                        <button pButton pRipple (click)="businessRequest()" label="Business request"
+                            class="border-white w-auto p-button-sm mt-8"></button>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="T&M control" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="col formgrid grid">
+                        <div class="field col-12 md:col-3">
+                            <label for="numberOfDays"> <b>Number of days</b></label>
+                            <input type="text" decimal pInputText placeholder="Number of days"
+                                formControlName="numberOfDays">
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="nDaysTransformed"> <b>N days transformed</b></label>
+                            <input type="text" decimal pInputText placeholder="N days transformed"
+                                formControlName="nDaysTransformed">
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <label for="managementFee"> <b>Management fee</b></label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">CHF</span>
+                                <input decimal type="text" pInputText placeholder="Management fee"
+                                    formControlName="managementFee">
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-3">
+                            <p-splitButton label="Change cost" [model]="cost" (onClick)="changeCost()"
+                                styleClass="p-button-sm w-auto md:w-fit p-button-primary mt-5"></p-splitButton>
+                        </div>
+                    </div>
+                    <div class="field col-12 md:col-4 flex">
+                        <div class="field">
+                            <label for="oerpProjectCode"> <b>OERP project code</b><span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" pInputText placeholder="OERP project code"
+                                formControlName="oerpProjectCode"
+                                [class]="addEditForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                            <p-message *ngIf="addEditForm.get('oerpProjectCode')?.invalid && isSubmited"
+                                severity="error" text="OERP project code is required"></p-message>
+                        </div>
+                        <div class="field ">
+                            <button pButton pRipple (click)="add()" label="Add"
+                                class="p-button-outlined p-button-secondary p-button-sm ml-3 mt-5"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="col formgrid grid">
+                        <div class="field col-12 md:col-4">
+                            <label for="maximumCost"> <b>Maximum cost</b></label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">€</span>
+                                <input type="text" decimal pInputText placeholder="Maximum cost"
+                                    formControlName="maximumCost">
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="additionalBudget"> <b>Additional budget</b></label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"></span>
+                                <input type="text" decimal pInputText placeholder="Additional budget"
+                                    formControlName="additionalBudget">
+                            </div>
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="mfInvoiced" class="mt-2"> <b>MF invoiced Y/N</b></label>
+                            <div class="mt-2">
+                                <p-radioButton name="mfInvoiced" class="mr-2" [value]="true" label="Yes"
+                                    formControlName="mfInvoiced"></p-radioButton>
+                                <p-radioButton name="mfInvoiced" [value]="false" label="No"
+                                    formControlName="mfInvoiced"></p-radioButton>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <p-table #dtOERP [value]="oerp" dataKey="id" [tableStyle]="{'min-width':'22rem'}">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th *ngFor="let col of cols">
+                                        {{ col.header }}
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-oerp>
+                                <tr>
+                                    <td *ngFor="let col of cols">
+                                        {{oerp[col.field]}}
+                                    </td>
+                                    <td>
+                                        <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text p-0"
+                                            (click)="delete(oerp)"></p-button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No OERP project code found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading OERP project code data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="field col mr-5">
+                    <p-table #dtOERP [value]="consultant" dataKey="id">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let col of colsConsultant">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-consultant>
+                            <tr>
+                                <td>
+                                    <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text p-0"
+                                        (click)="editConsultant(consultant)"></p-button>
+                                </td>
+                                <td *ngFor="let col of colsConsultant">
+                                    {{consultant[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No consultant found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading consultant data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Performance" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <p-splitButton label="Generate invoice" [model]="invoice" (onClick)="generateInvoice()"
+                            styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
+                    </div>
+                    <div class="field col pr-7">
+                        <p-splitButton label="Process for payment" [model]="processForPayment"
+                            (onClick)="processPayment()"
+                            styleClass="p-button-sm p-button-primary w-14rem"></p-splitButton>
+                    </div>
+                    <div class="field col pl-6">
+                        <p-splitButton label="Purchase order" [model]="purchaseOrder" (onClick)="purchaseOrders()"
+                            styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
+                    </div>
+                    <div class="field col">
+                        <button pButton pRipple (click)="transformForExtraServices()"
+                            class="p-button-sm p-button-primary w-14rem" label="Transform for Extra services"></button>
+                    </div>
+                    <div class="field col">
+                        <button pButton pRipple (click)="generateTsTemplate()"
+                            class="p-button-sm p-button-primary w-12rem" label="Generate TS template"></button>
+                    </div>
+                    <div class="field col">
+                        <button pButton pRipple (click)="addEditDaysWorked('add',0)"
+                            class="p-button-outlined p-button-sm p-button-primary w-5rem" icon="pi pi-plus-circle"
+                            label="Add"></button>
+                    </div>
+                </div>
+                <p-treeTable #dtPerformance [value]="performance" [columns]="colsPerformance"
+                        [(selection)]="selectedPerformances" selectionMode="multiple"
+                        (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                        responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px"
+                        styleClass="p-treetable-gridlines">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th class="w-4rem"></th>
+                                <th style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                            <tr (dblclick)="addEditDaysWorked('edit',rowData)">
+                                <td class="w-4rem p-0 text-center">
+                                    <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                                </td>
+                                <td style="min-width: 80px !important; width: fit-content !important;" *ngFor="let col of columns; let i = index">
+                                    <ng-container *ngIf="col.field == 'action' && !rowData[col.field]">
+                                        <p-button icon="pi pi-trash"
+                                            styleClass="p-button-danger p-button-text p-button-sm p-0"
+                                            (click)="deleteDaysWorked(rowData)"></p-button>
+                                        <p-button icon="pi pi-pencil"
+                                            styleClass="p-button-info p-button-text p-button-sm p-0"
+                                            (click)="addEditDaysWorked('edit',rowData)"></p-button>
+                                        <p-button icon="pi pi-arrow-circle-down"
+                                            styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
+                                        <p-button icon="pi pi-upload"
+                                            styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
+                                        <p-button icon="pi pi-bookmark"
+                                            styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                        <p-button icon="pi pi-credit-card"
+                                            styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                    </ng-container>
+                                    <ng-container *ngIf="col.field == 'action' && rowData[col.field]">
+                                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 "></p-treeTableToggler>
+                                        {{ rowData[col.field]}}
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No performance found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading performances data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-treeTable>
+                <div class="card mt-4">
+                    <div class="flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Provision of services - Performances</h5>
+                        <button pButton (click)="isCollapsed.performance = !isCollapsed.performance"
+                            [icon]="isCollapsed.performance ? 'pi pi-chevron-down' : 'pi pi-chevron-up' "
+                            class="p-button-text p-2"></button>
+                    </div>
+                    <div [@showHide]="isCollapsed.performance ? 'true' : 'false'" class="grid p-fluid">
+                        <div class="formgrid grid mt-3 col-offset-8">
+                            <div class="field col">
+                                <p-splitButton label="Purchase order" [model]="purchaseOrder"
+                                    (onClick)="purchaseOrders()"
+                                    styleClass="p-button-sm p-button-primary w-12rem"></p-splitButton>
+                            </div>
+                            <div class="field col">
+                                <button pButton pRipple (click)="addMonth()"
+                                    class="p-button-outlined p-button-sm p-button-primary w-10rem"
+                                    icon="pi pi-plus-circle" label="Add month"></button>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+
+                            <p-treeTable #dtPerformance [columns]="colsPerformances"
+                                [(selection)]="selectedPerformances" selectionMode="multiple"
+                                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                                responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
+                                scrollHeight="400px" [rowHover]="true" styleClass="p-treetable-gridlines">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 4rem"></th>
+                                        <th style="width: 15rem" *ngFor="let col of columns">
+                                            {{ col.header }}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                                    <tr>
+                                        <td style="width: 4rem">
+                                            <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                                        </td>
+                                        <td *ngFor="let col of columns; let i = index">
+                                            <p-treeTableToggler [rowNode]="rowNode"
+                                                *ngIf="i === 0"></p-treeTableToggler>
+                                            {{ rowData[col.field] }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-treeTable>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Provision of services - General</h5>
+                        <button pButton (click)="isCollapsed.general = !isCollapsed.general"
+                            [icon]="isCollapsed.general ? 'pi pi-chevron-down' : 'pi pi-chevron-up' "
+                            class="p-button-text p-2"></button>
+                    </div>
+                    <div [@showHide]="isCollapsed.general ? 'true' : 'false'" class="grid p-fluid">
+                        <div class="formgrid grid mt-3 col-offset-10">
+                            <div class="field col">
+                                <button pButton pRipple (click)="addLine()"
+                                    class="p-button-outlined p-button-sm p-button-primary w-10rem"
+                                    icon="pi pi-plus-circle" label="Add line"></button>
+                            </div>
+                        </div>
+                        <div class="formgrid grid">
+                            <p-table #dtGeneral [value]="general" [lazy]="true" [scrollable]="true"
+                                scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
+                                styleClass="p-treetable-gridlines">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 4rem">
+                                        </th>
+                                        <th style="width: 15rem" *ngFor="let col of colsGeneral">
+                                            {{ col.header }}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-general>
+                                    <tr (dblclick)="edit(general)">
+                                        <td>
+                                            <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text"
+                                                (click)="edit(general)"></p-button>
+                                            <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text"
+                                                (click)="deleteGeneral(general)"></p-button>
+                                        </td>
+                                        <td *ngFor="let col of colsGeneral">
+                                            {{general[col.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label class="font-bold">Performance comment</label>
+                        <textarea pInputTextarea formControlName="performanceComment"></textarea>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Invoicing" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Payment" class="p-fluid m-0">
+            </p-tabPanel>
+            <p-tabPanel header="Documentation" class="p-fluid m-0">
+            </p-tabPanel>
+        </p-tabView>
+        <div class="footer">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
+                [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton
+                class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+            <div class="absolute bottom-3 left-0 ml-2">
+                <button pButton pRipple (click)="generateNTTDataContract()" class="p-button-sm p-button-primary "
+                    label="Generate NTT data contract"></button>
+                <button pButton pRipple (click)="terminateContract()" class="p-button-sm p-button-danger ml-2"
+                    label="Terminate contract"></button>
+            </div>
+        </div>
+    </form>
+</div>

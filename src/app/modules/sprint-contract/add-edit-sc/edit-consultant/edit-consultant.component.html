@@ -1,0 +1,137 @@
+<div *ngIf="editForm">
+    <form [formGroup]="editForm">
+        <fieldset disabled style="border: white">
+        <p-tabView orientation="left">
+            <div class="p-fluid m-0" >
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="profile"> <b>Profile</b></label>
+                        <input type="text" pInputText formControlName="profile">
+                    </div>
+                    <div class="field col">
+                        <label for="level"> <b>Level</b></label>
+                        <input type="text" pInputText formControlName="level">
+                    </div>
+                    <div class="field col">
+                        <label for="category"> <b>Category</b></label>
+                        <input type="text" pInputText formControlName="category">
+                    </div>
+                    <div class="field col">
+                        <label for="farSite"> <b>On/Far site</b></label>
+                        <input type="text" pInputText formControlName="farSite">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="nOfDays"> <b>N° of days</b></label>
+                        <input decimal type="text" pInputText formControlName="nOfDays">
+                    </div>
+                    <div class="field col">
+                        <label for="daysPerformed"> <b>Days performed</b></label>
+                        <input decimal type="text" pInputText formControlName="daysPerformed">
+                    </div>
+                    <div class="field col">
+                        <label for="remainingDays"> <b>Remaining days</b></label>
+                        <input decimal type="text" pInputText formControlName="remainingDays">
+                    </div>
+                    <div class="field col">
+                        <label for="margin"> <b>Margin</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">%</span>
+                            <input decimal type="text" pInputText formControlName="margin">
+                        </div>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="company"> <b>Company</b></label>
+                        <input type="text" pInputText formControlName="company">
+                    </div>
+                    <div class="field col">
+                        <label for="consultantCost"> <b>Consultant cost</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText formControlName="consultantCost">
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label for="salesPrice"> <b>Sales price</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText formControlName="salesPrice">
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label for="consultantContractStatus"> <b>Consultant contract status</b></label>
+                        <input type="text" pInputText formControlName="consultantContractStatus">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="penalty"> <b>Penalty</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"></span>
+                            <input decimal type="text" pInputText formControlName="penalty">
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label for="penaltyDays"> <b>Penalty days</b></label>
+                        <input decimal type="text" pInputText formControlName="penaltyDays">
+                    </div>
+                    <div class="field col">
+                        <label for="penaltyComment"> <b>Penalty comment</b></label>
+                        <input type="text" pInputText formControlName="penaltyComment">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="subcontractorName"> <b>Subcontractor name</b></label>
+                        <input decimal type="text" pInputText formControlName="subcontractorName">
+                    </div>
+                    <div class="field col">
+                        <label for="thirdPartyRate"> <b>Third party rate</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"></span>
+                            <input decimal type="text" pInputText formControlName="thirdPartyRate">
+                        </div>
+                    </div>    
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="daysOfTraining"> <b>Days of training</b></label>
+                        <input decimal type="text" pInputText formControlName="daysOfTraining">
+                    </div>
+                    <div class="field col">
+                        <label for="daysForProvision"> <b>N° days for provision</b></label>
+                        <input decimal type="text" pInputText formControlName="daysForProvision">
+                    </div>    
+                    <div class="field col">
+                        <label for="renaimingDaysForProvision"> <b>Renaining days for provision</b></label>
+                        <input decimal type="text" pInputText formControlName="renaimingDaysForProvision">
+                    </div> 
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="budgetForProvision"> <b>Budget for provision</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText formControlName="budgetForProvision">
+                        </div>    
+                    </div>
+                    <div class="field col">
+                        <label for="remainingAmountForProvision"> <b>Remaining amount for provision</b></label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">CHF</span>
+                            <input decimal type="text" pInputText formControlName="remainingAmountForProvision">
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </p-tabView>
+    </fieldset>    
+        <div class="footer">
+            <button (click)="close()" type="button" pButton class="p-button-outlined p-button-sm p-button-secondary mr-2" label="Close"></button>
+        </div>
+    </form>
+</div>
+    
