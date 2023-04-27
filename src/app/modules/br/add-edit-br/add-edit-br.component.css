@@ -1,29 +1,33 @@
-
 :host ::ng-deep .br .p-tabview .p-tabview-nav {
-  justify-content: center;
+  justify-content: space-evenly;
   border-color: transparent;
 }
+
 :host ::ng-deep .br .p-tabview .p-tabview-nav .p-tabview-nav-link {
   border-radius: 6px;
-  border: solid 2px #6785C1;
-  margin: 0 15px;
+  border: solid 1.5px #6785C1;
   padding: 10px 15px;
   font-weight: 600;
 }
-:host ::ng-deep .br .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+
+:host ::ng-deep .br .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   background: #6785C1;
   border-color: #6785C1;
   color: #ffffff;
 }
+
 :host ::ng-deep .br .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
-  border-color: #C7D2FE;
+  box-shadow: unset;
 }
+
+
 
 :host ::ng-deep .sideBar .p-tabview {
   display: flex;
   align-items: normal;
 
 }
+
 :host ::ng-deep .sideBar .p-tabview .p-tabview-nav {
   display: flex;
   flex-direction: column;
@@ -31,16 +35,19 @@
   width: fit-content;
   border-color: transparent;
 }
+
 :host ::ng-deep .sideBar .p-tabview .p-tabview-nav .p-tabview-nav-link {
   border-radius: 6px;
   border: solid 1px #6785C1;
   margin: 0 15px 10px;
 }
-:host ::ng-deep .sideBar .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+
+:host ::ng-deep .sideBar .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   background: #6785C1;
   border-color: #6785C1;
   color: #ffffff;
 }
+
 :host ::ng-deep .sideBar .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
   border-color: #C7D2FE;
 }

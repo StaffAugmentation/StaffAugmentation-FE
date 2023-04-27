@@ -1,73 +1,71 @@
-<form class="br" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+<form class="br mt-3" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <p-tabView>
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="field">
-          <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
+          <label for="requestNumber" class="font-semibold">Request number <span class="text-red-500">*</span></label>
           <input type="text" pInputText formControlName="requestNumber"
             [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
           <p-message *ngIf="addEditForm.get('requestNumber')?.invalid && isSubmited" severity="error"
             [text]="getErrorMessage('requestNumber', addEditForm.get('requestNumber')?.errors)"></p-message>
         </div>
         <div class="formgrid grid">
-          <div class="field col">
-            <label for="frameworkContract"> <b>Framework Contract </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-3">
+            <label for="frameworkContract" class="font-semibold">Framework Contract <span
+                class="text-red-500">*</span></label>
             <p-dropdown [options]="frameworkContract" formControlName="frameworkContract"
               [class]="addEditForm.get('frameworkContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-dropdown>
             <p-message *ngIf="addEditForm.get('frameworkContract')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('frameworkContract', addEditForm.get('frameworkContract')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="cascade"><b>Cascade</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="cascade" class="font-semibold">Cascade</label>
             <p-dropdown [options]="cascade" formControlName="cascade"></p-dropdown>
           </div>
-          <div class="field col">
-            <label for="department"><b>Department </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-3">
+            <label for="department" class="font-semibold">Department <span class="text-red-500">*</span></label>
             <div class="flex">
-              <p-autoComplete class="grouped" [dropdown]="true" [readonly]="false" [suggestions]="filteredDepartments"
-                formControlName="department" (completeMethod)="filterDepartment($event)"
+              <p-autoComplete class="grouped w-full" [dropdown]="true" [readonly]="false"
+                [suggestions]="filteredDepartments" formControlName="department"
+                (completeMethod)="filterDepartment($event)"
                 [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
               </p-autoComplete>
-              <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined" style="border-radius: 0 7px 7px 0;"
-                icon="pi pi-plus"></button>
+              <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined"
+                style="border-radius: 0 7px 7px 0;" icon="pi pi-plus"></button>
             </div>
             <p-message *ngIf="addEditForm.get('department')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('department', addEditForm.get('department')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="departmentEmail"><b>Department Email</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="departmentEmail" class="font-semibold">Department Email</label>
             <input type="email7" pInputText formControlName="departmentEmail">
           </div>
-        </div>
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="contactName"> <b>Contact Name</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="contactName" class="font-semibold">Contact Name</label>
             <input type="text" pInputText formControlName="contactName">
           </div>
-          <div class="field col">
-            <label for="technicalContact"><b>Technical Contact</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="technicalContact" class="font-semibold">Technical Contact</label>
             <input type="text" pInputText formControlName="technicalContact">
           </div>
-          <div class="field col">
-            <label for="openIntended"><b>Open/Intended</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="openIntended" class="font-semibold">Open/Intended</label>
             <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
           </div>
-          <div class="field col">
-            <label for="comment"><b>Comment</b></label>
+          <div class="field col-12 md:col-3">
+            <label for="comment" class="font-semibold">Comment</label>
             <input type="text" pInputText formControlName="comment">
           </div>
-        </div>
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="status"> <b>Status </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="status" class="font-semibold">Status <span class="text-red-500">*</span></label>
             <p-dropdown [options]="status" formControlName="status"
               [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="serviceType"> <b>Service Type </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="serviceType" class="font-semibold">Service Type <span class="text-red-500">*</span></label>
             <p-dropdown [options]="serviceType" formControlName="serviceType"
               [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
@@ -75,7 +73,7 @@
           </div>
         </div>
         <div class="field">
-          <label for="source"> <b>Source </b><span class="text-red-500">*</span></label>
+          <label for="source" class="font-semibold">Source <span class="text-red-500">*</span></label>
           <p-dropdown [options]="source" formControlName="source"
             [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
           <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
@@ -87,43 +85,42 @@
     <p-tabPanel header="Work order" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
-          <div class="field col">
-            <label for="dateRf"> <b>Date RF received </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="dateRf" class="font-semibold">Date RF received <span class="text-red-500">*</span></label>
             <p-calendar formControlName="dateRf" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('dateRf')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
             <p-message *ngIf="addEditForm.get('dateRf')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('dateRf', addEditForm.get('dateRf')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="acknowlegment"><b>Acknowlegment</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="acknowlegment" class="font-semibold">Acknowlegment</label>
             <p-calendar formControlName="acknowlegment" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
-          <div class="field col">
-            <label for="acknowlegmentDl"><b>Acknowlegment deadline </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="acknowlegmentDl" class="font-semibold">Acknowlegment deadline <span
+                class="text-red-500">*</span></label>
             <p-calendar formControlName="acknowlegmentDl" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
-        </div>
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="yesNoDeadline"><b>Yes/No (Deadline)</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="yesNoDeadline" class="font-semibold">Yes/No (Deadline)</label>
             <p-calendar formControlName="yesNoDeadline" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('yesNoDeadline')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
             <p-message *ngIf="addEditForm.get('yesNoDeadline')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('yesNoDeadline', addEditForm.get('yesNoDeadline')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="proposalDeadline"><b>Proposal (Deadline)</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="proposalDeadline" class="font-semibold">Proposal (Deadline)</label>
             <p-calendar formControlName="proposalDeadline" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
             <p-message *ngIf="addEditForm.get('proposalDeadline')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('proposalDeadline', addEditForm.get('proposalDeadline')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="expectedSD"><b>Expected start date</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="expectedSD" class="font-semibold">Expected start date</label>
             <p-calendar formControlName="expectedSD" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
@@ -131,11 +128,11 @@
         <p-table #dtProfile [value]="listProfile" selectionMode="single" dataKey="id" [rows]="250"
           [loading]="tableOptionsProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+          scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll"
+          [resizableColumns]="true">
           <ng-template pTemplate="header">
             <tr>
-              <th style="width: 115px;">
-              </th>
+              <th style="width: 115px;"></th>
               <th *ngFor="let col of tableOptionsProfile.visibleCols" style="min-width: 100px;">
                 <div class="flex justify-content-between align-items-center">
                   {{col.label}}
@@ -172,7 +169,8 @@
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
           <div class="field col">
-            <label for="placeOfDelivery"> <b>Place of delivery </b><span class="text-red-500">*</span></label>
+            <label for="placeOfDelivery" class="font-semibold">Place of delivery <span
+                class="text-red-500">*</span></label>
             <p-dropdown [options]="placeOfDelivery" formControlName="placeOfDelivery"
               [class]="addEditForm.get('placeOfDelivery')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-dropdown>
@@ -180,7 +178,7 @@
               [text]="getErrorMessage('placeOfDelivery', addEditForm.get('placeOfDelivery')?.errors)"></p-message>
           </div>
           <div class="field col">
-            <label for="totalManDays"><b>Total man-days</b></label>
+            <label for="totalManDays" class="font-semibold">Total man-days</label>
             <input type="text" pInputText formControlName="totalManDays">
           </div>
         </div>
@@ -406,24 +404,24 @@
     <p-tabPanel header="Offer information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
-          <div class="field col">
-            <label for="subtotalPrice"> <b>Subtotal price</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="subtotalPrice" class="font-semibold">Subtotal price</label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
               <p-inputNumber formControlName="subtotalPrice" inputId="locale-us" mode="decimal" locale="en-US" decimal>
               </p-inputNumber>
             </div>
           </div>
-          <div class="field col">
-            <label for="generalBudget"> <b>General budget</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="generalBudget" class="font-semibold">General budget</label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
               <p-inputNumber formControlName="generalBudget" inputId="locale-us" mode="decimal" locale="en-US" decimal>
               </p-inputNumber>
             </div>
           </div>
-          <div class="field col">
-            <label for="totalPrice"> <b>Total price</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="totalPrice" class="font-semibold">Total price</label>
             <div class="p-inputgroup">
               <span class="p-inputgroup-addon">€</span>
               <p-inputNumber formControlName="totalPrice" inputId="locale-us" mode="decimal" locale="en-US" decimal>
@@ -431,12 +429,9 @@
             </div>
           </div>
         </div>
-        <div class="flex justify-content-end">
-          <div class="flex justify-content-between mt-2">
-            <button type="button" pButton pRipple class="p-button-sm p-button-primary" label="General offer"></button>
-            <button type="button" pButton pRipple class="p-button-sm p-button-primary ml-2"
-              label="General letter of intent"></button>
-          </div>
+        <div class="flex justify-content-end mt-2">
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit" label="General offer"></button>
+            <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit ml-2" label="General letter of intent"></button>
         </div>
       </div>
     </p-tabPanel>
@@ -444,119 +439,114 @@
     <p-tabPanel header="Specific contract" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
-          <div class="field col">
-            <label for="specificCN"> <b>Specific contract number </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="specificCN" class="font-semibold">Specific contract number <span
+                class="text-red-500">*</span></label>
             <p-inputNumber inputId="integeronly" formControlName="specificCN"></p-inputNumber>
             <p-message *ngIf="addEditForm.get('specificCN')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('specificCN', addEditForm.get('specificCN')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="dateSCR"> <b>Date SC is received </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="dateSCR" class="font-semibold">Date SC is received <span class="text-red-500">*</span></label>
             <p-calendar formControlName="dateSCR" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('dateSCR')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
             <p-message *ngIf="addEditForm.get('dateSCR')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('dateSCR', addEditForm.get('dateSCR')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="dateSCS"> <b>Date SC is signed </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="dateSCS" class="font-semibold">Date SC is signed <span class="text-red-500">*</span></label>
             <p-calendar formControlName="dateSCS" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('dateSCS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
             <p-message *ngIf="addEditForm.get('dateSCS')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('dateSCS', addEditForm.get('dateSCS')?.errors)"></p-message>
           </div>
-        </div>
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="projectSD"> <b>Project start day </b></label>
+          <div class="field col-12 md:col-4">
+            <label for="projectSD" class="font-semibold">Project start day </label>
             <p-calendar formControlName="projectSD" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
-          <div class="field col">
-            <label for="maximumED"> <b>Maximum end date </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="maximumED" class="font-semibold">Maximum end date <span class="text-red-500">*</span></label>
             <p-calendar formControlName="maximumED" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
               [class]="addEditForm.get('maximumED')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-calendar>
             <p-message *ngIf="addEditForm.get('maximumED')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('maximumED', addEditForm.get('maximumED')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="extensionMED"> <b>Extension maximum end date </b></label>
+          <div class="field col-12 md:col-4">
+            <label for="extensionMED" class="font-semibold">Extension maximum end date </label>
             <p-calendar formControlName="extensionMED" [disabledDays]="[5,6]" [showIcon]="true"
               [readonlyInput]="true"></p-calendar>
           </div>
-        </div>
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="numberOfDays"> <b>Number of days </b><span class="text-red-500">*</span></label>
+          <div class="field col-12 md:col-4">
+            <label for="numberOfDays" class="font-semibold">Number of days <span class="text-red-500">*</span></label>
             <p-inputNumber formControlName="numberOfDays" inputId="locale-user" decimal
               [class]="addEditForm.get('numberOfDays')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-inputNumber>
             <p-message *ngIf="addEditForm.get('numberOfDays')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('numberOfDays', addEditForm.get('numberOfDays')?.errors)"></p-message>
           </div>
-          <div class="field col">
-            <label for="additionalBudget"> <b>Additional budget</b></label>
-            <div class="flex">
+          <div class="field col-12 md:col-4">
+            <label for="additionalBudget" class="font-semibold">Additional budget</label>
+            <div class="flex grouped-select">
               <p-inputNumber formControlName="additionalBudget" inputId="locale-us" mode="decimal" locale="en-US"
                 decimal> </p-inputNumber>
               <p-dropdown placeholder="€"></p-dropdown>
             </div>
           </div>
-          <div class="field col">
-            <label for="specificClientC"><b>Specific client code</b></label>
+          <div class="field col-12 md:col-4">
+            <label for="specificClientC" class="font-semibold">Specific client code</label>
             <input type="text" pInputText formControlName="specificClientC">
           </div>
         </div>
-        <div class=" field flex justify-content-between">
-          <div style="width: 80%;">
-            <p-table #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id" [rows]="250"
-              [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-              [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-              responsiveLayout="scroll">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th style="width: 115px;">
-                  </th>
-                  <th *ngFor="let col of tableOptionsPenalty.visibleCols" style="min-width: 100px;">
-                    <div class="flex justify-content-between align-items-center">
-                      {{col.label}}
-                    </div>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-Penalty>
-                <tr>
-                  <td class="p-0 text-center">
-                    <button (click)="editPenalty(Penalty.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
-                      class="p-button-rounded p-button-info p-button-text"></button>
-                  </td>
-                  <td *ngFor="let col of tableOptionsPenalty.visibleCols">
-                    {{Penalty[col.id]}}
-                  </td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="8">No Penalty found.</td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="loadingbody">
-                <tr>
-                  <td colspan="8">Loading Penaltys data. Please wait.</td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-          <div class="flex justify-content-end">
+        <div class="grid">
+          <p-table [className]="'col-12 md:col-10'" #dtPenalty [value]="listPenalty" selectionMode="single" dataKey="id"
+            [rows]="250" [loading]="tableOptionsPenalty.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+            responsiveLayout="scroll" [resizableColumns]="true">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 115px;">
+                </th>
+                <th *ngFor="let col of tableOptionsPenalty.visibleCols" style="min-width: 100px;">
+                  <div class="flex justify-content-between align-items-center">
+                    {{col.label}}
+                  </div>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-Penalty>
+              <tr>
+                <td class="p-0 text-center">
+                  <button (click)="editPenalty(Penalty.profileN)" pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-info p-button-text"></button>
+                </td>
+                <td *ngFor="let col of tableOptionsPenalty.visibleCols">
+                  {{Penalty[col.id]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No Penalty found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading Penaltys data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="col-12 md:col-2 flex justify-content-end">
             <button type="button" style="max-width: 100px; height: 40px;" pButton pRipple
               class="p-button-sm p-button-primary mt-4" label="Create SC"></button>
           </div>
         </div>
         <div class="field">
-          <label for="generalComment"> <b>General comment</b></label>
+          <label for="generalComment" class="font-semibold">General comment</label>
           <textarea rows="5" cols="30" formControlName="generalComment" pInputTextarea></textarea>
         </div>
       </div>
@@ -646,10 +636,10 @@
     <button type="button" pButton pRipple class="p-button-outlined bg-white">Communicate to partners <i
         class="ml-2 pi pi-envelope"></i></button>
     <div>
-      <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary"
-        label="Close"></button>
-      <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
+      <button type="submit" pButton pRipple class="p-button-sm p-button-primary" label="Save"
         [loading]="actionLoading"></button>
+      <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary ml-2"
+        label="Close"></button>
     </div>
   </div>
 </form>

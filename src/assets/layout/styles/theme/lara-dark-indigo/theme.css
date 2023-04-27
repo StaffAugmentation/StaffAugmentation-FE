@@ -6265,3 +6265,9 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
   justify-content: space-between;
   padding: 0 12px;
 }
+.p-dialog .p-dialog-header{
+  background-color: var(--surface-ground);
+}
+.centred-header .p-dialog .p-dialog-header{
+  background-color: #071426;
+}

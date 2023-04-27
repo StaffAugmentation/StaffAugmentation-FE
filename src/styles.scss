@@ -10,21 +10,44 @@ $gutter: 1rem; //for primeflex grid system
     width: unset;
 }
 
-.centred-header .p-dialog .p-dialog-header {
-    justify-content: center;
+// Modal headers
+.p-dialog .p-dialog-header {
     padding: 1rem;
-
+    justify-content: center;
+    border-top: 5px solid var(--primary-color);
+    height: 6rem;
     .p-dialog-title {
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
 
     .p-dialog-header-icons {
         display: none;
     }
 
-    border-bottom: 1px solid var(--primary-color);
 }
-p-autoComplete.grouped button {
-    border-radius: 0;
+
+.centred-header .p-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--primary-color);
+    border-top: 0;
+    height: unset;
+    .p-dialog-title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+}
+
+// Group controls
+.grouped button {
+    border-radius: 0 !important;
+}
+.grouped-select{
+    input{
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    .p-dropdown{
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
 }

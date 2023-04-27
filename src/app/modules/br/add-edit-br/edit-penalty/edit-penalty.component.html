@@ -13,9 +13,9 @@
     <div class="formgrid grid">
       <div class="field col">
         <label for="penaltyAmount"> <b>Penalty amount</b></label>
-        <div class="flex">
+        <div class="flex grouped-select">
           <p-inputNumber formControlName="penaltyAmount" inputId="locale-us" mode="decimal" locale="en-US"
-          [minFractionDigits]="2"> </p-inputNumber>
+            [minFractionDigits]="2"> </p-inputNumber>
           <p-dropdown placeholder="€"></p-dropdown>
         </div>
       </div>
@@ -26,9 +26,9 @@
     </div>
   </div>
   <div class="footer">
-    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
-      [loading]="actionLoading"></button>
-    <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary"
+    <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary ml-2"
       label="Close"></button>
+    <button type="submit" pButton pRipple class="p-button-sm p-button-primary" label="Save"
+      [loading]="actionLoading"></button>
   </div>
 </form>
