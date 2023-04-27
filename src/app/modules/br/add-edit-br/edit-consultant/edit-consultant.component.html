@@ -1,39 +1,35 @@
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-7">
     <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="ressourcePhone"> <b>Ressource phone</b></label>
         <input type="tel" pInputText formControlName="ressourcePhone">
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="ressourceEmail"> <b>Ressource email</b></label>
         <input type="email" pInputText formControlName="ressourceEmail">
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="vatNumber"> <b>Vat number</b></label>
         <input type="text" pInputText formControlName="vatNumber">
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="nationality"> <b>Nationality</b></label>
         <input type="text" pInputText formControlName="nationality">
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="legalEN"> <b>Legal entity name</b></label>
         <input type="text" pInputText formControlName="legalEN">
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="idNumber"> <b>Id number</b></label>
         <input type="text" pInputText formControlName="idNumber">
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="legalEA"> <b>Legal entity adress</b></label>
         <input type="text" pInputText formControlName="legalEA">
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="employeeNumber"> <b>Employee number</b></label>
         <input type="text" pInputText formControlName="employeeNumber">
       </div>
@@ -45,7 +41,8 @@
       <ng-template pTemplate="caption">
         <div class="flex justify-content-end">
           <div>
-              <p-button (click)="addEditProfile('add',0)" label="Assign profile" styleClass="p-button-outlined"></p-button>
+            <p-button (click)="addEditProfile('add',0)" label="Assign profile"
+              styleClass="p-button-outlined"></p-button>
           </div>
         </div>
       </ng-template>
@@ -65,9 +62,9 @@
         <tr>
           <td class="p-0 text-center">
             <button pButton pRipple (click)="deleteProfile(Profile.id)" type="button" icon="pi pi-trash"
-                class="p-button-rounded p-button-danger p-button-text"></button>
-              <button pButton pRipple (click)="addEditProfile('edit',Profile.id)" type="button" icon="pi pi-user-edit"
-                class="p-button-rounded p-button-info p-button-text"></button>
+              class="p-button-rounded p-button-danger p-button-text"></button>
+            <button pButton pRipple (click)="addEditProfile('edit',Profile.id)" type="button" icon="pi pi-user-edit"
+              class="p-button-rounded p-button-info p-button-text"></button>
           </td>
           <td *ngFor="let col of tableOptionsProfile.visibleCols">
             {{Profile[col.id]}}

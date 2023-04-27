@@ -221,7 +221,7 @@
                   <button pButton pRipple (click)="deleteBrProfile(BrProfile.profileN)" type="button" icon="pi pi-trash"
                     class="p-button-rounded p-button-danger p-button-text"></button>
                   <button pButton pRipple (click)="addEditBrProfile('edit',BrProfile.profileN)" type="button"
-                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsBrProfile.visibleCols">
                   {{BrProfile[col.id]}}
@@ -262,7 +262,7 @@
                   <button pButton pRipple (click)="deleteConsultant(Consultant.id)" type="button" icon="pi pi-trash"
                     class="p-button-rounded p-button-danger p-button-text"></button>
                   <button pButton pRipple (click)="editConsultant(Consultant.id,Consultant.name)" type="button"
-                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
                 </td>
                 <td *ngFor="let col of tableOptionsConsultant.visibleCols">
                   {{Consultant[col.id]}}
@@ -306,7 +306,7 @@
                   <button pButton pRipple (click)="deleteCandidate(Candidate.code)" type="button" icon="pi pi-trash"
                     class="p-button-rounded p-button-danger p-button-text p-0"></button>
                   <button pButton pRipple (click)="addEditCandidate('edit',Candidate.code)" type="button"
-                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
                   <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
                     class="p-button-rounded p-button-warning p-button-text"></button>
                 </td>
@@ -364,7 +364,7 @@
                   <button pButton pRipple (click)="deletePartner(Partner.code)" type="button" icon="pi pi-trash"
                     class="p-button-rounded p-button-danger p-button-text"></button>
                   <button pButton pRipple (click)="addEditPartner('edit',Partner.code)" type="button"
-                    icon="pi pi-user-edit" class="p-button-rounded p-button-info p-button-text"></button>
+                    icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-text"></button>
                   <button pButton pRipple type="button" icon="pi pi-arrow-circle-down"
                     class="p-button-rounded p-button-warning p-button-text"></button>
                 </td>
@@ -430,8 +430,10 @@
           </div>
         </div>
         <div class="flex justify-content-end mt-2">
-            <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit" label="General offer"></button>
-            <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit ml-2" label="General letter of intent"></button>
+          <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit"
+            label="General offer"></button>
+          <button type="button" pButton pRipple class="p-button-sm p-button-primary w-fit ml-2"
+            label="General letter of intent"></button>
         </div>
       </div>
     </p-tabPanel>

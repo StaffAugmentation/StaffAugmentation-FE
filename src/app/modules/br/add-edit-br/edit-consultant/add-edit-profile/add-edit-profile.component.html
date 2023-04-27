@@ -1,75 +1,65 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="profile"> <b>Profile </b><span class="text-red-500">*</span></label>
         <p-dropdown [options]="profile" formControlName="profile"
           [class]="addEditForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('profile')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('profile', addEditForm.get('profile')?.errors)"></p-message>
       </div>
-      <div class="field col">
-        <div class="formgrid grid">
-          <div class="field col">
-            <label for="salesPrice"> <b>Sales price</b></label>
-            <div class="p-inputgroup">
-              <span class="p-inputgroup-addon">€</span>
-              <input type="text" formControlName="salesPrice" pInputText />
-            </div>
-          </div>
-          <div class="field col">
-            <label for="numberOfDays"> <b>Number of days</b></label>
-            <input type="text" pInputText formControlName="numberOfDays">
-          </div>
+      <div class="field col-12 md:col-3">
+        <label for="salesPrice"> <b>Sales price</b></label>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">€</span>
+          <input type="text" formControlName="salesPrice" pInputText />
         </div>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-3">
+        <label for="numberOfDays"> <b>Number of days</b></label>
+        <input type="text" pInputText formControlName="numberOfDays">
+      </div>
+      <div class="field col-12 md:col-4">
         <label for="consultantCost"><b>Consultant cost</b></label>
         <div class="flex">
           <input type="text" pInputText formControlName="consultantCost">
           <p-dropdown placeholder="€"></p-dropdown>
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-2">
         <label for="margin"><b>Margin</b></label>
         <div class="p-inputgroup">
           <span class="p-inputgroup-addon">%</span>
           <input type="text" pInputText formControlName="margin" />
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-3">
         <label for="typeOfContract"> <b>Type of contract</b></label>
         <p-dropdown [options]="typeOfContract" formControlName="typeOfContract"
           [class]="addEditForm.get('typeOfContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('typeOfContract')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('typeOfContract', addEditForm.get('typeOfContract')?.errors)"></p-message>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-3">
         <label for="expectedSD"> <b>Expected started date</b></label>
-        <div class="flex">
-          <p-calendar formControlName="expectedSD" [disabledDays]="[5,6]" [showIcon]="true"
-            [readonlyInput]="true"></p-calendar>
-        </div>
+        <p-calendar formControlName="expectedSD" [disabledDays]="[5,6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="subconstractorName"> <b>Subconstractor name</b></label>
         <p-dropdown [options]="subconstractorName" formControlName="subconstractorName"></p-dropdown>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="thirdPR"> <b>Third party rate</b></label>
         <div class="flex">
           <input type="text" pInputText formControlName="thirdPR">
-          <p-dropdown ></p-dropdown>
+          <p-dropdown></p-dropdown>
         </div>
       </div>
-    </div>
-    <div class="field">
-      <label for="dayfOfTrain"> <b>Days of training</b></label>
-      <input type="text" pInputText formControlName="dayfOfTrain">
+      <div class="field col-12 md:col-6">
+        <label for="dayfOfTrain"> <b>Days of training</b></label>
+        <input type="text" pInputText formControlName="dayfOfTrain">
+      </div>
     </div>
   </div>
   <div class="footer">

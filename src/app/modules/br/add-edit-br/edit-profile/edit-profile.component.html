@@ -1,66 +1,66 @@
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="profile" class="font-semibold">Profile</label>
         <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="requestFS" class="font-semibold"> Request form status <span class="text-red-500">*</span></label>
         <p-dropdown [options]="requestFS" formControlName="requestFS"
           [class]="editForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="editForm.get('requestFS')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('requestFS', editForm.get('requestFS')?.errors)"></p-message>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="yesNo" class="font-semibold">Yes/No sent to customer</label>
-        <p-calendar formControlName="yesNo" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="yesNo" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="datePSC" class="font-semibold">Date proposal is submitted to customer</label>
         <p-calendar formControlName="datePSC" [disabledDays]="[5, 6]" [showIcon]="true"
           [readonlyInput]="true"></p-calendar>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="acceptanceDate" class="font-semibold">Acceptance date</label>
-        <p-calendar formControlName="acceptanceDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="acceptanceDate" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="refusalDate" class="font-semibold">Refusal date</label>
-        <p-calendar formControlName="refusalDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="refusalDate" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="dateFOD" class="font-semibold">Date FO deadline</label>
-        <p-calendar formControlName="dateFOD" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="dateFOD" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="dateFOSC" class="font-semibold">Date FO is submitted to customer</label>
-        <p-calendar formControlName="dateFOSC" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="dateFOSC" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="validityDate" class="font-semibold">Validity date</label>
-        <p-calendar formControlName="validityDate" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="validityDate" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="changeOfferD" class="font-semibold">Change offer deadline</label>
-        <p-calendar formControlName="changeOfferD" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+        <p-calendar formControlName="changeOfferD" [disabledDays]="[5, 6]" [showIcon]="true"
+          [readonlyInput]="true"></p-calendar>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="changeOfferS" class="font-semibold">Change offer submission</label>
         <div class="p-inputgroup">
-          <p-calendar formControlName="changeOfferS" class="grouped" [disabledDays]="[5, 6]" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+          <p-calendar formControlName="changeOfferS" class="grouped" [disabledDays]="[5, 6]" [showIcon]="true"
+            [readonlyInput]="true"></p-calendar>
           <span class="p-inputgroup-addon">
-              <i class="pi pi-history"></i>
+            <i class="pi pi-history"></i>
           </span>
-      </div>
+        </div>
       </div>
     </div>
   </div>

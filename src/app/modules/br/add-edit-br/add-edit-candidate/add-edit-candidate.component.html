@@ -1,58 +1,53 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="firstName"> <b>First name </b><span class="text-red-500">*</span></label>
         <input type="text" pInputText formControlName="firstName"
           [class]="addEditForm.get('firstName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         <p-message *ngIf="addEditForm.get('firstName')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('firstName', addEditForm.get('firstName')?.errors)"></p-message>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="lastName"> <b>Last name </b><span class="text-red-500">*</span></label>
         <input type="text" pInputText formControlName="lastName"
           [class]="addEditForm.get('lastName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         <p-message *ngIf="addEditForm.get('lastName')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('lastName', addEditForm.get('lastName')?.errors)"></p-message>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="company"> <b>Company</b></label>
         <p-dropdown [options]="company" formControlName="company"></p-dropdown>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="recruitment"><b>Recruitment </b></label>
         <div class="flex">
           <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredRecruitments"
             formControlName="recruitment" (completeMethod)="filterRecruitment($event)"
             [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid grouped' : 'grouped'">
           </p-autoComplete>
-          <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus" style="border-radius: 0 7px 7px 0;"></button>
+          <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus"
+            style="border-radius: 0 7px 7px 0;"></button>
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <label for="resourceType"> <b>Resource type</b></label>
         <p-dropdown [options]="resourceType" formControlName="resourceType"></p-dropdown>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <div class="flex justify-content-start mb-2">
           <p-checkbox class="mr-2" formControlName="checked" [binary]="true" inputId="binary"></p-checkbox>
           <label for="subconstractor"> <b>Subconstractor</b></label>
         </div>
         <p-dropdown [options]="subconstractor" formControlName="subconstractor"></p-dropdown>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="availabilityD"> <b>Availability date</b></label>
         <p-calendar formControlName="availabilityD" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
           [class]="addEditForm.get('availabilityD')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         </p-calendar>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
           <label for="foA"> <b>FO approval</b></label>
         </div>
@@ -60,7 +55,7 @@
           <p-inputSwitch formControlName="foA"></p-inputSwitch>
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
           <label for="proposalC"> <b>Proposal Completed</b></label>
         </div>
@@ -68,7 +63,7 @@
           <p-inputSwitch formControlName="proposalC"></p-inputSwitch>
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
           <label for="draftA"> <b>Draft approval</b></label>
         </div>
@@ -76,55 +71,52 @@
           <p-inputSwitch formControlName="draftA"></p-inputSwitch>
         </div>
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="detailI"> <b>Detail interview</b></label>
         <textarea rows="5" cols="30" formControlName="detailI" pInputTextarea
           [class]="addEditForm.get('detailI')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="comment"> <b>Comment</b></label>
-        <textarea rows="5" cols="30" formControlName="comment" pInputTextarea 
+        <textarea rows="5" cols="30" formControlName="comment" pInputTextarea
           [class]="addEditForm.get('comment')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
     </div>
     <p-table #dtFile [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
-    [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-    responsiveLayout="scroll">
-    <ng-template pTemplate="header">
-      <tr>
-        <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
-          <div class="flex justify-content-between align-items-center">
-            {{col.label}}
-          </div>
-        </th>
-        <th style="max-width: 70px;">
-          <button type="button" icon="pi pi-download" pButton pRipple
-            label="Upload" class="p-button-outlined bg-white"></button>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-File>
-      <tr>
-        <td *ngFor="let col of tableOptionsFile.visibleCols">
-          {{File[col.id]}}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="8">No File found.</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="loadingbody">
-      <tr>
-        <td colspan="8">Loading Files data. Please wait.</td>
-      </tr>
-    </ng-template>
-  </p-table>
+      [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+      scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
+            <div class="flex justify-content-between align-items-center">
+              {{col.label}}
+            </div>
+          </th>
+          <th style="max-width: 70px;">
+            <button type="button" icon="pi pi-download" pButton pRipple label="Upload"
+              class="p-button-outlined bg-white"></button>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-File>
+        <tr>
+          <td *ngFor="let col of tableOptionsFile.visibleCols">
+            {{File[col.id]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No File found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8">Loading Files data. Please wait.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
   <div class="footer">
     <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"

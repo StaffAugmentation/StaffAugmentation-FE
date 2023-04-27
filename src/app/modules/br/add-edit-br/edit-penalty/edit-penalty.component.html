@@ -1,17 +1,15 @@
 <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="profile"><b>Profile</b></label>
         <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="penaltyDays"><b>Penalty days</b></label>
         <input type="text" pInputText formControlName="penaltyDays">
       </div>
-    </div>
-    <div class="formgrid grid">
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="penaltyAmount"> <b>Penalty amount</b></label>
         <div class="flex grouped-select">
           <p-inputNumber formControlName="penaltyAmount" inputId="locale-us" mode="decimal" locale="en-US"
@@ -19,7 +17,7 @@
           <p-dropdown placeholder="€"></p-dropdown>
         </div>
       </div>
-      <div class="field col">
+      <div class="field col-12 md:col-6">
         <label for="penaltyComment"><b>Penalty comment</b></label>
         <input type="text" pInputText formControlName="penaltyComment">
       </div>
