@@ -327,6 +327,7 @@ export class AddEditBrComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEditBrProfile = this.modalService.open(AddEditBrProfileComponent, {
         header: `Add profile`,
+        maskStyleClass: 'centred-header',
         style: { width: '95%', maxWidth: '1000px' }
       });
       this.modalAddEditBrProfile.onClose.subscribe(res => {
@@ -337,6 +338,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalAddEditBrProfile = this.modalService.open(AddEditBrProfileComponent, {
         header: `Edit profile`,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }
@@ -365,6 +367,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalEditConsultant = this.modalService.open(EditConsultantComponent, {
         header: name,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }
@@ -391,6 +394,7 @@ export class AddEditBrComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEditCandidate = this.modalService.open(AddEditCandidateComponent, {
         header: `Add candidate`,
+        maskStyleClass: 'centred-header',
         style: { width: '95%', maxWidth: '1000px' }
       });
       this.modalAddEditCandidate.onClose.subscribe(res => {
@@ -401,6 +405,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalAddEditCandidate = this.modalService.open(AddEditCandidateComponent, {
         header: `Edit candidate`,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }
@@ -427,6 +432,7 @@ export class AddEditBrComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEditPartner = this.modalService.open(AddEditCandidateComponent, {
         header: `Add Partner`,
+        maskStyleClass: 'centred-header',
         style: { width: '95%', maxWidth: '1000px' }
       });
       this.modalAddEditPartner.onClose.subscribe(res => {
@@ -437,6 +443,7 @@ export class AddEditBrComponent implements OnInit {
       this.modalAddEditPartner = this.modalService.open(AddEditCandidateComponent, {
         header: `Edit Partner`,
         style: { width: '95%', maxWidth: '1000px' },
+        maskStyleClass: 'centred-header',
         data: {
           id: id
         }
@@ -463,7 +470,7 @@ export class AddEditBrComponent implements OnInit {
     if (id) {
       this.modalEditPenalty = this.modalService.open(EditPenaltyComponent, {
         header: `Edit penalty`,
-        style: { width: '95%', maxWidth: '1000px' },
+        style: { width: '95%', maxWidth: '800px' },
         maskStyleClass: 'centred-header',
         data: {
           id: id

@@ -1,43 +1,43 @@
-<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-  <div class="p-fluid p-2 mb-7">
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="mt-2 mb-6">
+  <div class="p-fluid p-2">
     <div class="formgrid grid">
       <div class="field col-12 md:col-4">
-        <label for="ressourcePhone"> <b>Ressource phone</b></label>
+        <label for="ressourcePhone" class="font-semibold">Ressource phone</label>
         <input type="tel" pInputText formControlName="ressourcePhone">
       </div>
       <div class="field col-12 md:col-4">
-        <label for="ressourceEmail"> <b>Ressource email</b></label>
+        <label for="ressourceEmail" class="font-semibold">Ressource email</label>
         <input type="email" pInputText formControlName="ressourceEmail">
       </div>
       <div class="field col-12 md:col-4">
-        <label for="vatNumber"> <b>Vat number</b></label>
+        <label for="vatNumber" class="font-semibold">Vat number</label>
         <input type="text" pInputText formControlName="vatNumber">
       </div>
       <div class="field col-12 md:col-4">
-        <label for="nationality"> <b>Nationality</b></label>
+        <label for="nationality" class="font-semibold">Nationality</label>
         <input type="text" pInputText formControlName="nationality">
       </div>
       <div class="field col-12 md:col-4">
-        <label for="legalEN"> <b>Legal entity name</b></label>
+        <label for="legalEN" class="font-semibold">Legal entity name</label>
         <input type="text" pInputText formControlName="legalEN">
       </div>
       <div class="field col-12 md:col-4">
-        <label for="idNumber"> <b>Id number</b></label>
+        <label for="idNumber" class="font-semibold">Id number</label>
         <input type="text" pInputText formControlName="idNumber">
       </div>
       <div class="field col-12 md:col-6">
-        <label for="legalEA"> <b>Legal entity adress</b></label>
+        <label for="legalEA" class="font-semibold">Legal entity adress</label>
         <input type="text" pInputText formControlName="legalEA">
       </div>
       <div class="field col-12 md:col-6">
-        <label for="employeeNumber"> <b>Employee number</b></label>
+        <label for="employeeNumber" class="font-semibold">Employee number</label>
         <input type="text" pInputText formControlName="employeeNumber">
       </div>
     </div>
     <p-table #dtProfile [value]="listProfile" selectionMode="single" dataKey="id" [rows]="250"
       [loading]="tableOptionsProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      scrollDirection="both" [scrollable]="true" scrollHeight="200px" responsiveLayout="scroll">
+      scrollDirection="both" [scrollable]="true" scrollHeight="200px" responsiveLayout="scroll" [resizableColumns]="true">
       <ng-template pTemplate="caption">
         <div class="flex justify-content-end">
           <div>
@@ -63,7 +63,7 @@
           <td class="p-0 text-center">
             <button pButton pRipple (click)="deleteProfile(Profile.id)" type="button" icon="pi pi-trash"
               class="p-button-rounded p-button-danger p-button-text"></button>
-            <button pButton pRipple (click)="addEditProfile('edit',Profile.id)" type="button" icon="pi pi-user-edit"
+            <button pButton pRipple (click)="addEditProfile('edit',Profile.id)" type="button" icon="pi pi-pencil"
               class="p-button-rounded p-button-info p-button-text"></button>
           </td>
           <td *ngFor="let col of tableOptionsProfile.visibleCols">
@@ -93,7 +93,7 @@
     <div>
       <button type="submit" pButton pRipple class="p-button-sm p-button-primary mr-2" label="Save"
         [loading]="actionLoading"></button>
-      <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+      <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary"
         label="Close"></button>
     </div>
   </div>

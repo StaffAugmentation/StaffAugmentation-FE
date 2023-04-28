@@ -1,14 +1,14 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <div class="p-fluid p-2 mb-4">
         <div class="field">
-            <label for="roleName"> <b>Role name </b><span class="text-red-500">*</span></label>
+            <label for="roleName" class="font-semibold">Role name <span class="text-red-500">*</span></label>
             <input type="text" pInputText 
                 [class]="addEditForm.get('roleName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 placeholder="Role name" formControlName="roleName">
             <p-message *ngIf="addEditForm.get('roleName')?.invalid && isSubmited" severity="error" text="Role name is required"></p-message>
         </div>
         <div class="field">
-            <label for="roleType"> <b>Role type</b><span class="text-red-500">*</span></label>
+            <label for="roleType" class="font-semibold">Role type<span class="text-red-500">*</span></label>
             <p-dropdown [options]="types" placeholder="Choose type" formControlName="roleType"
                     optionLabel="name" [class]="addEditForm.get('roleType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('roleType')?.invalid && isSubmited" severity="error" text="Role type is required"></p-message>

@@ -1,5 +1,5 @@
 <div *ngIf="addEditForm">
-    <form [formGroup]="addEditForm" class="pt-4 pb-5">
+    <form [formGroup]="addEditForm" class="mt-4 mb-6">
         <div class="p-fluid m-0">
             <div class="grid px-3">
                 <div class="field mb-0 col-12 md:col-3 p-1">
@@ -68,10 +68,10 @@
             </div>
         </div>
         <div class="footer">
-            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
-                [loading]="actionLoading"></button>
-            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
+            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
                 label="Close"></button>
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2" label="Save"
+                    [loading]="actionLoading"></button>
         </div>
     </form>
 </div>

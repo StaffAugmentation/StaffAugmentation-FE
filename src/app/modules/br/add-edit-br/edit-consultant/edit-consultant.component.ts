@@ -92,7 +92,8 @@ export class EditConsultantComponent implements OnInit {
     if (action == 'add') {
       this.modalAddEditProfile = this.modalService.open(AddEditProfileComponent, {
         header: `Assign profile`,
-        style: { width: '95%', maxWidth: '1300px' }
+        maskStyleClass: 'centred-header',
+        style: { width: '95%', maxWidth: '900px' }
       });
       this.modalAddEditProfile.onClose.subscribe(res => {
         this.getProfile();
@@ -101,7 +102,8 @@ export class EditConsultantComponent implements OnInit {
     else if (id) {
       this.modalAddEditProfile = this.modalService.open(AddEditProfileComponent, {
         header: `Edit profile`,
-        style: { width: '95%', maxWidth: '1300px' },
+        style: { width: '95%', maxWidth: '900px' },
+        maskStyleClass: 'centred-header',
         data: {
           id:id
         }

@@ -1,7 +1,7 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <div class="p-fluid p-2 mb-4">
         <div class="field">
-            <label for="name"> <b>Responsible name</b><span class="text-red-500">*</span></label>
+            <label for="name" class="font-semibold">Responsible name<span class="text-red-500">*</span></label>
             <input type="text" pInputText name-only
                 [class]="addEditForm.get('name')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 formControlName="name">
@@ -9,7 +9,7 @@
                 [text]="getErrorMessage('Responsible name', addEditForm.get('name')?.errors)"></p-message>
         </div>
         <div class="field">
-            <label for="email"> <b>Responsible email</b><span class="text-red-500">*</span></label>
+            <label for="email" class="font-semibold">Responsible email<span class="text-red-500">*</span></label>
             <input type="text" pInputText
                 [class]="addEditForm.get('email')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 formControlName="email">

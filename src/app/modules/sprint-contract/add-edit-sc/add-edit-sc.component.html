@@ -1,9 +1,10 @@
 <div *ngIf="addEditForm">
-    <form [formGroup]="addEditForm">
+    <form [formGroup]="addEditForm" class="mb-3">
         <p-tabView orientation="left">
             <p-tabPanel header="Business request" class="p-fluid m-0">
                 <div class="field">
-                    <label for="requestNumber"> <b>Request number </b><span class="text-red-500">*</span></label>
+                    <label for="requestNumber" class="font-semibold">Request number <span
+                            class="text-red-500">*</span></label>
                     <input type="text" pInputText
                         [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                         placeholder="Request number" formControlName="requestNumber">
@@ -11,57 +12,53 @@
                         text="Request number is required"></p-message>
                 </div>
                 <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="requestOrExtension"> <b>Source</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="requestOrExtension" class="font-semibold">Source</label>
                         <input type="text" pInputText placeholder="Source" formControlName="requestOrExtension">
                     </div>
-                    <div class="field col">
-                        <label for="scNumber"> <b>SC Number</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="scNumber" class="font-semibold">SC Number</label>
                         <input type="text" pInputText placeholder="SC Number" formControlName="scNumber">
                     </div>
-                    <div class="field col">
-                        <label for="department"> <b>Department</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="department" class="font-semibold">Department</label>
                         <input type="text" pInputText placeholder="Department" formControlName="department">
                     </div>
-                    <div class="field col">
-                        <label for="placeOfDelivery"> <b>Place of delivery</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="placeOfDelivery" class="font-semibold">Place of delivery</label>
                         <input type="text" pInputText placeholder="Place of delivery" formControlName="placeOfDelivery">
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="frameworkContract"> <b>Framework contract</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="frameworkContract" class="font-semibold">Framework contract</label>
                         <input type="text" pInputText placeholder="Framework contract"
                             formControlName="frameworkContract">
                     </div>
-                    <div class="field col">
-                        <label for="signatureDate"> <b>Signature date</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="signatureDate" class="font-semibold">Signature date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="signatureDate"></p-calendar>
                     </div>
-                    <div class="field col">
-                        <label for="maximumEndDate"> <b>Maximum end date</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="maximumEndDate" class="font-semibold">Maximum end date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="maximumEndDate"></p-calendar>
                     </div>
-                    <div class="field col">
-                        <label for="specificClientCode"> <b>Specific client code</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="specificClientCode" class="font-semibold">Specific client code</label>
                         <input type="text" pInputText placeholder="Specific client code"
                             formControlName="specificClientCode">
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="projectStartDate"> <b>Project start date</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="projectStartDate" class="font-semibold">Project start date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="projectStartDate"></p-calendar>
                     </div>
-                    <div class="field col">
-                        <label for="contractStatus"> <b>Contract status</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="contractStatus" class="font-semibold">Contract status</label>
                         <input type="text" pInputText placeholder="Contract status" formControlName="contractStatus">
                     </div>
-                    <div class="field col">
-                        <label for="totalPrice"> <b>Total price</b></label>
+                    <div class="field col-12 md:col-3">
+                        <label for="totalPrice" class="font-semibold">Total price</label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">CHF</span>
                             <input decimal type="text" pInputText placeholder="Total price"
@@ -70,7 +67,7 @@
                     </div>
                     <div class="field col text-right">
                         <button pButton pRipple (click)="businessRequest()" label="Business request"
-                            class="border-white w-auto p-button-sm mt-8"></button>
+                            class="border-white w-auto p-button-sm md:mt-8"></button>
                     </div>
                 </div>
             </p-tabPanel>
@@ -78,17 +75,17 @@
                 <div class="formgrid grid">
                     <div class="col formgrid grid">
                         <div class="field col-12 md:col-3">
-                            <label for="numberOfDays"> <b>Number of days</b></label>
+                            <label for="numberOfDays" class="font-semibold">Number of days</label>
                             <input type="text" decimal pInputText placeholder="Number of days"
                                 formControlName="numberOfDays">
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="nDaysTransformed"> <b>N days transformed</b></label>
+                            <label for="nDaysTransformed" class="font-semibold">N days transformed</label>
                             <input type="text" decimal pInputText placeholder="N days transformed"
                                 formControlName="nDaysTransformed">
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="managementFee"> <b>Management fee</b></label>
+                            <label for="managementFee" class="font-semibold">Management fee</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon">CHF</span>
                                 <input decimal type="text" pInputText placeholder="Management fee"
@@ -99,27 +96,8 @@
                             <p-splitButton label="Change cost" [model]="cost" (onClick)="changeCost()"
                                 styleClass="p-button-sm w-auto md:w-fit p-button-primary mt-5"></p-splitButton>
                         </div>
-                    </div>
-                    <div class="field col-12 md:col-4 flex">
-                        <div class="field">
-                            <label for="oerpProjectCode"> <b>OERP project code</b><span
-                                    class="text-red-500">*</span></label>
-                            <input type="text" pInputText placeholder="OERP project code"
-                                formControlName="oerpProjectCode"
-                                [class]="addEditForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
-                            <p-message *ngIf="addEditForm.get('oerpProjectCode')?.invalid && isSubmited"
-                                severity="error" text="OERP project code is required"></p-message>
-                        </div>
-                        <div class="field ">
-                            <button pButton pRipple (click)="add()" label="Add"
-                                class="p-button-outlined p-button-secondary p-button-sm ml-3 mt-5"></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="col formgrid grid">
                         <div class="field col-12 md:col-4">
-                            <label for="maximumCost"> <b>Maximum cost</b></label>
+                            <label for="maximumCost" class="font-semibold">Maximum cost</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon">€</span>
                                 <input type="text" decimal pInputText placeholder="Maximum cost"
@@ -127,7 +105,7 @@
                             </div>
                         </div>
                         <div class="field col-12 md:col-4">
-                            <label for="additionalBudget"> <b>Additional budget</b></label>
+                            <label for="additionalBudget" class="font-semibold">Additional budget</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon"></span>
                                 <input type="text" decimal pInputText placeholder="Additional budget"
@@ -135,7 +113,7 @@
                             </div>
                         </div>
                         <div class="field col-12 md:col-4">
-                            <label for="mfInvoiced" class="mt-2"> <b>MF invoiced Y/N</b></label>
+                            <label for="mfInvoiced" class="mt-2" class="font-semibold">MF invoiced Y/N</label>
                             <div class="mt-2">
                                 <p-radioButton name="mfInvoiced" class="mr-2" [value]="true" label="Yes"
                                     formControlName="mfInvoiced"></p-radioButton>
@@ -144,8 +122,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field col-12 md:col-4">
-                        <p-table #dtOERP [value]="oerp" dataKey="id" [tableStyle]="{'min-width':'22rem'}">
+                    <div class="field col-12 md:col-4 flex flex-column">
+                        <div class="flex">
+                            <div class="field">
+                                <label for="oerpProjectCode" class="font-semibold">OERP project code<span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" pInputText placeholder="OERP project code"
+                                    formControlName="oerpProjectCode"
+                                    [class]="addEditForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                                <p-message *ngIf="addEditForm.get('oerpProjectCode')?.invalid && isSubmited"
+                                    severity="error" text="OERP project code is required"></p-message>
+                            </div>
+                            <div class="field ">
+                                <button pButton pRipple (click)="add()" label="Add"
+                                    class="p-button-outlined p-button-secondary p-button-sm ml-3 mt-5"></button>
+                            </div>
+                        </div>
+                        <p-table #dtOERP [value]="oerp" dataKey="id" [tableStyle]="{'width':'100%'}"
+                            [resizableColumns]="true">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th *ngFor="let col of cols">
@@ -178,8 +172,8 @@
                         </p-table>
                     </div>
                 </div>
-                <div class="field col mr-5">
-                    <p-table #dtOERP [value]="consultant" dataKey="id">
+                <div class="field col mr-5 -mx-3">
+                    <p-table #dtOERP [value]="consultant" dataKey="id" [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th></th>
@@ -238,12 +232,11 @@
                     [columns]="colsPerformance" [(selection)]="selectedPerformances" selectionMode="multiple"
                     (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
                     responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px"
-                    styleClass="p-treetable-gridlines">
+                    styleClass="p-treetable-gridlines" [resizableColumns]="true">
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th class="w-4rem"></th>
-                            <th [style]="{minWidth: (col.field == 'action' ? '25rem' : '100px'), width: 'fit-content'}"
-                                *ngFor="let col of columns">
+                            <th *ngFor="let col of columns">
                                 {{ col.header }}
                             </th>
                         </tr>
@@ -308,12 +301,12 @@
                                 [(selection)]="selectedPerformances" selectionMode="multiple"
                                 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
                                 responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
-                                scrollHeight="400px" [rowHover]="true" styleClass="p-treetable-gridlines">
+                                scrollHeight="400px" [rowHover]="true" styleClass="p-treetable-gridlines"
+                                [resizableColumns]="true">
                                 <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 4rem"></th>
-                                        <th style="min-width: 80px !important; width: fit-content !important;"
-                                            *ngFor="let col of columns">
+                                        <th *ngFor="let col of columns">
                                             {{ col.header }}
                                         </th>
                                     </tr>
@@ -323,8 +316,7 @@
                                         <td style="width: 4rem">
                                             <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
                                         </td>
-                                        <td style="min-width: 80px !important; width: fit-content !important;"
-                                            *ngFor="let col of columns; let i = index">
+                                        <td *ngFor="let col of columns; let i = index">
                                             <p-treeTableToggler [rowNode]="rowNode"
                                                 *ngIf="i === 0"></p-treeTableToggler>
                                             {{ rowData[col.field] }}
@@ -355,18 +347,18 @@
                     <div [@showHide]="isCollapsed.general ? 'true' : 'false'" class="grid p-fluid">
                         <div class="flex justify-content-end w-full mb-2">
                             <button pButton pRipple (click)="addLine()"
-                                    class="p-button-outlined p-button-sm p-button-primary w-10rem"
-                                    icon="pi pi-plus-circle" label="Add line"></button>
+                                class="p-button-outlined p-button-sm p-button-primary w-10rem" icon="pi pi-plus-circle"
+                                label="Add line"></button>
                         </div>
                         <div class="formgrid grid">
                             <p-table #dtGeneral [value]="general" [lazy]="true" [scrollable]="true"
                                 scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
-                                styleClass="p-treetable-gridlines">
+                                styleClass="p-treetable-gridlines" [resizableColumns]="true">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th style="width: 4rem">
                                         </th>
-                                        <th style="width: 15rem" *ngFor="let col of colsGeneral">
+                                        <th *ngFor="let col of colsGeneral">
                                             {{ col.header }}
                                         </th>
                                     </tr>
@@ -408,7 +400,7 @@
             <p-tabPanel header="Invoicing">
                 <div class="col formgrid grid">
                     <div class="field col-12 md:col-2 mt-3">
-                        <label for="maximumCost"> <b>Remaining amount</b></label>
+                        <label for="maximumCost" class="font-semibold">Remaining amount</label>
                     </div>
                     <div class="field col-12 md:col-2">
                         <div class="p-inputgroup">
@@ -419,7 +411,8 @@
                 </div>
                 <div>
                     <p-table #dtInvoice [value]="invoices" dataKey="id" styleClass="p-datatable-gridlines"
-                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+                        [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th *ngFor="let col of colsInvoice">
@@ -479,7 +472,7 @@
                         <div>
                             <p-table #dtPayment [value]="payments" dataKey="id" styleClass="p-datatable-gridlines"
                                 responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
-                                scrollHeight="400px">
+                                scrollHeight="400px" [resizableColumns]="true">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th *ngFor="let col of colsPayment">
@@ -517,7 +510,8 @@
                 <div class="field col">
                     <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true"
                         class="flex align-items-center justify-content-center"></p-fileUpload>
-                    <p-table #dtDocumentation [value]="documentations" styleClass="p-datatable-gridlines" class="m-5">
+                    <p-table #dtDocumentation [value]="documentations" styleClass="p-datatable-gridlines" class="m-5"
+                        [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 9rem">
@@ -562,10 +556,10 @@
                     label="Terminate contract"></button>
             </div>
             <div class="flex">
-                <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
+                    label="Save" [loading]="actionLoading"></button>
+                <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
                     label="Close"></button>
-                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
-                    [loading]="actionLoading"></button>
             </div>
         </div>
     </form>

@@ -1,7 +1,7 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <div class="p-fluid p-2 mb-4">
         <div class="field">
-            <label for="countryName"> <b>Country name</b><span class="text-red-500">*</span></label>
+            <label for="countryName" class="font-semibold">Country name<span class="text-red-500">*</span></label>
             <input type="text" pInputText 
                 [class]="addEditForm.get('countryName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 placeholder="country name" formControlName="countryName">
@@ -9,11 +9,11 @@
                 [text]="getErrorMessage('Country name', addEditForm.get('countryName')?.errors)"></p-message>
         </div>
         <div class="field">
-            <label for="hotelCeiling"> <b>Hotel ceiling</b></label>
+            <label for="hotelCeiling" class="font-semibold">Hotel ceiling</label>
             <input type="text" decimal pInputText placeholder="Hotel ceiling" formControlName="hotelCeiling">
         </div>
         <div class="field">
-            <label for="dailyAllowance"> <b>Daily allowance</b></label>
+            <label for="dailyAllowance" class="font-semibold">Daily allowance</label>
             <input type="text" decimal pInputText placeholder="Daily allowance" formControlName="dailyAllowance">
         </div>
         <div class="field">

@@ -1,7 +1,7 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="p-fluid p-2 mb-4">
       <div class="field">
-          <label for="value"> <b>OERP Code</b><span class="text-red-500">*</span></label>
+          <label for="value" class="font-semibold">OERP Code<span class="text-red-500">*</span></label>
           <input type="text" pInputText
               [class]="addEditForm.get('value')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
               placeholder="OERP Code" formControlName="value">

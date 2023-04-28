@@ -3,7 +3,7 @@
     <p-tabView orientation="left">
         <p-tabPanel header="General infos" class="p-fluid m-0">
             <div class="field">
-                <label for="name"> <b>Company Name </b><span class="text-red-500">*</span></label>
+                <label for="name" class="font-semibold">Company Name <span class="text-red-500">*</span></label>
                 <input type="text" pInputText
                     [class]="addEditForm.get('name')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                     placeholder="Company name" formControlName="name">
@@ -11,11 +11,11 @@
                     text="Name is required"></p-message>
             </div>
             <div class="field">
-                <label for="bankAccount"> <b>IBAN Number</b></label>
+                <label for="bankAccount" class="font-semibold">IBAN Number</label>
                 <input type="text" pInputText placeholder="IBAN Number" formControlName="bankAccount">
             </div>
             <div class="field">
-                <label for="Email"> <b>Email</b> <span class="text-red-500">*</span></label>
+                <label for="Email" class="font-semibold">Email <span class="text-red-500">*</span></label>
                 <input type="text" pInputText
                     [class]="addEditForm.get('email')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                     placeholder="Email" formControlName="email">
@@ -23,20 +23,20 @@
                     [text]="addEditForm.get('email')?.errors ? addEditForm.get('email')?.errors?.['required'] ? 'Email is required' : 'Email format not valid' : ''"></p-message>
             </div>
             <div class="field">
-                <label for="VATLegalEntity"> <b>VAT legal entity</b></label>
+                <label for="VATLegalEntity" class="font-semibold">VAT legal entity</label>
                 <input type="text" pInputText placeholder="VAT legal entity" formControlName="vatLegal">
             </div>
             <div class="field">
-                <label for="BIC/SWIFT"> <b>BIC/SWIFT</b></label>
+                <label for="BIC/SWIFT" class="font-semibold">BIC/SWIFT</label>
                 <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="bic">
             </div>
             <div class="field">
-                <label for="Approver"> <b>Approver</b></label>
+                <label for="Approver" class="font-semibold">Approver</label>
                 <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver"
                     optionLabel="displayLabel"></p-dropdown>
             </div>
             <div class="field">
-                <label for="VATRate"> <b>VAT rate</b></label>
+                <label for="VATRate" class="font-semibold">VAT rate</label>
                 <div class="p-inputgroup">
                 <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
                 <span class="p-inputgroup-addon">%</span>

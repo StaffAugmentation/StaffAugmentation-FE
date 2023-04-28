@@ -2,7 +2,7 @@
   <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <div class="p-fluid p-2 mb-4">
       <div class="field">
-                  <label for="ValueId"> <b>Value</b><span class="text-red-500">*</span></label>
+                  <label for="ValueId" class="font-semibold">Value<span class="text-red-500">*</span></label>
                   <input type="text" pInputText
                       [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                       placeholder="Value" formControlName="valueId">

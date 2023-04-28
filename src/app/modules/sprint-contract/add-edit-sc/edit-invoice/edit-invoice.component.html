@@ -117,7 +117,8 @@
                     <label class="font-semibold">Normal Performances</label>
                     <div class="m-2"></div>
                     <p-table #dtPerformance [value]="performances" dataKey="id" styleClass="p-datatable-gridlines"
-                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px" 
+                        [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th *ngFor="let col of colsPerformance">
@@ -149,7 +150,7 @@
                     <div class="m-2"></div>
                     <p-table #dtProvisionPerformance [value]="provisionPerformances" dataKey="id"
                         styleClass="p-datatable-gridlines" responsiveLayout="scroll" scrollDirection="both"
-                        [scrollable]="true" scrollHeight="400px">
+                        [scrollable]="true" scrollHeight="400px" [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th *ngFor="let col of colsProvisionPerformance">
@@ -180,7 +181,8 @@
                     <label class="font-semibold">Povision of services - General</label>
                     <div class="m-2"></div>
                     <p-table #dtGeneral [value]="generals" dataKey="id" styleClass="p-datatable-gridlines"
-                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
+                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+                        [resizableColumns]="true">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th *ngFor="let col of colsGeneral">
@@ -217,10 +219,10 @@
                     (click)="generateCreditNote()" label="Generate credit note"></button>
             </div>
             <div class="flex">
-                <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
-                    label="Close"></button>
                 <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
                     label="Save" [loading]="actionLoading"></button>
+                    <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
+                        label="Close"></button>
             </div>
         </div>
     </form>

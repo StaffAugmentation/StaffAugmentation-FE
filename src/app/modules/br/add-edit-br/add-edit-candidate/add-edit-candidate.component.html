@@ -1,55 +1,55 @@
-<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="addEditForm" (ngSubmit)="onSubmit()" class="mt-2 mb-6">
   <div class="p-fluid p-2 mb-4">
     <div class="formgrid grid">
       <div class="field col-12 md:col-6">
-        <label for="firstName"> <b>First name </b><span class="text-red-500">*</span></label>
+        <label for="firstName" class="font-semibold">First name <span class="text-red-500">*</span></label>
         <input type="text" pInputText formControlName="firstName"
           [class]="addEditForm.get('firstName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         <p-message *ngIf="addEditForm.get('firstName')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('firstName', addEditForm.get('firstName')?.errors)"></p-message>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="lastName"> <b>Last name </b><span class="text-red-500">*</span></label>
+        <label for="lastName" class="font-semibold">Last name <span class="text-red-500">*</span></label>
         <input type="text" pInputText formControlName="lastName"
           [class]="addEditForm.get('lastName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         <p-message *ngIf="addEditForm.get('lastName')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('lastName', addEditForm.get('lastName')?.errors)"></p-message>
       </div>
       <div class="field col-12 md:col-4">
-        <label for="company"> <b>Company</b></label>
+        <label for="company" class="font-semibold">Company</label>
         <p-dropdown [options]="company" formControlName="company"></p-dropdown>
       </div>
       <div class="field col-12 md:col-4">
-        <label for="recruitment"><b>Recruitment </b></label>
+        <label for="recruitment" class="font-semibold">Recruitment </label>
         <div class="flex">
           <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredRecruitments"
             formControlName="recruitment" (completeMethod)="filterRecruitment($event)"
-            [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid grouped' : 'grouped'">
+            [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid grouped w-full' : 'grouped w-full'">
           </p-autoComplete>
           <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus"
             style="border-radius: 0 7px 7px 0;"></button>
         </div>
       </div>
       <div class="field col-12 md:col-4">
-        <label for="resourceType"> <b>Resource type</b></label>
+        <label for="resourceType" class="font-semibold">Resource type</label>
         <p-dropdown [options]="resourceType" formControlName="resourceType"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6">
         <div class="flex justify-content-start mb-2">
           <p-checkbox class="mr-2" formControlName="checked" [binary]="true" inputId="binary"></p-checkbox>
-          <label for="subconstractor"> <b>Subconstractor</b></label>
+          <label for="subconstractor" class="font-semibold">Subconstractor</label>
         </div>
         <p-dropdown [options]="subconstractor" formControlName="subconstractor"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="availabilityD"> <b>Availability date</b></label>
+        <label for="availabilityD" class="font-semibold">Availability date</label>
         <p-calendar formControlName="availabilityD" [disabledDays]="[5,6]" [showIcon]="true" [readonlyInput]="true"
           [class]="addEditForm.get('availabilityD')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
         </p-calendar>
       </div>
       <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
-          <label for="foA"> <b>FO approval</b></label>
+          <label for="foA" class="font-semibold">FO approval</label>
         </div>
         <div class="flex justify-content-center align-items-center">
           <p-inputSwitch formControlName="foA"></p-inputSwitch>
@@ -57,7 +57,7 @@
       </div>
       <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
-          <label for="proposalC"> <b>Proposal Completed</b></label>
+          <label for="proposalC" class="font-semibold">Proposal Completed</label>
         </div>
         <div class="flex justify-content-center align-items-center">
           <p-inputSwitch formControlName="proposalC"></p-inputSwitch>
@@ -65,19 +65,19 @@
       </div>
       <div class="field col-12 md:col-4">
         <div class="flex justify-content-center align-items-center mb-3">
-          <label for="draftA"> <b>Draft approval</b></label>
+          <label for="draftA" class="font-semibold">Draft approval</label>
         </div>
         <div class="flex justify-content-center align-items-center ">
           <p-inputSwitch formControlName="draftA"></p-inputSwitch>
         </div>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="detailI"> <b>Detail interview</b></label>
+        <label for="detailI" class="font-semibold">Detail interview</label>
         <textarea rows="5" cols="30" formControlName="detailI" pInputTextarea
           [class]="addEditForm.get('detailI')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="comment"> <b>Comment</b></label>
+        <label for="comment" class="font-semibold">Comment</label>
         <textarea rows="5" cols="30" formControlName="comment" pInputTextarea
           [class]="addEditForm.get('comment')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
       </div>
@@ -85,7 +85,7 @@
     <p-table #dtFile [value]="listFile" selectionMode="single" dataKey="id" [rows]="250"
       [loading]="tableOptionsFile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-      scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll">
+      scrollDirection="both" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll" [resizableColumns]="true">
       <ng-template pTemplate="header">
         <tr>
           <th *ngFor="let col of tableOptionsFile.visibleCols" style="min-width: 80px;">
@@ -119,9 +119,9 @@
     </p-table>
   </div>
   <div class="footer">
-    <button type="submit" pButton pRipple class="p-button-sm p-button-primary ml-2" label="Save"
-      [loading]="actionLoading"></button>
-    <button (click)="close()" type="button" pButton pRipple class="p-button-outlined p-button-sm p-button-secondary"
+    <button (click)="close()" type="button" pButton pRipple class="p-button-sm p-button-secondary ml-2"
       label="Close"></button>
+    <button type="submit" pButton pRipple class="p-button-sm p-button-primary" label="Save"
+      [loading]="actionLoading"></button>
   </div>
 </form>

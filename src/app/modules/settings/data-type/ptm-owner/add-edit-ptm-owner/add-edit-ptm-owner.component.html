@@ -3,7 +3,7 @@
       <p-tabView orientation="left">
           <div class="p-fluid m-0">
               <div class="field">
-                  <label for="valueId"> <b>Name </b><span class="text-red-500">*</span></label>
+                  <label for="valueId" class="font-semibold">Name <span class="text-red-500">*</span></label>
                   <input type="text" pInputText
                       [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                       placeholder="Name" formControlName="valueId">
@@ -11,24 +11,24 @@
                       text="Name is required"></p-message>
               </div>
               <div class="field">
-                  <label for="ba"> <b>IBAN Number</b></label>
+                  <label for="ba" class="font-semibold">IBAN Number</label>
                   <input type="text" pInputText placeholder="IBAN Number" formControlName="ba">
               </div>
               <div class="field">
-                  <label for="vatNumber"> <b>VAT number</b></label>
+                  <label for="vatNumber" class="font-semibold">VAT number</label>
                   <input type="text" pInputText placeholder="VAT number" formControlName="vatNumber">
               </div>
               <div class="field">
-                  <label for="bicsw"> <b>BIC/SW</b></label>
+                  <label for="bicsw" class="font-semibold">BIC/SW</label>
                   <input type="text" pInputText placeholder="BIC/SWIFT" formControlName="bicsw">
               </div>
               <div class="field">
-                  <label for="approver"> <b>Approver</b></label>
+                  <label for="approver" class="font-semibold">Approver</label>
                   <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver"
                       optionLabel="displayLabel"></p-dropdown>
               </div>
               <div class="field">
-                  <label for="vatRate"> <b>VAT rate</b></label>
+                  <label for="vatRate" class="font-semibold">VAT rate</label>
                   <div class="p-inputgroup">
                   <input decimal type="text" pInputText placeholder="VAT rate" formControlName="vatRate">
                   <span class="p-inputgroup-addon">%</span>

@@ -1,7 +1,7 @@
 <form [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
     <div class="p-fluid p-2 mb-4">
         <div class="field">
-            <label for="valueId"> <b>Name</b><span class="text-red-500">*</span></label>
+            <label for="valueId" class="font-semibold">Name<span class="text-red-500">*</span></label>
             <input type="text" pInputText
                 [class]="addEditForm.get('valueId')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
                 formControlName="valueId">
@@ -9,49 +9,49 @@
                 [text]="getErrorMessage('Name', addEditForm.get('valueId')?.errors)"></p-message>
         </div>
         <div class="field">
-            <label for="idNumber"> <b>ID number</b></label>
+            <label for="idNumber" class="font-semibold">ID number</label>
             <input type="text" pInputText formControlName="idNumber">
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="ba"> <b>IBAN number</b></label>
+                <label for="ba" class="font-semibold">IBAN number</label>
                 <input type="text" pInputText formControlName="ba">
             </div>
             <div class="field col">
-                <label for="vatNumber"> <b>VAT number</b></label>
+                <label for="vatNumber" class="font-semibold">VAT number</label>
                 <input type="text" pInputText formControlName="vatNumber">
             </div>
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="bicsw"> <b>BIC/SW</b></label>
+                <label for="bicsw" class="font-semibold">BIC/SW</label>
                 <input type="text" pInputText formControlName="bicsw">
             </div>
             <div class="field col">
-                <label for="approver"> <b>Approver</b></label>
+                <label for="approver" class="font-semibold">Approver</label>
                 <p-dropdown [options]="approvers" placeholder="Choose approver" formControlName="approver"
                     optionLabel="displayLabel"></p-dropdown>
             </div>
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="paymentTerm"> <b>Payment terms</b></label>
+                <label for="paymentTerm" class="font-semibold">Payment terms</label>
                 <p-dropdown [options]="paymentTerm" placeholder="Choose payment term" formControlName="paymentTerm"
                     optionLabel="displayLabel"></p-dropdown>
             </div>
             <div class="field col">
-                <label for="typeOfCost"> <b>Type of cost</b></label>
+                <label for="typeOfCost" class="font-semibold">Type of cost</label>
                 <p-dropdown [options]="typeOfCost" placeholder="Choose type of cost" formControlName="typeOfCost"
                     optionLabel="displayLabel" ></p-dropdown>
             </div>
         </div>
         <div class="formgrid grid">
             <div class="field col">
-                <label for="legalEntityName"> <b>Legal entity name</b></label>
+                <label for="legalEntityName" class="font-semibold">Legal entity name</label>
                 <input type="text" pInputText formControlName="legalEntityName">
             </div>
             <div class="field col">
-                <label for="vatRate"> <b>VAT rate</b></label>
+                <label for="vatRate" class="font-semibold">VAT rate</label>
                 <div class="p-inputgroup">
                 <input decimal type="text" pInputText formControlName="vatRate">
                 <span class="p-inputgroup-addon">%</span>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="field">
-            <label for="legalEntityAdress"> <b>Legal entity address</b></label>
+            <label for="legalEntityAdress" class="font-semibold">Legal entity address</label>
             <input type="text" pInputText formControlName="legalEntityAdress">
         </div>
         <div class="field">

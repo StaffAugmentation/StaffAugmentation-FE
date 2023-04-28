@@ -1,4 +1,4 @@
-<form class="br mt-3" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+<form class="navigation mt-3 mb-3" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <p-tabView>
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
@@ -71,13 +71,13 @@
             <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('serviceType', addEditForm.get('serviceType')?.errors)"></p-message>
           </div>
-        </div>
-        <div class="field">
-          <label for="source" class="font-semibold">Source <span class="text-red-500">*</span></label>
-          <p-dropdown [options]="source" formControlName="source"
-            [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-          <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
-            [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
+          <div class="field col-12 md:col-6">
+            <label for="source" class="font-semibold">Source <span class="text-red-500">*</span></label>
+            <p-dropdown [options]="source" formControlName="source"
+              [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
+              [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
+          </div>
         </div>
       </div>
     </p-tabPanel>
@@ -168,7 +168,7 @@
     <p-tabPanel header="Basic characteristics" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="formgrid grid">
-          <div class="field col">
+          <div class="field col-12 md:col-6">
             <label for="placeOfDelivery" class="font-semibold">Place of delivery <span
                 class="text-red-500">*</span></label>
             <p-dropdown [options]="placeOfDelivery" formControlName="placeOfDelivery"
@@ -177,19 +177,19 @@
             <p-message *ngIf="addEditForm.get('placeOfDelivery')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('placeOfDelivery', addEditForm.get('placeOfDelivery')?.errors)"></p-message>
           </div>
-          <div class="field col">
+          <div class="field col-12 md:col-6">
             <label for="totalManDays" class="font-semibold">Total man-days</label>
             <input type="text" pInputText formControlName="totalManDays">
           </div>
         </div>
       </div>
-      <p-tabView class="sideBar">
+      <p-tabView class="side-tabview">
         <p-tabPanel header="Profile/Level/Consultant" class="p-fluid m-0">
           <p-table #dtBrProfile [value]="listBrProfile" selectionMode="single" dataKey="id" [rows]="250"
             [loading]="tableOptionsBrProfile.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-            responsiveLayout="scroll">
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="250px"
+            responsiveLayout="scroll" [resizableColumns]="true">
             <ng-template pTemplate="caption">
               <div class="flex justify-content-between">
                 <span class="p-input-icon-right" style="max-width: 150px;">
@@ -239,11 +239,12 @@
               </tr>
             </ng-template>
           </p-table>
-          <p-table #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
+          <div class="mt-4"></div>
+          <p-table  #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
             [loading]="tableOptionsConsultant.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-            responsiveLayout="scroll">
+            [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="250px"
+            responsiveLayout="scroll" [resizableColumns]="true">
             <ng-template pTemplate="header">
               <tr>
                 <th style="width: 115px;">
@@ -287,7 +288,7 @@
             [loading]="tableOptionsCandidate.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-            responsiveLayout="scroll">
+            responsiveLayout="scroll" [resizableColumns]="true">
             <ng-template pTemplate="header">
               <tr>
                 <th style="width: 158px;">
@@ -345,7 +346,7 @@
             [loading]="tableOptionsPartner.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-            responsiveLayout="scroll">
+            responsiveLayout="scroll" [resizableColumns]="true">
             <ng-template pTemplate="header">
               <tr>
                 <th style="width: 158px;">
