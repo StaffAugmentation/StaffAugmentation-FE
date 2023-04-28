@@ -34,6 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
   standalone: true,
   selector: 'app-add-edit-sc',
   templateUrl: './add-edit-sc.component.html',
+  styleUrls: ['./add-edit-sc.component.css'],
   imports: [
     CommonModule,
     FormsModule,
