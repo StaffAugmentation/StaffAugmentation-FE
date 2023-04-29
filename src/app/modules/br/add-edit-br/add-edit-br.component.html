@@ -611,7 +611,7 @@
                 </ng-container>
                 <p-cellEditor *ngIf="col.id=='docType'">
                   <ng-template pTemplate="input">
-                    <input pInputText type="text" formControlName="File[col.id]">
+                    <p-dropdown [options]="type" formControlName="File[col.id]"></p-dropdown>
                   </ng-template>
                   <ng-template pTemplate="output">
                     {{File[col.id]}}

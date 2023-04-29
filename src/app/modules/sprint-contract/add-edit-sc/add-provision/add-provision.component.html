@@ -3,47 +3,43 @@
         <p-tabView orientation="left">
             <p-tabPanel header="General provision" class="p-fluid m-0">
                 <div class="formgrid grid">
-                    <div class="field col">
-                        <label class="font-bold">Consultant<span class="text-red-500">*</span></label>
+                  <div class="field col-12 md:col-6">
+                    <label class="font-bold">Consultant<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="consultant" formControlName="consultantName" optionLabel="consultantName"
                             [class]="addForm.get('consultantName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('consultantName')?.invalid && isSubmited" severity="error"
                             text="Consultant is required"></p-message>
                     </div>
-                    <div class="field col">
-                        <label class="font-bold">Profile<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-bold">Profile<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="consultant" formControlName="profile" optionLabel="profile"
                             [class]="addForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('profile')?.invalid && isSubmited" severity="error"
                             text="Profile is required"></p-message>
-                    </div>   
-                </div>   
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label class="font-bold">Amount<span class="text-red-500">*</span></label>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-bold">Amount<span class="text-red-500">*</span></label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">€</span>
                             <input type="text" decimal pInputText formControlName="amount"
                                 [class]="addForm.get('amount')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
-                        </div> 
+                        </div>
                         <p-message *ngIf="addForm.get('amount')?.invalid && isSubmited" severity="error"
-                            text="Amount is required"></p-message>   
+                            text="Amount is required"></p-message>
                     </div>
-                    <div class="field col">
-                        <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-6">
+                      <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="consultant" formControlName="oerpProjectCode" optionLabel="oerpProjectCode"
                             [class]="addForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('oerpProjectCode')?.invalid && isSubmited" severity="error"
                             text="OERP project code is required"></p-message>
                     </div>
-                </div>
-                <div class="formgrid grid">
                     <div class="field col">
                         <label class="font-bold">Description<span class="text-red-500">*</span></label>
                         <textarea pInputText rows="5" cols="120" formControlName="description"
                             [class]="addForm.get('description')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></textarea>
                         <p-message *ngIf="addForm.get('description')?.invalid && isSubmited" severity="error"
-                            text="Description is required"></p-message>    
+                            text="Description is required"></p-message>
                     </div>
                 </div>
             </p-tabPanel>
@@ -82,7 +78,7 @@
                             </tr>
                         </ng-template>
                     </p-table>
-                </div>    
+                </div>
             </p-tabPanel>
         </p-tabView>
         <div class="footer">
@@ -90,4 +86,4 @@
             <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2" label="Close"></button>
         </div>
     </form>
-</div>                
+</div>

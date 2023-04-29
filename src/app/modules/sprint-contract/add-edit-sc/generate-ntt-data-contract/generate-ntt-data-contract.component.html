@@ -3,46 +3,42 @@
         <p-tabView orientation="left">
             <p-tabPanel header="Contract detail" class="p-fluid m-0">
                 <div class="formgrid grid">
-                    <div class="field col">
-                        <label class="font-bold">Consultant name</label>
+                  <div class="field col-12 md:col-3">
+                    <label class="font-bold">Consultant name</label>
                         <input type="text" pInputText formControlName="consultantName">
                     </div>
-                    <div class="field col">
-                        <label class="font-bold">Sent date<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-3">
+                      <label class="font-bold">Sent date<span class="text-red-500">*</span></label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="sentDate"
                             [class]="addForm.get('sentDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
                         <p-message *ngIf="addForm.get('sentDate')?.invalid && isSubmited" severity="error"
                             text="Sent date is required"></p-message>
                     </div>
-                    <div class="field col">
-                        <label class="font-bold">Signature date</label>
+                    <div class="field col-12 md:col-3">
+                      <label class="font-bold">Signature date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="signatureDate"></p-calendar>
                     </div>
-                    <div class="field col">
-                        <label class="font-bold">Maximum end date<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-3">
+                      <label class="font-bold">Maximum end date<span class="text-red-500">*</span></label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="maximumEndDate"
                             [class]="addForm.get('maximumEndDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
                         <p-message *ngIf="addForm.get('maximumEndDate')?.invalid && isSubmited" severity="error"
                             text="Maximum end date is required"></p-message>
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label class="font-bold">Status<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-bold">Status<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="status" formControlName="status" optionLabel="status"
                             [class]="addForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('status')?.invalid && isSubmited" severity="error"
                             text="Status is required"></p-message>
                     </div>
-                    <div class="field col">
-                        <label class="pt-2 font-bold">Specific provision(s)</label>
+                    <div class="field col-12 md:col-6">
+                      <label class="pt-2 font-bold">Specific provision(s)</label>
                         <input type="text" pInputText formControlName="specificProvision">
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label class="font-bold">Comment</label>
+                    <div class="field">
+                      <label class="font-bold">Comment</label>
                         <textarea pInputText rows="5" cols="145" formControlName="comment"></textarea>
                     </div>
                 </div>

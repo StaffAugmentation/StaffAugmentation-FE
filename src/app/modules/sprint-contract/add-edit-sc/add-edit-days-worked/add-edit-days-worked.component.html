@@ -3,47 +3,43 @@
         <p-tabView orientation="left">
             <p-tabPanel header="Days worked" class="p-fluid m-0">
                 <div class="formgrid grid">
-                    <div class="flex field col-12 md:col p-0">
-                        <label class="pt-2 pr-2 font-bold">Month</label>
+                  <div class=" flex align-items-center field col-12 md:col-4">
+                    <label class="pt-2 pr-2 font-bold">Month</label>
                         <p-calendar dateFormat="MM/yy" view="month" [showIcon]="true" [readonlyInput]="true"
                             formControlName="month"></p-calendar>
                     </div>
-                    <label class="pt-2 font-bold">Forecast</label>
-                    <div class="field col">
-                        <input decimal type="text" pInputText formControlName="forecast">
+                    <div class=" flex align-items-center field col-12 md:col-4">
+                      <label class="pt-2 pr-2 font-bold">Forecast</label>
+                      <input decimal type="text" pInputText formControlName="forecast">
                     </div>
-                    <label class="pt-2 font-bold">Days worked</label>
-                    <div class="field col">
-                        <input decimal type="text" pInputText formControlName="daysWorked">
+                    <div class=" flex align-items-center field col-12 md:col-4">
+                      <label class="pt-2 font-bold">Days worked</label>
+                      <input decimal type="text" pInputText formControlName="daysWorked">
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <label class="pt-2 font-bold">Consultant</label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="consultant"
+                    <div class=" flex justify-content-between align-items-center field col-12 md:col-4">
+                      <label class="pt-2 font-bold">Consultant</label>
+                      <p-dropdown [options]="consultant" formControlName="consultant"
                             optionLabel="consultantName"></p-dropdown>
                     </div>
-                    <label class="pt-2 font-bold">Days not invoiceable</label>
-                    <div class="field col">
-                        <input decimal type="text" pInputText formControlName="daysNotInvoiceable">
+                    <div class=" flex align-items-center field col-12 md:col-4">
+                      <label class="pt-2 font-bold">Days not invoiceable</label>
+                      <input decimal type="text" pInputText formControlName="daysNotInvoiceable">
                     </div>
-                    <label class="pt-2 font-bold">Days not payable</label>
-                    <div class="field col">
-                        <input decimal type="text" pInputText formControlName="daysNotPayable">
+                    <div class=" flex align-items-center field col-12 md:col-4">
+                      <label class="pt-2 font-bold">Days not payable</label>
+                      <input decimal type="text" pInputText formControlName="daysNotPayable">
                     </div>
-                </div>
-                <div class="formgrid grid">
-                    <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="oerpProjectCode"
+                    <div class="field col-12 md:col-5">
+                      <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
+                      <p-dropdown [options]="consultant" formControlName="oerpProjectCode"
                             optionLabel="oerpProjectCode"
                             [class]="addEditForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addEditForm.get('oerpProjectCode')?.invalid && isSubmited" severity="error"
                             text="OERP project code is required"></p-message>
                     </div>
-                    <label class="pt-2 font-bold">Profile</label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="profile" optionLabel="profile"></p-dropdown>
+                    <div class="field col-12 md:col-5">
+                      <label class="pt-2 font-bold">Profile</label>
+                      <p-dropdown [options]="consultant" formControlName="profile" optionLabel="profile"></p-dropdown>
                     </div>
                 </div>
             </p-tabPanel>

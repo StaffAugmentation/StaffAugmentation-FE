@@ -71,6 +71,7 @@ export class AddEditBrComponent implements OnInit {
   actionLoading: boolean = false;
   frameworkContract!: [];
   cascade!: [];
+  type!: [];
   serviceType!: [];
   subscription!: Subscription;
   id: any;

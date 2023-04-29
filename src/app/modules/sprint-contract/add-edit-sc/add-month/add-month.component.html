@@ -1,88 +1,91 @@
 <div *ngIf="addForm">
-    <form [formGroup]="addForm" class="pb-3">
-        <p-tabView orientation="left">
-            <p-tabPanel header="Days worked" class="p-fluid m-0">
-                <div class="formgrid grid">
-                    <label class="pt-2 font-bold">Month<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <p-calendar dateFormat="MM/yy" view="month" [showIcon]="true" [readonlyInput]="true" formControlName="month"
-                            [class]="addForm.get('month')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
-                        <p-message *ngIf="addForm.get('month')?.invalid && isSubmited" severity="error"
-                            text="Month is required"></p-message>    
-                    </div>
-                    <label class="pt-2 font-bold">Days worked<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <input decimal type="text" pInputText formControlName="daysWorked"
-                            [class]="addForm.get('daysWorked')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
-                        <p-message *ngIf="addForm.get('daysWorked')?.invalid && isSubmited" severity="error"
-                            text="Days worked is required"></p-message>
-                    </div>
-                    <label class="pt-2 font-bold">Consultant<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="consultant" optionLabel="consultantName"
-                            [class]="addForm.get('consultant')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-                        <p-message *ngIf="addForm.get('consultant')?.invalid && isSubmited" severity="error"
-                            text="Consultant is required"></p-message>
-                    </div>
-                </div>    
-                <div class="formgrid grid">
-                    <label class="pt-2 font-bold">Transformation<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="transformation" optionLabel="transformation"
-                            [class]="addForm.get('transformation')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-                    <p-message *ngIf="addForm.get('transformation')?.invalid && isSubmited" severity="error"
-                        text="Transformation is required"></p-message>
-                    </div>
-                    <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
-                    <div class="field col">
-                        <p-dropdown [options]="consultant" formControlName="oerpProjectCode" optionLabel="oerpProjectCode"
-                            [class]="addForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
-                    <p-message *ngIf="addForm.get('oerpProjectCode')?.invalid && isSubmited" severity="error"
-                        text="OERP project code is required"></p-message>
-                    </div>
-                </div>
-            </p-tabPanel>
-            <p-tabPanel header="Documentation" class="p-fluid m-0">
-                <div class="field col">
-                    <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true" class="flex align-items-center justify-content-center"></p-fileUpload>
-                    <p-table #dtFile [value]="files" styleClass="p-datatable-gridlines" class="m-5">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="width: 4rem">
-                                </th>
-                                <th *ngFor="let col of cols">
-                                    {{ col.header }}
-                                </th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-file>
-                            <tr (dblclick)="edit(file)">
-                                <td>
-                                    <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text" (click)="edit(file)"></p-button>
-                                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="delete(file)"></p-button>
-                                </td>
-                                <td *ngFor="let col of cols">
-                                    {{file[col.field]}}
-                                </td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="emptymessage">
-                            <tr>
-                                <td colspan="8">No data found.</td>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="loadingbody">
-                            <tr>
-                                <td colspan="8">Loading data. Please wait.</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>    
-            </p-tabPanel>
-        </p-tabView>
-        <div class="footer">
-            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save" [loading]="actionLoading"></button>
-            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2" label="Close"></button>
+  <form [formGroup]="addForm" class="pb-3">
+    <p-tabView orientation="left">
+      <p-tabPanel header="Days worked" class="p-fluid m-0">
+        <div class="formgrid grid">
+          <div class="flex align-items-center justify-content-between field col-12 md:col-4">
+            <label class="pt-2 font-bold">Month<span class="text-red-500">*</span></label>
+            <p-calendar dateFormat="MM/yy" view="month" [showIcon]="true" [readonlyInput]="true" formControlName="month"
+              [class]="addForm.get('month')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+            <p-message *ngIf="addForm.get('month')?.invalid && isSubmited" severity="error"
+              text="Month is required"></p-message>
+          </div>
+          <div class="flex align-items-center justify-content-between field col-12 md:col-4">
+            <label class="pt-2 font-bold">Days worked<span class="text-red-500">*</span></label>
+            <input decimal type="text" pInputText formControlName="daysWorked"
+              [class]="addForm.get('daysWorked')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+            <p-message *ngIf="addForm.get('daysWorked')?.invalid && isSubmited" severity="error"
+              text="Days worked is required"></p-message>
+          </div>
+          <div class="flex align-items-center justify-content-between field col-12 md:col-4">
+            <label class="pt-2 font-bold">Consultant<span class="text-red-500">*</span></label>
+            <p-dropdown [options]="consultant" formControlName="consultant" optionLabel="consultantName"
+              [class]="addForm.get('consultant')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addForm.get('consultant')?.invalid && isSubmited" severity="error"
+              text="Consultant is required"></p-message>
+          </div>
+          <div class="flex align-items-center justify-content-between field col-12 md:col-8">
+            <label class="pt-2 font-bold">Transformation<span class="text-red-500">*</span></label>
+            <p-dropdown [options]="consultant" formControlName="transformation" optionLabel="transformation"
+              [class]="addForm.get('transformation')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addForm.get('transformation')?.invalid && isSubmited" severity="error"
+              text="Transformation is required"></p-message>
+          </div>
+          <div class="flex align-items-center justify-content-between field col-12 md:col-4">
+            <label class="pt-2 font-bold">OERP project code<span class="text-red-500">*</span></label>
+            <p-dropdown [options]="consultant" formControlName="oerpProjectCode" optionLabel="oerpProjectCode"
+              [class]="addForm.get('oerpProjectCode')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+            <p-message *ngIf="addForm.get('oerpProjectCode')?.invalid && isSubmited" severity="error"
+              text="OERP project code is required"></p-message>
+          </div>
         </div>
-    </form>
-</div>                
+      </p-tabPanel>
+      <p-tabPanel header="Documentation" class="p-fluid m-0">
+        <div class="field col">
+          <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true"
+            class="flex align-items-center justify-content-center"></p-fileUpload>
+          <p-table #dtFile [value]="files" styleClass="p-datatable-gridlines" class="m-5">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 4rem">
+                </th>
+                <th *ngFor="let col of cols">
+                  {{ col.header }}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-file>
+              <tr (dblclick)="edit(file)">
+                <td>
+                  <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text"
+                    (click)="edit(file)"></p-button>
+                  <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text"
+                    (click)="delete(file)"></p-button>
+                </td>
+                <td *ngFor="let col of cols">
+                  {{file[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="8">No data found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+              <tr>
+                <td colspan="8">Loading data. Please wait.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+    <div class="footer">
+      <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary" label="Save"
+        [loading]="actionLoading"></button>
+      <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary mr-2"
+        label="Close"></button>
+    </div>
+  </form>
+</div>

@@ -2,16 +2,16 @@
     <form [formGroup]="addForm" class="pb-4">
         <p-tabView orientation="left">
             <p-tabPanel header="Payment" class="p-fluid m-0">
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Invoicing period</label>
+              <div class="formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label class="font-semibold">Invoicing period</label>
                         <div class="p-inputgroup">
                             <input type="text" pInputText formControlName="invoicingPeriodStart">
                             <input type="text" pInputText formControlName="invoicingPeriodEnd">
                         </div>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Invoice amount<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-semibold">Invoice amount<span class="text-red-500">*</span></label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">€</span>
                             <input type="text" decimal pInputText formControlName="totalAmount"
@@ -20,132 +20,118 @@
                                 text="Invoice amount is required"></p-message>
                         </div>
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">VAT amount</label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-semibold">VAT amount</label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">€</span>
                             <input type="text" decimal pInputText formControlName="vatAmount">
                         </div>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Invoice subtotal</label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-semibold">Invoice subtotal</label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">€</span>
                             <input type="text" decimal pInputText formControlName="invoiceSubtotal">
                         </div>
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Invoice reference<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Invoice reference<span class="text-red-500">*</span></label>
                         <input type="text" pInputText formControlName="invoiceReference"
                             [class]="addForm.get('invoiceReference')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
                         <p-message *ngIf="addForm.get('invoiceReference')?.invalid && isSubmited" severity="error"
                             text="Invoice reference is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Invoice date<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Invoice date<span class="text-red-500">*</span></label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true" formControlName="invoiceDate"
                             [class]="addForm.get('invoiceDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
                         <p-message *ngIf="addForm.get('invoiceDate')?.invalid && isSubmited" severity="error"
                             text="Invoice date is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Payment schedule<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Payment schedule<span class="text-red-500">*</span></label>
                         <p-calendar [disabledDates]="disabledDates" [showIcon]="true" [readonlyInput]="true"
                             formControlName="paymentSchedule"
                             [class]="addForm.get('paymentSchedule')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
                         <p-message *ngIf="addForm.get('paymentSchedule')?.invalid && isSubmited" severity="error"
                             text="Payment schedule is required"></p-message>
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Ntt data entity<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Ntt data entity<span class="text-red-500">*</span></label>
                         <input type="text" pInputText formControlName="nttDataEntity"
                             [class]="addForm.get('nttDataEntity')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
                         <p-message *ngIf="addForm.get('nttDataEntity')?.invalid && isSubmited" severity="error"
                             text="Ntt data entity is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Legal entity name<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Legal entity name<span class="text-red-500">*</span></label>
                         <input type="text" pInputText formControlName="legalEntityName"
                             [class]="addForm.get('legalEntityName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
                         <p-message *ngIf="addForm.get('legalEntityName')?.invalid && isSubmited" severity="error"
                             text="Legal entity name is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">VAT legal entity</label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">VAT legal entity</label>
                         <input type="text" pInputText formControlName="vatLegalEntity">
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Type of cost<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Type of cost<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="typeOfCost" formControlName="typeOfCost" optionLabel="typeOfCost"
                             [class]="addForm.get('typeOfCost')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('typeOfCost')?.invalid && isSubmited" severity="error"
                             text="Type of cost is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">BIC/SWIFT<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">BIC/SWIFT<span class="text-red-500">*</span></label>
                         <input type="text" pInputText formControlName="bicSwift"
                             [class]="addForm.get('bicSwift')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
                         <p-message *ngIf="addForm.get('bicSwift')?.invalid && isSubmited" severity="error"
                             text="BIC/SWIFT is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">PO reference</label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">PO reference</label>
                         <input type="text" pInputText formControlName="poReference">
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Approver<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">Approver<span class="text-red-500">*</span></label>
                         <p-dropdown [options]="approver" formControlName="approver" optionLabel="approver"
                             [class]="addForm.get('typeOfCost')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
                         <p-message *ngIf="addForm.get('approver')?.invalid && isSubmited" severity="error"
                             text="Approver is required"></p-message>
                     </div>
-                    <div class="field col mb-0">
-                        <label class="pt-2 font-semibold">IBAN Number<span class="text-red-500">*</span></label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">IBAN Number<span class="text-red-500">*</span></label>
                         <input type="text" pInputText formControlName="ibanNumber"
                             [class]="addForm.get('ibanNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
                         <p-message *ngIf="addForm.get('ibanNumber')?.invalid && isSubmited" severity="error"
                             text="IBAN Number is required"></p-message>
                     </div>
-                    <div class="field col mb-0 mt-5 flex align-items-center">
-                        <label class="font-semibold mr-3">On hold</label>
-                        <p-inputSwitch formControlName="onHold"></p-inputSwitch>
+                    <div class="flex justify-content-center align-items-center field col-12 md:col-4">
+                      <label class="font-semibold mr-3">On hold</label>
+                      <p-inputSwitch formControlName="onHold"></p-inputSwitch>
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold mr-4">Invoice document</label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold mr-4">Invoice document</label>
                         <button (click)="upload()" type="button" pButton label="Upload" icon="pi pi-upload"
                             class="p-button-outlined p-button-sm p-button-primary w-3 ml-8 p-1"></button>
                         <input type="text" pInputText formControlName="invoiceDocument" class="mt-2">
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold mr-6">Approval proof</label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold mr-6">Approval proof</label>
                         <button (click)="upload()" type="button" pButton label="Upload" icon="pi pi-upload"
                             class="p-button-outlined p-button-sm p-button-primary w-3 ml-8 p-1"></button>
                         <input type="text" pInputText formControlName="approvalProof" class="mt-2">
                     </div>
-                    <div class="field col mb-0">
-                        <label class="font-semibold">SAP Vendor</label>
+                    <div class="field col-12 md:col-4">
+                      <label class="font-semibold">SAP Vendor</label>
                         <input type="text" pInputText formControlName="sapVendor" class="mt-2">
                     </div>
-                </div>
-                <div class="grid">
-                    <div class="field col mb-0">
-                        <label class="font-semibold">Comment</label>
+                    <div class="field col-12 md:col-6">
+                      <label class="font-semibold">Comment</label>
                         <textarea pInputTextarea formControlName="comment"></textarea>
                     </div>
-                    <div class="field col mb-0 mt-5">
-                        <p-table #dtOerp [value]="oerp" dataKey="id" styleClass="p-datatable-gridlines"
+                    <div class="field col-12 md:col-6">
+                      <p-table #dtOerp [value]="oerp" dataKey="id" styleClass="p-datatable-gridlines"
                             responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px">
                             <ng-template pTemplate="header">
                                 <tr>
