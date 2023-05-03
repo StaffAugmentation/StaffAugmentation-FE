@@ -27,9 +27,14 @@
             <label for="department" class="font-semibold">Department <span class="text-red-500">*</span></label>
             <div class="flex">
               <p-autoComplete class="grouped w-full" [dropdown]="true" [readonly]="false"
-                [suggestions]="filteredDepartments" formControlName="department"
+                [suggestions]="filteredDepartments" formControlName="department" field="valueId"
                 (completeMethod)="filterDepartment($event)"
                 [class]="addEditForm.get('department')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                <ng-template let-department pTemplate="item">
+                  <div class="flex align-items-center gap-2">
+                    <div>{{ department.valueId }}</div>
+                  </div>
+                </ng-template>
               </p-autoComplete>
               <button type="button" (click)="addDepartment()" pButton pRipple class="p-button-outlined"
                 style="border-radius: 0 7px 7px 0;" icon="pi pi-plus"></button>
@@ -240,7 +245,7 @@
             </ng-template>
           </p-table>
           <div class="mt-4"></div>
-          <p-table  #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
+          <p-table #dtConsultant [value]="listConsultant" selectionMode="single" dataKey="id" [rows]="250"
             [loading]="tableOptionsConsultant.loading" [rowHover]="true" styleClass="p-datatable-gridlines"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true" scrollDirection="both" [scrollable]="true" scrollHeight="250px"

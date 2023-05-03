@@ -22,6 +22,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
+import { Department } from '@models/department';
+import { DepartmentService } from '@services/department.service';
 
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -62,8 +64,7 @@ import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
 })
 export class AddEditBrComponent implements OnInit {
 
-  filteredDepartments!: any[];
-  departments: any;
+  filteredDepartments!: Department[];
   source!: any[];
   status!: any[];
   addEditForm!: FormGroup;
@@ -170,6 +171,8 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+  departments: Department[] = [];
+
   constructor(
     private modalDepartment: DynamicDialogRef,
     private modalEditProfile: DynamicDialogRef,
@@ -181,7 +184,9 @@ export class AddEditBrComponent implements OnInit {
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
-    private modalService: DialogService) { }
+    private departmentService: DepartmentService,
+    private modalService: DialogService) {
+    }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -201,7 +206,23 @@ export class AddEditBrComponent implements OnInit {
     this.getPenalty();
     this.getFile();
 
+    this.getDepartments();
+
   }
+  getDepartments(): void {
+    this.departmentService.getAll().subscribe({
+      next: (res) => {
+        this.departments = res;
+        this.departments = this.departments.map((dep: any) => {
+          return { ...dep, displayLabel: dep.value };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+
   getProfile(): void {
     this.listProfile = [
       { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
@@ -250,7 +271,7 @@ export class AddEditBrComponent implements OnInit {
 
     for (let i = 0; i < this.departments.length; i++) {
       let department = this.departments[i];
-      if (department.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (department.valueId.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(department);
       }
     }
@@ -304,7 +325,10 @@ export class AddEditBrComponent implements OnInit {
       maskStyleClass: 'centred-header'
     });
     this.modalDepartment.onClose.subscribe(res => {
-
+      if (res) {
+        this.getDepartments();
+        this.addEditForm.get('department')!.setValue(res);
+      }
     });
   }
 
