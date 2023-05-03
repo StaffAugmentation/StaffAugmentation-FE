@@ -218,7 +218,7 @@ export class AddEditScComponent implements OnInit {
 
     this.colsGeneral = [
       { field: 'consultantName', header: 'Consultant name' },
-      { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
+      { field: 'profileLevelOnsiteCategory', header: 'Profile/level/onsite/category' },
       { field: 'description', header: 'Description' },
       { field: 'oerpProjectCode', header: 'OERP project code' },
       { field: 'amount', header: 'Amount' },

@@ -350,20 +350,20 @@
                                 class="p-button-outlined p-button-sm p-button-primary w-10rem" icon="pi pi-plus-circle"
                                 label="Add line"></button>
                         </div>
-                        <div class="formgrid grid">
-                            <p-table #dtGeneral [value]="general" [lazy]="true" [scrollable]="true"
+                        <div>
+                            <p-table #dtGeneral [value]="general" [scrollable]="true" [columns]="colsGeneral"
                                 scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
-                                styleClass="p-treetable-gridlines" [resizableColumns]="true">
-                                <ng-template pTemplate="header">
+                                styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="header" let-columns>
                                     <tr>
                                         <th style="width: 4rem">
                                         </th>
-                                        <th *ngFor="let col of colsGeneral">
+                                        <th *ngFor="let col of columns">
                                             {{ col.header }}
                                         </th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-general>
+                                <ng-template pTemplate="body" let-general let-columns>
                                     <tr (dblclick)="edit(general)">
                                         <td>
                                             <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text"
@@ -371,19 +371,19 @@
                                             <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text"
                                                 (click)="deleteGeneral(general)"></p-button>
                                         </td>
-                                        <td *ngFor="let col of colsGeneral">
+                                        <td *ngFor="let col of columns">
                                             {{general[col.field]}}
                                         </td>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="emptymessage">
                                     <tr>
-                                        <td colspan="8">No data found.</td>
+                                        <td colspan="11">No data found.</td>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="loadingbody">
                                     <tr>
-                                        <td colspan="8">Loading data. Please wait.</td>
+                                        <td colspan="11">Loading data. Please wait.</td>
                                     </tr>
                                 </ng-template>
                             </p-table>
