@@ -3,11 +3,11 @@
     <div class="formgrid grid">
       <div class="field col-12 md:col-6">
         <label for="profile" class="font-semibold">Profile</label>
-        <p-dropdown [options]="profile" formControlName="profile"></p-dropdown>
+        <p-dropdown [options]="profile" optionLabel="displayLabel" formControlName="profile"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6">
         <label for="requestFS" class="font-semibold"> Request form status <span class="text-red-500">*</span></label>
-        <p-dropdown [options]="requestFS" formControlName="requestFS"
+        <p-dropdown [options]="requestFS" optionLabel="displayLabel" formControlName="requestFS"
           [class]="editForm.get('requestFS')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="editForm.get('requestFS')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('requestFS', editForm.get('requestFS')?.errors)"></p-message>
