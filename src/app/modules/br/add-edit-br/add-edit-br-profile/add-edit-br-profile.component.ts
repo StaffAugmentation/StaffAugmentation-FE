@@ -14,7 +14,8 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { LevelService } from '@services/level.service';
+import { CategoryService } from '@services/category.service';
 @Component({
   standalone:true,
   selector: 'app-add-edit-br-profile',
@@ -46,14 +47,46 @@ export class AddEditBrProfileComponent implements OnInit {
   serviceLC!: any[];
   company!: any[];
 
-  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  constructor(
+    private ref: DynamicDialogRef,
+    public toast: MessageService,
+    private modalService: DialogService,
+    private levelService: LevelService,
+    private categoryService: CategoryService,
+
+    ) {
+      this.getLevel();
+      this.getCategory();
+
+    }
 
   ngOnInit(): void {
     this.initForm(null);
   }
-
-
-
+  getLevel(): void {
+    this.levelService.getAll().subscribe({
+      next: (res) => {
+        this.level = res;
+        this.level = this.level.map((level: any) => {
+          return { ...level, displayLabel: level.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getCategory(): void {
+    this.categoryService.getAll().subscribe({
+      next: (res) => {
+        this.category = res;
+        this.category = this.category.map((category: any) => {
+          return { ...category, displayLabel: category.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   onSubmit() {
     this.isSubmited = true;
     this.ref.close();

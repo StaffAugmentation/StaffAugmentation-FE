@@ -3,14 +3,14 @@
     <div class="formgrid grid">
       <div class="field col-12 md:col-3">
         <label for="profile" class="font-semibold">Profile <span class="text-red-500">*</span></label>
-        <p-dropdown [options]="profile" formControlName="profile"
+        <p-dropdown [options]="profile" optionLabel="displayLabel" formControlName="profile"
           [class]="addEditForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('profile')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('profile', addEditForm.get('profile')?.errors)"></p-message>
       </div>
       <div class="field col-12 md:col-3">
         <label for="level" class="font-semibold">Level <span class="text-red-500">*</span></label>
-        <p-dropdown [options]="level" formControlName="level"
+        <p-dropdown [options]="level" optionLabel="displayLabel" formControlName="level"
           [class]="addEditForm.get('level')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('level')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('level', addEditForm.get('level')?.errors)"></p-message>
@@ -20,8 +20,8 @@
         <p-dropdown [options]="onFarSite" formControlName="onFarSite"></p-dropdown>
       </div>
       <div class="field col-12 md:col-3">
-        <label for="category" class="font-semibold">Category <span class="text-red-500">*</span></label>
-        <p-dropdown [options]="category" formControlName="category"
+        <label for="category"  class="font-semibold">Category <span class="text-red-500">*</span></label>
+        <p-dropdown [options]="category" optionLabel="displayLabel" formControlName="category"
           [class]="addEditForm.get('category')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('category')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('category', addEditForm.get('category')?.errors)"></p-message>
@@ -32,7 +32,7 @@
       </div>
       <div class="field col-12 md:col-3">
         <label for="company" class="font-semibold">Company</label>
-        <p-dropdown [options]="company" formControlName="company"></p-dropdown>
+        <p-dropdown [options]="company" optionLabel="displayLabel" formControlName="company"></p-dropdown>
       </div>
       <div class="field col-12 md:col-2">
         <label for="nDays" class="font-semibold">Nº Days</label>

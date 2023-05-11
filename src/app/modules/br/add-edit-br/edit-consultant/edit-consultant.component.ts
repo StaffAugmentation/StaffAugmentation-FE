@@ -45,7 +45,7 @@ export class EditConsultantComponent implements OnInit {
       { id: 'consultantCost', label: 'Consultant cost' },
       { id: 'margin', label: 'Margin' },
       { id: 'typeOfContract', label: 'Type of contract' },
-      { id: 'subconstractor', label: 'Subconstractor' },
+      { id: 'subcontractor', label: 'Subcontractor' },
     ],
     loading: false,
     exportLoading: false
@@ -69,7 +69,7 @@ export class EditConsultantComponent implements OnInit {
 
   getProfile(): void {
     this.listProfile = [
-      { id:1, plcOnsite: "20208 AA;2;3;On site", salesPrice: '504.09 €', nOfDays: 60.00000, consultantCost: '430.00 €', margin: '14.70', typeOfContract: 'Freelance', subconstractor: '' }
+      { id:1, plcOnsite: "20208 AA;2;3;On site", salesPrice: '504.09 €', nOfDays: 60.00000, consultantCost: '430.00 €', margin: '14.70', typeOfContract: 'Freelance', subcontractor: '' }
     ];
   };
   onSubmit() {

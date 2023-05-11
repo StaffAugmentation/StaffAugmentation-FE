@@ -17,13 +17,13 @@
       </div>
       <div class="field col-12 md:col-4">
         <label for="company" class="font-semibold">Company</label>
-        <p-dropdown [options]="company" formControlName="company"></p-dropdown>
+        <p-dropdown [options]="company" optionLabel="displayLabel" formControlName="company"></p-dropdown>
       </div>
       <div class="field col-12 md:col-4">
         <label for="recruitment" class="font-semibold">Recruitment </label>
         <div class="flex">
           <p-autoComplete [dropdown]="true" [readonly]="false" [suggestions]="filteredRecruitments"
-            formControlName="recruitment" (completeMethod)="filterRecruitment($event)"
+            formControlName="recruitment" field="name" (completeMethod)="filterRecruitment($event)"
             [class]="addEditForm.get('recruitment')?.invalid && isSubmited ? 'ng-dirty ng-invalid grouped w-full' : 'grouped w-full'">
           </p-autoComplete>
           <button type="button" pButton pRipple class="p-button-outlined" icon="pi pi-plus"
@@ -37,9 +37,9 @@
       <div class="field col-12 md:col-6">
         <div class="flex justify-content-start mb-2">
           <p-checkbox class="mr-2" formControlName="checked" [binary]="true" inputId="binary"></p-checkbox>
-          <label for="subconstractor" class="font-semibold">Subconstractor</label>
+          <label for="Subcontractor" class="font-semibold">subcontractor</label>
         </div>
-        <p-dropdown [options]="subconstractor" formControlName="subconstractor"></p-dropdown>
+        <p-dropdown [options]="subcontractor" optionLabel="displayLabel" formControlName="subcontractor"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6">
         <label for="availabilityD" class="font-semibold">Availability date</label>

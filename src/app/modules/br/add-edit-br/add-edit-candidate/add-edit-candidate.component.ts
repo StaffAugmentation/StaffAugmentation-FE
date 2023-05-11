@@ -17,8 +17,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TableModule } from 'primeng/table';
-
-
+import { CompanyService } from '@services/company.service';
+import { RecruitmentService } from '@services/recruitment.service';
+import { SubcontractorService } from '@services/subcontractor.service';
 
 @Component({
   standalone: true,
@@ -51,7 +52,7 @@ export class AddEditCandidateComponent implements OnInit {
   recruitments:any;
   company!: any[];
   resourceType!: any[];
-  subconstractor!: any[];
+  subcontractor!: any[];
   listFile!: any[];
   tableOptionsFile: any = {
     visibleCols: [],
@@ -65,7 +66,18 @@ export class AddEditCandidateComponent implements OnInit {
     exportLoading: false
   };
 
-  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  constructor(
+    private ref: DynamicDialogRef,
+    public toast: MessageService,
+    private modalService: DialogService,
+    private companyService: CompanyService,
+    private recruitmentService: RecruitmentService,
+    private subcontractorService: SubcontractorService,
+    ) {
+      this.getCompany();
+      this.getRecruitment();
+      this.getSubcontractor();
+    }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -87,7 +99,7 @@ export class AddEditCandidateComponent implements OnInit {
       recruitment: new FormControl(null),
       resourceType: new FormControl(null),
       checked: new FormControl(null),
-      subconstractor: new FormControl({value: null, disabled: true}),
+      subcontractor: new FormControl({value: null, disabled: true}),
       availabilityD: new FormControl(null),
       foA: new FormControl({value: null, disabled: true}),
       proposalC: new FormControl({value: null, disabled: true}),
@@ -96,7 +108,30 @@ export class AddEditCandidateComponent implements OnInit {
       comment: new FormControl({value: null, disabled: true}),
     });
   }
-
+  getCompany(): void {
+    this.companyService.getAll().subscribe({
+      next: (res) => {
+        this.company = res;
+        this.company = this.company.map((company: any) => {
+          return { ...company, displayLabel: company.name}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getRecruitment(): void {
+    this.recruitmentService.getAll().subscribe({
+      next: (res) => {
+        this.recruitments = res;
+        this.recruitments = this.recruitments.map((recruitments: any) => {
+          return { ...recruitments, displayLabel: recruitments.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   filterRecruitment(event: { query: any; }) {
     let filtered: any[] = [];
     let query = event.query;
@@ -110,7 +145,18 @@ export class AddEditCandidateComponent implements OnInit {
 
     this.filteredRecruitments = filtered;
   }
-
+  getSubcontractor(): void {
+    this.subcontractorService.getAll().subscribe({
+      next: (res) => {
+        this.subcontractor = res;
+        this.subcontractor = this.subcontractor.map((subcontractor: any) => {
+          return { ...subcontractor, displayLabel: subcontractor.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;

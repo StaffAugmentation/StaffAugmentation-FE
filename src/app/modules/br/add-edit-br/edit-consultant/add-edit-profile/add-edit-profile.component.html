@@ -3,7 +3,7 @@
     <div class="formgrid grid">
       <div class="field col-12 md:col-6">
         <label for="profile" class="font-semibold">Profile <span class="text-red-500">*</span></label>
-        <p-dropdown [options]="profile" formControlName="profile"
+        <p-dropdown [options]="profile" optionLabel="displayLabel" formControlName="profile"
           [class]="addEditForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
         <p-message *ngIf="addEditForm.get('profile')?.invalid && isSubmited" severity="error"
           [text]="getErrorMessage('profile', addEditForm.get('profile')?.errors)"></p-message>
@@ -46,8 +46,8 @@
           [readonlyInput]="true"></p-calendar>
       </div>
       <div class="field col-12 md:col-6">
-        <label for="subconstractorName" class="font-semibold">Subconstractor name</label>
-        <p-dropdown [options]="subconstractorName" formControlName="subconstractorName"></p-dropdown>
+        <label for="subcontractorName" class="font-semibold">Subcontractor name</label>
+        <p-dropdown [options]="subcontractorName" optionLabel="displayLabel" formControlName="subcontractorName"></p-dropdown>
       </div>
       <div class="field col-12 md:col-6">
         <label for="thirdPR" class="font-semibold">Third party rate</label>

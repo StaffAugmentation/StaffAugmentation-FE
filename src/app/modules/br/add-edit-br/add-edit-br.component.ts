@@ -22,6 +22,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
+import { RequestFormStatusService } from '@services/request-form-status.service';
+import { BrTypeService } from '@services/br-type.service';
+import { BrSourceService } from '@services/br-source.service';
+import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
+
 
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -71,8 +76,8 @@ export class AddEditBrComponent implements OnInit {
   actionLoading: boolean = false;
   frameworkContract!: [];
   cascade!: [];
-  type!: [];
-  serviceType!: [];
+  type!: any[];
+  serviceType!: any[];
   subscription!: Subscription;
   id: any;
   selectedDepartment: any;
@@ -181,7 +186,19 @@ export class AddEditBrComponent implements OnInit {
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
-    private modalService: DialogService) { }
+    private modalService: DialogService,
+    private requestFormStatusService: RequestFormStatusService,
+    private brTypeService: BrTypeService,
+    private brSourceService: BrSourceService,
+    private placeOfDeliveryService: PlaceOfDeliveryService,
+
+    ) {
+      this.getStatus();
+      this.getBrType();
+      this.getBrSource();
+      this.getPlaceOfDelivery();
+
+    }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -256,6 +273,55 @@ export class AddEditBrComponent implements OnInit {
     }
 
     this.filteredDepartments = filtered;
+  }
+
+  getStatus(): void {
+    this.requestFormStatusService.getAll().subscribe({
+      next: (res) => {
+        this.status = res;
+        this.status = this.status.map((status: any) => {
+          return { ...status, displayLabel: status.value}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getBrType(): void {
+    this.brTypeService.getAll().subscribe({
+      next: (res) => {
+        this.serviceType = res;
+        this.serviceType = this.serviceType.map((serviceType: any) => {
+          return { ...serviceType, displayLabel: serviceType.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getBrSource(): void {
+    this.brSourceService.getAll().subscribe({
+      next: (res) => {
+        this.source = res;
+        this.source = this.source.map((source: any) => {
+          return { ...source, displayLabel: source.name}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getPlaceOfDelivery(): void {
+    this.placeOfDeliveryService.getAll().subscribe({
+      next: (res) => {
+        this.placeOfDelivery = res;
+        this.placeOfDelivery = this.placeOfDelivery.map((placeOfDelivery: any) => {
+          return { ...placeOfDelivery, displayLabel: placeOfDelivery.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
   }
 
   initForm(data: null): void {
