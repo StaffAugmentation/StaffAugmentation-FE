@@ -397,6 +397,71 @@
                     </div>
                 </div>
             </p-tabPanel>
+            <p-tabPanel header="Travel expenses" class="p-fluid m-0">
+                <div class="flex justify-content-between mb-3">
+                    <div class="flex">
+                        <button pButton pRipple label="Generate invoice" (onClick)="generateInvoice()"
+                            class="p-button-sm p-button-primary w-auto text-sm mr-2"></button>
+                        <button pButton pRipple label="Process for payment" (onClick)="processPayment()"
+                            class="p-button-sm p-button-primary w-auto"></button>
+                    </div>
+                    <div class="flex text-sm">
+                        <button pButton pRipple (click)="addEditMission('add',0)" label="New mission" icon="pi pi-plus-circle"
+                            class="p-button-outlined p-button-sm p-button-primary w-auto"></button>
+                    </div>
+                </div>
+                <div>
+                    <p-table #dtRole [value]="missions" [(selection)]="selectedMissions" dataKey="id" [rowHover]="true"
+                        (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [scrollable]="true"
+                        scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
+                        styleClass="p-datatable-gridlines" [resizableColumns]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 4rem">
+                                </th>
+                                <th></th>
+                                <th *ngFor="let col of colsMission">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-mission>
+                            <tr (dblclick)="addEditMission('edit',mission)">
+                                <td>
+                                    <p-tableCheckbox [value]="mission"></p-tableCheckbox>
+                                </td>
+                                <td>
+                                    <p-button icon="pi pi-pencil" (click)="addEditMission('edit',mission)"
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-trash"  (click)="delete(mission.id)"
+                                        styleClass="p-button-danger p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-bookmark" 
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-credit-card"
+                                        styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-file-pdf" 
+                                        styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
+                                    <p-button icon="pi pi-file-excel"
+                                        styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>    
+                                </td>
+                                <td *ngFor="let col of colsMission">
+                                    {{mission[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No data found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading missions data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-tabPanel>
             <p-tabPanel header="Invoicing">
                 <div class="col formgrid grid">
                     <div class="field col-12 md:col-2 mt-3">

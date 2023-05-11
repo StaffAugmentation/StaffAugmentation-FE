@@ -1,0 +1,232 @@
+<div *ngIf="addEditForm">
+    <form [formGroup]="addEditForm" class="pb-3">
+        <p-tabView orientation="left">
+            <p-tabPanel header="Mission statement" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Name</label>
+                        <input type="text" pInputText formControlName="name">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Surmane</label>
+                        <input type="text" pInputText formControlName="surname">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Project name</label>
+                        <input type="text" pInputText formControlName="projectName">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Profile<span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="profile"
+                            [class]="addEditForm.get('profile')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addEditForm.get('profile')?.invalid && isSubmited" severity="error"
+                            text="Profile is required"></p-message>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Authorized by</label>
+                        <input type="text" pInputText formControlName="authorizedBy">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Function</label>
+                        <input type="text" pInputText formControlName="function">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">FWC reference</label>
+                        <input type="text" pInputText formControlName="fwcReference">
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="pt-2 font-bold">Specific contract reference</label>
+                        <input type="text" pInputText formControlName="specificContractReference">
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12">
+                        <label class="font-bold">Goal of the mission</label>
+                        <textarea pInputText formControlName="goalOfTheMission"></textarea>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Description of mission" class="p-fluid m-0">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Country</label>
+                        <input type="text" pInputText formControlName="country">
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">City</label>
+                        <input type="text" pInputText formControlName="city">
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Exchange applied</label>
+                        <div class="mt-2">
+                            <p-checkbox formControlName="exchangeApplied" value="true" label="Yes"></p-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Exchange rate</label>
+                        <input type="text" pInputText formControlName="exchangeRate">
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Source</label>
+                        <input type="text" pInputText formControlName="source">
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Departed of outward journey<span class="text-red-500">*</span></label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="departedOfOutwardJourney"
+                            [class]="addEditForm.get('departedOfOutwardJourney')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addEditForm.get('departedOfOutwardJourney')?.invalid && isSubmited" severity="error"
+                            text="Departed of outward journey is required"></p-message>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Arrival of outward journey</label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="arrivalOfOutwardJourney"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Commencement of services rendered</label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="commencementOfServicesRendered"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Cessation of services rendered</label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="cessationOfServicesRendered"></p-calendar>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Departed of return journey</label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="departedOfReturnJourney"></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Arrival of return journey<span class="text-red-500">*</span></label>
+                        <p-calendar [showTime]="true" [showIcon]="true" [readonlyInput]="true" placeholder="dd/mm/yyyy hh:mm"
+                            dateFormat="dd/mm/yy" formControlName="arrivalOfReturnJourney"
+                            [class]="addEditForm.get('arrivalOfReturnJourney')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addEditForm.get('arrivalOfReturnJourney')?.invalid && isSubmited" severity="error"
+                            text="Arrival of return journey is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Duration of travel</label>
+                        <p-calendar [timeOnly]="true" [showIcon]="false" formControlName="durationOfTravel" ></p-calendar>
+                    </div>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Wait time<span class="text-red-500">*</span></label>
+                        <p-dropdown [options]="waitTime" formControlName="waitTime" optionLabel="name"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Total duration of travel</label>
+                        <p-calendar [timeOnly]="true" [showIcon]="false" formControlName="totalDurationOfTravel" ></p-calendar>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="pt-2 font-bold">Daily allowance (days)<span class="text-red-500">*</span></label>
+                        <input decimal type="text" pInputText formControlName="dailyAllowanceDays"
+                            [class]="addEditForm.get('dailyAllowanceDays')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addEditForm.get('dailyAllowanceDays')?.invalid && isSubmited" severity="error"
+                            text="Daily allowance (days) is required"></p-message>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Mission/Travel costs" class="p-fluid m-0">
+                <div>
+                    <p-treeTable [value]="travel" [lazy]="true" [columns]="colsTravel" [scrollable]="true" responsiveLayout="scroll" 
+                        scrollHeight="400px" styleClass="p-treetable-gridlines" [resizableColumns]="true">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th class="text-center">
+                                    Travel/Mission costs
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                            <tr>
+                                <td *ngFor="let col of columns; let i = index">
+                                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" ></p-treeTableToggler>
+                                    {{ rowData[col.field] }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-treeTable>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label class="pt-2 font-bold">Total amount mission</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input decimal type="text" pInputText formControlName="totalAmountMission">
+                        </div>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label class="pt-2 font-bold">Grand total</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">€</span>
+                            <input decimal type="text" pInputText formControlName="grandTotal">
+                        </div>    
+                    </div>
+                </div>    
+            </p-tabPanel>
+            <p-tabPanel header="Supporting Documents" class="p-fluid m-0">
+                <div class="field col">
+                    <p-fileUpload mode="basic" name="demo[]" chooseLabel="Click or drag file(s) here" [auto]="true"
+                        class="flex align-items-center justify-content-center"></p-fileUpload>
+                    <p-table #dtFile [value]="files" styleClass="p-datatable-gridlines" class="m-5">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 4rem">
+                                </th>
+                                <th *ngFor="let col of cols">
+                                    {{ col.header }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-file>
+                            <tr (dblclick)="edit(file)">
+                                <td>
+                                    <p-button icon="pi pi-pencil" styleClass="p-button-info p-button-text"
+                                        (click)="edit(file)"></p-button>
+                                    <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text"
+                                        (click)="delete(file)"></p-button>
+                                </td>
+                                <td *ngFor="let col of cols">
+                                    {{file[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No data found.</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="loadingbody">
+                            <tr>
+                                <td colspan="8">Loading data. Please wait.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+        <div class="footer-filled">
+            <div class="flex">
+                <button pButton pRipple (click)="importMission()" class="p-button-sm p-button-primary "
+                    icon="pi pi-upload" label="Import mission"></button>
+            </div>
+            <div class="flex">
+                <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
+                    label="Save" [loading]="actionLoading"></button>
+                <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
+                    label="Close"></button>
+            </div>
+        </div>
+    </form>
+</div>

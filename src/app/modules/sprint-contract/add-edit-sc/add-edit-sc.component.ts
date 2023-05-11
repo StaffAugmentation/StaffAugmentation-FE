@@ -29,6 +29,7 @@ import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { EditPaymentComponent } from './edit-payment/edit-payment.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
+import { AddEditMissionComponent } from './add-edit-mission/add-edit-mission.component';
 
 @Component({
   standalone: true,
@@ -104,6 +105,11 @@ export class AddEditScComponent implements OnInit {
   selectedPerformances: any;
   selectedGenerals: any;
   general: any[] = [];
+  missions: any[] = [
+    { id: '1', consultantName: 'Kostas Proedrou', profile: 'DtMode;Junior;On site', projectName: ' '}
+  ];
+  colsMission: any[] = [];
+  selectedMissions: any;
   invoices: any[] = [
     { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice: 'Client invoice' }
   ];
@@ -227,6 +233,13 @@ export class AddEditScComponent implements OnInit {
       { field: 'mfPaymentStatus', header: 'MF payment status' },
       { field: 'invoicingStatus', header: 'Invoicing status' },
       { field: 'mfInvoicingStatus', header: 'MF invoicing status' },
+    ];
+
+    this.colsMission = [
+      { field: 'consultantName', header: 'Consultant name' },
+      { field: 'profile', header: 'Profile' },
+      { field: 'projectName', header: 'Project name' },
+      { field: 'framework', header: 'Framework' },
     ];
 
     this.colsInvoice = [
@@ -492,6 +505,42 @@ export class AddEditScComponent implements OnInit {
     });
   }
 
+  addEditMission(action: string,row:any){
+    if (action == 'add') {
+      this.modalEdit = this.modalService.open(AddEditMissionComponent, {
+        header: 'Add mission',
+        style: { width: '80%', maxWidth: '900px' },
+        maskStyleClass: 'centred-header',
+        data: {
+          action: 'add'
+        }
+      });
+      this.modalEdit.onClose.subscribe(() => {
+        this.ngOnInit();
+      });
+    } else {
+      this.modalEdit = this.modalService.open(AddEditMissionComponent, {
+        header: 'Update mission',
+        style: { width: '80%', maxWidth: '900px' },
+        maskStyleClass: 'centred-header',
+        data: {
+          data: row
+        }
+      });
+      this.modalEdit.onClose.subscribe(() => {
+        this.ngOnInit();
+      });
+    }
+  }
+
+  onRowSelect(event:any) {
+    this.toast.add({ severity: 'info', summary: 'Mission Selected', detail: event.data.consultantName });
+  }
+
+  onRowUnselect(event:any) {
+    this.toast.add({ severity: 'warn', summary: 'Mission Unselected', detail: event.data.consultantName });
+  }
+  
   editInvoice(invoice: any): void {
     this.modalEdit = this.modalService.open(EditInvoiceComponent, {
       header: invoice.typeInvoice,
