@@ -110,12 +110,16 @@ export class AddEditScComponent implements OnInit {
   ];
   colsMission: any[] = [];
   selectedMissions: any;
-  invoices: any[] = [
-    { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice: 'Client invoice' }
+  invoices: TreeNode[] = [
+    {
+      data: { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice: 'Client invoice' }
+    }  
   ];
   colsInvoice: any[] = [];
-  payments: any[] = [
-    { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule: '10/04/2023' }
+  payments: TreeNode[] = [
+    {
+      data: { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule: '10/04/2023' } 
+    }
   ];
   colsPayment: any[] = [];
   performance: TreeNode[] = [
@@ -242,6 +246,7 @@ export class AddEditScComponent implements OnInit {
       { field: 'framework', header: 'Framework' },
     ];
 
+    this.invoices.forEach(x => this.expandChildren(x));
     this.colsInvoice = [
       { field: 'invoicingPeriod', header: 'Invoicing period' },
       { field: 'totalAmount', header: 'Total amount' },
@@ -251,6 +256,7 @@ export class AddEditScComponent implements OnInit {
       { field: 'typeInvoice', header: 'Type invoice' },
     ];
 
+    this.payments.forEach(x => this.expandChildren(x));
     this.colsPayment = [
       { field: 'invoicingPeriod', header: 'Invoicing period' },
       { field: 'totalAmount', header: 'Total amount' },
