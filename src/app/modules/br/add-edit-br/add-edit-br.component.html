@@ -51,7 +51,7 @@
           </div>
           <div class="field col-12 md:col-3">
             <label for="openIntended" class="font-semibold">Open/Intended</label>
-            <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
+            <p-dropdown [options]="openIntended" optionLabel="displayLabel" formControlName="openIntended"></p-dropdown>
           </div>
           <div class="field col-12 md:col-3">
             <label for="comment" class="font-semibold">Comment</label>
@@ -611,7 +611,7 @@
                 </ng-container>
                 <p-cellEditor *ngIf="col.id=='docType'">
                   <ng-template pTemplate="input">
-                    <p-dropdown [options]="type" formControlName="File[col.id]"></p-dropdown>
+                    <p-dropdown [options]="docType" formControlName="File[col.id]"></p-dropdown>
                   </ng-template>
                   <ng-template pTemplate="output">
                     {{File[col.id]}}

@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { ProfileService } from '@services/profile.service';
 import { RequestFormStatusService } from '@services/request-form-status.service';
+import { RequestFormStatus } from '@models/request-form-status';
 
 
 @Component({
@@ -38,7 +39,7 @@ import { RequestFormStatusService } from '@services/request-form-status.service'
 export class EditProfileComponent implements OnInit {
 
   profile!: any[];
-  requestFS!: any[];
+  requestFS: RequestFormStatus[] = [];
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   editForm!: FormGroup;
@@ -49,25 +50,12 @@ export class EditProfileComponent implements OnInit {
     private profileService: ProfileService,
     private requestFormStatusService: RequestFormStatusService,
 
-    ) {
-      this.getProfile();
-      this.getRequestFormStatus();
-    }
+    ) { }
 
   ngOnInit(): void {
     this.initForm(null);
-  }
-  getProfile(): void {
-    this.profileService.getAll().subscribe({
-      next: (res) => {
-        this.profile = res;
-        this.profile = this.profile.map((profile: any) => {
-          return { ...profile, displayLabel: profile.valueId}; });
-      },
-      error: (err: any) => {
-        this.toast.add({ severity: 'error', summary: err.error });
-      }
-    });
+    this.getRequestFormStatus();
+
   }
   getRequestFormStatus(): void {
     this.requestFormStatusService.getAll().subscribe({

@@ -20,6 +20,9 @@ import { TableModule } from 'primeng/table';
 import { CompanyService } from '@services/company.service';
 import { RecruitmentService } from '@services/recruitment.service';
 import { SubcontractorService } from '@services/subcontractor.service';
+import { Recruitment } from '@models/recruitment';
+import { Company } from '@models/company';
+import { Subcontractor } from '@models/subcontractor';
 
 @Component({
   standalone: true,
@@ -48,11 +51,11 @@ export class AddEditCandidateComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   addEditForm!: FormGroup;
-  filteredRecruitments!: any[];
-  recruitments:any;
-  company!: any[];
+  filteredRecruitments: Recruitment[] = [];
+  recruitments: Recruitment[] = [];
+  company: Company[] = [];
   resourceType!: any[];
-  subcontractor!: any[];
+  subcontractor: Subcontractor[] = [];
   listFile!: any[];
   tableOptionsFile: any = {
     visibleCols: [],
@@ -73,19 +76,18 @@ export class AddEditCandidateComponent implements OnInit {
     private companyService: CompanyService,
     private recruitmentService: RecruitmentService,
     private subcontractorService: SubcontractorService,
-    ) {
-      this.getCompany();
-      this.getRecruitment();
-      this.getSubcontractor();
-    }
+  ) { }
 
   ngOnInit(): void {
     this.initForm(null);
     this.tableOptionsFile.visibleCols = this.tableOptionsFile.cols;
     this.getFile();
+    this.getCompany();
+    this.getRecruitment();
+    this.getSubcontractor();
   }
   getFile(): void {
-    this.listFile = [ ];
+    this.listFile = [];
   };
   onSubmit() {
     this.isSubmited = true;
@@ -99,13 +101,13 @@ export class AddEditCandidateComponent implements OnInit {
       recruitment: new FormControl(null),
       resourceType: new FormControl(null),
       checked: new FormControl(null),
-      subcontractor: new FormControl({value: null, disabled: true}),
+      subcontractor: new FormControl({ value: null, disabled: true }),
       availabilityD: new FormControl(null),
-      foA: new FormControl({value: null, disabled: true}),
-      proposalC: new FormControl({value: null, disabled: true}),
-      draftA: new FormControl({value: null, disabled: true}),
+      foA: new FormControl({ value: null, disabled: true }),
+      proposalC: new FormControl({ value: null, disabled: true }),
+      draftA: new FormControl({ value: null, disabled: true }),
       detailI: new FormControl(null),
-      comment: new FormControl({value: null, disabled: true}),
+      comment: new FormControl({ value: null, disabled: true }),
     });
   }
   getCompany(): void {
@@ -113,7 +115,8 @@ export class AddEditCandidateComponent implements OnInit {
       next: (res) => {
         this.company = res;
         this.company = this.company.map((company: any) => {
-          return { ...company, displayLabel: company.name}; });
+          return { ...company, displayLabel: company.name };
+        });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -125,7 +128,8 @@ export class AddEditCandidateComponent implements OnInit {
       next: (res) => {
         this.recruitments = res;
         this.recruitments = this.recruitments.map((recruitments: any) => {
-          return { ...recruitments, displayLabel: recruitments.valueId}; });
+          return { ...recruitments, displayLabel: recruitments.name };
+        });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -150,7 +154,8 @@ export class AddEditCandidateComponent implements OnInit {
       next: (res) => {
         this.subcontractor = res;
         this.subcontractor = this.subcontractor.map((subcontractor: any) => {
-          return { ...subcontractor, displayLabel: subcontractor.valueId}; });
+          return { ...subcontractor, displayLabel: subcontractor.valueId };
+        });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });

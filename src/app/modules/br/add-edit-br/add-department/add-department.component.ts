@@ -31,7 +31,7 @@ import { SharedModule } from '@modules/shared/shared.module'
 })
 export class AddDepartmentComponent implements OnInit {
 
-  id!: number;
+  name!: string;
   addForm!: FormGroup;
   isSubmited: boolean = false;
   constructor(private ref: DynamicDialogRef, private toast: MessageService,) { }
