@@ -236,7 +236,7 @@
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th class="w-4rem"></th>
-                            <th *ngFor="let col of columns">
+                            <th *ngFor="let col of columns" [style.width]="col.width">
                                 {{ col.header }}
                             </th>
                         </tr>
@@ -247,7 +247,7 @@
                                 <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
                             </td>
                             <ng-container *ngFor="let col of columns; let i = index">
-                                <td *ngIf="col.field == 'action' && !rowData[col.field]">
+                                <td *ngIf="col.field == 'action' && !rowData[col.field]" [style.width]="col.width">
                                     <p-button icon="pi pi-trash"
                                         styleClass="p-button-danger p-button-text p-button-sm p-0"
                                         (click)="deleteDaysWorked(rowData)"></p-button>
@@ -263,7 +263,7 @@
                                     <p-button icon="pi pi-credit-card"
                                         styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
                                 </td>
-                                <td *ngIf="col.field != 'action' || rowData[col.field]">
+                                <td *ngIf="col.field != 'action' || rowData[col.field]" [style.width]="col.width">
                                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 "></p-treeTableToggler>
                                     {{ rowData[col.field]}}
                                 </td>
