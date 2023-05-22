@@ -16,6 +16,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { LevelService } from '@services/level.service';
 import { CategoryService } from '@services/category.service';
+import { Level } from '@models/level';
+import { Category } from '@models/category';
 @Component({
   standalone:true,
   selector: 'app-add-edit-br-profile',
@@ -40,10 +42,10 @@ export class AddEditBrProfileComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   addEditForm!: FormGroup;
-  level!: any[];
+  level: Level[] = [];
   profile!: any[];
   onFarSite!: any[];
-  category!: any[];
+  category: Category[] = [];
   serviceLC!: any[];
   company!: any[];
 
@@ -54,14 +56,12 @@ export class AddEditBrProfileComponent implements OnInit {
     private levelService: LevelService,
     private categoryService: CategoryService,
 
-    ) {
-      this.getLevel();
-      this.getCategory();
-
-    }
+    ) { }
 
   ngOnInit(): void {
     this.initForm(null);
+    this.getLevel();
+    this.getCategory();
   }
   getLevel(): void {
     this.levelService.getAll().subscribe({
