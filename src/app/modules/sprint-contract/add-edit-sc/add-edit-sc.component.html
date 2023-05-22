@@ -411,7 +411,7 @@
                     </div>
                 </div>
                 <div>
-                    <p-table #dtRole [value]="missions" [(selection)]="selectedMissions" dataKey="id" [rowHover]="true"
+                    <p-table #dtMission [value]="missions" [(selection)]="selectedMissions" dataKey="id" [rowHover]="true"
                         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [scrollable]="true"
                         scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
                         styleClass="p-datatable-gridlines" [resizableColumns]="true">
@@ -439,7 +439,7 @@
                                         styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
                                     <p-button icon="pi pi-credit-card"
                                         styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
-                                    <p-button icon="pi pi-file-pdf" 
+                                    <p-button icon="pi pi-file-pdf" (click)="exportPDF(mission)" 
                                         styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
                                     <p-button icon="pi pi-file-excel"
                                         styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>    
