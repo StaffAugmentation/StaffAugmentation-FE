@@ -24,6 +24,17 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Department } from '@models/department';
 import { DepartmentService } from '@services/department.service';
+import { BrSource } from '@models/br-source';
+import { BrType } from '@models/br-type';
+import { PlaceOfDelivery } from '@models/place-of-delivery';
+import { Type } from '@models/type';
+import { StatusBR } from '@models/status-br';
+import { TypeService } from '@services/type.service';
+import { StatusBRService } from '@services/status-br.service';
+import { BrTypeService } from '@services/br-type.service';
+import { BrSourceService } from '@services/br-source.service';
+import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
+
 
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -31,6 +42,7 @@ import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-pro
 import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
+
 
 
 
@@ -63,21 +75,21 @@ import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
   ]
 })
 export class AddEditBrComponent implements OnInit {
-
-  filteredDepartments!: Department[];
-  source!: any[];
-  status!: any[];
+  filteredDepartments: Department[] = [];
+  departments: Department[] = [];
+  source: BrSource[] = [];
+  status: StatusBR[] = [];
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   frameworkContract!: [];
   cascade!: [];
-  type!: [];
-  serviceType!: [];
+  docType!: any[];
+  serviceType: BrType[] = [];
   subscription!: Subscription;
   id: any;
   selectedDepartment: any;
-  openIntended!: any[];
+  openIntended: Type[] = [];
   listProfile!: any[];
   tableOptionsProfile: any = {
     visibleCols: [],
@@ -90,7 +102,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  placeOfDelivery!: any[];
+  placeOfDelivery: PlaceOfDelivery[] = [];
   listBrProfile!: any[];
   tableOptionsBrProfile: any = {
     visibleCols: [],
@@ -171,7 +183,6 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  departments: Department[] = [];
 
   constructor(
     private modalDepartment: DynamicDialogRef,
@@ -185,8 +196,14 @@ export class AddEditBrComponent implements OnInit {
     public toast: MessageService,
     private confirmationService: ConfirmationService,
     private departmentService: DepartmentService,
-    private modalService: DialogService) {
-    }
+    private modalService: DialogService,
+    private typeService: TypeService,
+    private statusBRService: StatusBRService,
+    private brTypeService: BrTypeService,
+    private brSourceService: BrSourceService,
+    private placeOfDeliveryService: PlaceOfDeliveryService,
+
+    ) { }
 
   ngOnInit(): void {
     this.initForm(null);
@@ -205,6 +222,11 @@ export class AddEditBrComponent implements OnInit {
     this.getPartner();
     this.getPenalty();
     this.getFile();
+    this.getTypes();
+    this.getStatus();
+    this.getBrType();
+    this.getBrSource();
+    this.getPlaceOfDelivery();
 
     this.getDepartments();
 
@@ -278,6 +300,66 @@ export class AddEditBrComponent implements OnInit {
 
     this.filteredDepartments = filtered;
   }
+  getTypes(): void {
+    this.typeService.getAll().subscribe({
+      next: (res) => {
+        this.openIntended = res;
+        this.openIntended = this.openIntended.map((openIntended: any) => {
+          return { ...openIntended, displayLabel: openIntended.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getStatus(): void {
+    this.statusBRService.getAll().subscribe({
+      next: (res) => {
+        this.status = res;
+        this.status = this.status.map((status: any) => {
+          return { ...status, displayLabel: status.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getBrType(): void {
+    this.brTypeService.getAll().subscribe({
+      next: (res) => {
+        this.serviceType = res;
+        this.serviceType = this.serviceType.map((serviceType: any) => {
+          return { ...serviceType, displayLabel: serviceType.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getBrSource(): void {
+    this.brSourceService.getAll().subscribe({
+      next: (res) => {
+        this.source = res;
+        this.source = this.source.map((source: any) => {
+          return { ...source, displayLabel: source.name}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getPlaceOfDelivery(): void {
+    this.placeOfDeliveryService.getAll().subscribe({
+      next: (res) => {
+        this.placeOfDelivery = res;
+        this.placeOfDelivery = this.placeOfDelivery.map((placeOfDelivery: any) => {
+          return { ...placeOfDelivery, displayLabel: placeOfDelivery.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
 
   initForm(data: null): void {
     this.addEditForm = new FormGroup({
@@ -322,7 +404,10 @@ export class AddEditBrComponent implements OnInit {
     this.modalDepartment = this.modalService.open(AddDepartmentComponent, {
       header: `Add department`,
       style: { width: '90%', maxWidth: '500px' },
-      maskStyleClass: 'centred-header'
+      maskStyleClass: 'centred-header',
+      data: {
+        name: 'Department'
+      }
     });
     this.modalDepartment.onClose.subscribe(res => {
       if (res) {

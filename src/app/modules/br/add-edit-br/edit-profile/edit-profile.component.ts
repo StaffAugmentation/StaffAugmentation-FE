@@ -12,6 +12,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { ProfileService } from '@services/profile.service';
+import { RequestFormStatusService } from '@services/request-form-status.service';
+import { RequestFormStatus } from '@models/request-form-status';
+
 
 @Component({
   standalone: true,
@@ -35,17 +39,36 @@ import { CalendarModule } from 'primeng/calendar';
 export class EditProfileComponent implements OnInit {
 
   profile!: any[];
-  requestFS!: any[];
+  requestFS: RequestFormStatus[] = [];
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   editForm!: FormGroup;
 
-  constructor(private ref: DynamicDialogRef, public toast: MessageService) { }
+  constructor(
+    private ref: DynamicDialogRef,
+    public toast: MessageService,
+    private profileService: ProfileService,
+    private requestFormStatusService: RequestFormStatusService,
+
+    ) { }
 
   ngOnInit(): void {
     this.initForm(null);
-  }
+    this.getRequestFormStatus();
 
+  }
+  getRequestFormStatus(): void {
+    this.requestFormStatusService.getAll().subscribe({
+      next: (res) => {
+        this.requestFS = res;
+        this.requestFS = this.requestFS.map((requestFS: any) => {
+          return { ...requestFS, displayLabel: requestFS.value}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   onSubmit() {
     this.isSubmited = true;
     this.ref.close();

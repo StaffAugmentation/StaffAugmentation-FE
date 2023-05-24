@@ -29,6 +29,9 @@ import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { EditPaymentComponent } from './edit-payment/edit-payment.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
+import { AddEditMissionComponent } from './add-edit-mission/add-edit-mission.component';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   standalone: true,
@@ -104,12 +107,21 @@ export class AddEditScComponent implements OnInit {
   selectedPerformances: any;
   selectedGenerals: any;
   general: any[] = [];
-  invoices: any[] = [
-    { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice: 'Client invoice' }
+  missions: any[] = [
+    { id: '1', consultantName: 'Kostas Proedrou', profile: 'DtMode;Junior;On site', projectName: ' '}
+  ];
+  colsMission: any[] = [];
+  selectedMissions: any;
+  invoices: TreeNode[] = [
+    {
+      data: { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', oerpInvoiceCode: '5.000000', invoiceDate: '12/04/2023', invoiceComment: '  Framework Contract: DIGIT TM II LO T2 Specific .....', typeInvoice: 'Client invoice' }
+    }  
   ];
   colsInvoice: any[] = [];
-  payments: any[] = [
-    { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule: '10/04/2023' }
+  payments: TreeNode[] = [
+    {
+      data: { id: '1', invoicingPeriod: '01/01/2023 - 28/02/2023', totalAmount: '5,391.84', invoiceReference: 'ss', paymentSchedule: '10/04/2023' } 
+    }
   ];
   colsPayment: any[] = [];
   performance: TreeNode[] = [
@@ -218,7 +230,7 @@ export class AddEditScComponent implements OnInit {
 
     this.colsGeneral = [
       { field: 'consultantName', header: 'Consultant name' },
-      { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
+      { field: 'profileLevelOnsiteCategory', header: 'Profile/level/onsite/category' },
       { field: 'description', header: 'Description' },
       { field: 'oerpProjectCode', header: 'OERP project code' },
       { field: 'amount', header: 'Amount' },
@@ -229,6 +241,14 @@ export class AddEditScComponent implements OnInit {
       { field: 'mfInvoicingStatus', header: 'MF invoicing status' },
     ];
 
+    this.colsMission = [
+      { field: 'consultantName', header: 'Consultant name' },
+      { field: 'profile', header: 'Profile' },
+      { field: 'projectName', header: 'Project name' },
+      { field: 'frameworkContractReference', header: 'Framework Contract Reference' },
+    ];
+
+    this.invoices.forEach(x => this.expandChildren(x));
     this.colsInvoice = [
       { field: 'invoicingPeriod', header: 'Invoicing period' },
       { field: 'totalAmount', header: 'Total amount' },
@@ -238,6 +258,7 @@ export class AddEditScComponent implements OnInit {
       { field: 'typeInvoice', header: 'Type invoice' },
     ];
 
+    this.payments.forEach(x => this.expandChildren(x));
     this.colsPayment = [
       { field: 'invoicingPeriod', header: 'Invoicing period' },
       { field: 'totalAmount', header: 'Total amount' },
@@ -490,6 +511,164 @@ export class AddEditScComponent implements OnInit {
       },
 
     });
+  }
+
+  addEditMission(action: string,row:any){
+    if (action == 'add') {
+      this.modalEdit = this.modalService.open(AddEditMissionComponent, {
+        header: 'Add mission',
+        style: { width: '80%', maxWidth: '900px' },
+        maskStyleClass: 'centred-header',
+        data: {
+          action: 'add'
+        }
+      });
+      this.modalEdit.onClose.subscribe(() => {
+        this.ngOnInit();
+      });
+    } else {
+      this.modalEdit = this.modalService.open(AddEditMissionComponent, {
+        header: 'Update mission',
+        style: { width: '80%', maxWidth: '900px' },
+        maskStyleClass: 'centred-header',
+        data: {
+          data: row
+        }
+      });
+      this.modalEdit.onClose.subscribe(() => {
+        this.ngOnInit();
+      });
+    }
+  }
+
+  onRowSelect(event:any) {
+    this.toast.add({ severity: 'info', summary: 'Mission Selected', detail: event.data.consultantName });
+  }
+
+  onRowUnselect(event:any) {
+    this.toast.add({ severity: 'warn', summary: 'Mission Unselected', detail: event.data.consultantName });
+  }
+  
+  exportPDF(row:any) {
+    const doc = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+    });
+    doc.setFillColor('#6785C1');
+    doc.setFontSize(11);
+
+    const text = 'Mission Statement';
+    const textWidth = doc.getStringUnitWidth(text) * doc.getFontSize() / doc.internal.scaleFactor;
+    const textX = (doc.internal.pageSize.width - textWidth) / 2;
+    const textY = 20;
+    
+    doc.rect(10, textY - 5, 277 , 8, 'F');
+    doc.rect(10, textY - 5, 277 , 8, 'S');
+    doc.text(text, textX, textY);
+
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.1);
+
+    const data = [
+      ['Name', row.consultantName.split(' ')[0]],
+      ['Surname', row.consultantName.split(' ')[1]],
+      ['Project name', row.projectName],
+      ['Goal of the mission', row.goalOfTheMission],
+      ['Authorized by', row.AuthorizedBy],
+      ['Function', row.function]
+    ];
+    autoTable(doc, {
+      body: data,
+      startY: 25,
+      styles: {
+        lineColor: [0,0,0],
+        lineWidth: 0.1,
+        textColor:'#000000',
+        fillColor: [255,255,255]
+      },
+      columnWidth: [200, 300]
+    } as any);
+    
+    const text2 = 'Statement of expenses';
+    const textY2 = 85;
+    doc.setFillColor('#6785C1');
+    doc.rect(10, textY2 - 5, 277, 8, 'F');
+    doc.rect(10, textY2 - 5, 277 , 8, 'S');
+    doc.text(text2, textX, textY2);
+
+    const data2 = [
+      ['Name', row.consultantName.split(' ')[0],' '],
+      ['Surname', row.consultantName.split(' ')[1]],
+      ['Framework Contract Reference', row.frameworkContractReference],
+      ['Specific Contract Reference', row.specificContractReference],
+      [{content: 'Description of mission', colSpan: 3 }],
+      ['Country', row.country],
+      ['City', row.city],
+      ['Exchange rate applied (if applicable + source)',row.exchangeApplied+' '+row.source],
+      ['Date and time of departure of outward journey',row.departedOfOutwardJourney,'Format (DD/MM/YYYY HH:MM)'],
+      ['Date and time of arrival of outward journey',row.arrivalOfOutwardJourney],
+      ['Date and time of commencement of services rendered',row.commencementOfServicesRendered],
+      ['Date and time of cessation of services rendered',row.cessationOfServicesRendered],
+      ['Date and time of departure of return journey',row.departedOfReturnJourney],
+      ['Date and time of arrival of return journey',row.arrivalOfReturnJourney],
+      ['Calculation: departure date - return date (= day(s) + hour(s))'],
+      ['+ 2 x 30 min before/after train/boat (01:00); + 2 x 120 min before/after plane(04:00)',''],
+      ['Total duration of mission (d+h)',row.totalDurationOfTravel],
+      ['Daily allowance (Days) :\n- between 00h and 06h : 0,2 day \n- between 06h and 12h : 1/2 day \n- between 12h and 24h : 1day \n- each successive 12h period : 1/2 day',row.dailyAllowanceDays],
+      [{content: 'Travel Costs', colSpan: 3 }],
+      ['Train tickects',row.trainTickets],
+      ['Plane tickects',row.planeTickets],
+      ['Public transport outward trip (Brussels) / Taxi only if *',row.transportOutwarTripBrussels],
+      ['Public transport outward trip (abroad) / Taxi only if *',row.transportOutwarTripAbroad],
+      ['Public transport return journey (abroad) / Taxi only if *',row.transportReturnJourneyAbroad],
+      ['Public transport return journey (Brussels) / Taxi only if *',row.transportReturnJourneyBrussels],
+      [{content: 'Mission costs', colSpan: 3 }],
+      ['Number of nights',row.numberOfNights],
+      ['Maximum hotel cost per day 100 € * 2days',row.maximumHotelCost,'100'],
+      ['Real total hotel cost in EUR:',row.realTotalHotelCost],
+      ['Daily allowance per day 0 € * 2days',row.dailyAllowanceAmount,'0'],
+      ['Breakfast offer or breakfast included in the room -> amount€/breakfast',row.amountBreakfast],
+      ['Lunch offer or lunch included in the room -> amount€/lunch',row.amountLunch],
+      ['Dinner offer or dinner included in the room -> amount€/dinner',row.amountDinner],
+      ['Total daily allowance in EUR :',row.totalDailyAllowance],
+      [{content: 'Total\t\t'+row.total, colSpan: 3 }],
+      [{content: 'Extra cost acceptable for missions? (If approved in advance by the projectmanager)', colSpan: 2 }],
+      [{content: 'Grand total\t\t'+row.grandTotal, colSpan: 2 }],
+    ];
+    autoTable(doc, {
+      body: data2,
+      startY: 90,
+      styles: {
+        lineColor: [0,0,0],
+        lineWidth: 0.1,
+        textColor:'#000000',
+        fillColor: [255,255,255]
+      },
+      columnWidth: [350, 110, 70]
+    } as any);
+
+    const data3 = [
+      ['Instructions'],
+      ['Document must be filled in EUR\n* The reimbursement of taxi is authorised only if public transports are not available (i.e: early in the morning, late in the\nevening, in case of strike, ...)\n** Precise the number of breakfasts offered\n*** Precise the number of lunchs offered\n**** Precise the number of dinners offeredThe original supporting documents must not be attached to your Statement of Expenses.\nSupporting documents must be scanned and linked electronically to the invoice.\nHowever, be careful to keep your original supporting documents.'],
+    ];
+    autoTable(doc, {
+      body: data3,
+      styles: {
+        lineColor: [0,0,0],
+        lineWidth: 0.1,
+        textColor:'#000000',
+        fillColor: [255,255,255]
+      },
+      columnWidth: [550]
+    } as any);
+
+    var totalPages = doc.getNumberOfPages();
+    var y = doc.internal.pageSize.getHeight() - 10;
+    for (var i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.text(i + ' of ' + totalPages, textX, y);
+    }
+    doc.save('Travel expenses.pdf');
   }
 
   editInvoice(invoice: any): void {

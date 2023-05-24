@@ -12,6 +12,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { SubcontractorService } from '@services/subcontractor.service';
+import { Subcontractor } from '@models/subcontractor';
+
 
 @Component({
   standalone:true,
@@ -38,11 +41,18 @@ export class AddEditProfileComponent implements OnInit {
   addEditForm!: FormGroup;
   profile!: any[];
   typeOfContract!: any[];
-  subconstractorName!: any[];
-  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  subcontractorName: Subcontractor[] = [];
+  constructor(
+    private ref: DynamicDialogRef,
+    public toast: MessageService,
+    private modalService: DialogService,
+    private subcontractorService: SubcontractorService
+    ) { }
 
   ngOnInit(): void {
     this.initForm(null);
+    this.getSubcontractor();
+
   }
 
   onSubmit() {
@@ -58,12 +68,24 @@ export class AddEditProfileComponent implements OnInit {
       margin: new FormControl(null),
       typeOfContract: new FormControl(null, [Validators.required]),
       expectedSD: new FormControl(null),
-      subconstractorName: new FormControl({value: null, disabled: true}),
+      subcontractorName: new FormControl({value: null, disabled: true}),
       thirdPR: new FormControl({value: null, disabled: true}),
       dayfOfTrain: new FormControl(null),
     });
   }
 
+  getSubcontractor(): void {
+    this.subcontractorService.getAll().subscribe({
+      next: (res) => {
+        this.subcontractorName = res;
+        this.subcontractorName = this.subcontractorName.map((subcontractorName: any) => {
+          return { ...subcontractorName, displayLabel: subcontractorName.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;

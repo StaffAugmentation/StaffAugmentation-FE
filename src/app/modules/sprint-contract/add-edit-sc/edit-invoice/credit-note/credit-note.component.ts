@@ -12,13 +12,11 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedModule } from '@modules/shared/shared.module';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { DialogModule } from 'primeng/dialog';
-import { CreditNoteComponent } from './credit-note/credit-note.component';
 
 @Component({
   standalone: true,
-  selector: 'app-edit-invoice',
-  templateUrl: './edit-invoice.component.html',
+  selector: 'app-credit-note',
+  templateUrl: './credit-note.component.html',
   imports: [
     CommonModule,
     FormsModule,
@@ -31,11 +29,10 @@ import { CreditNoteComponent } from './credit-note/credit-note.component';
     TableModule,
     DropdownModule,
     SharedModule,
-    InputTextareaModule,
-    DialogModule
+    InputTextareaModule
   ]
 })
-export class EditInvoiceComponent implements OnInit {
+export class CreditNoteComponent implements OnInit {
 
   isSubmited: boolean = false;
   actionLoading: boolean = false;
@@ -50,10 +47,8 @@ export class EditInvoiceComponent implements OnInit {
   colsProvisionPerformance:any[]=[];
   generals:any[]=[];
   colsGeneral:any[]=[];
-  visible: boolean=false;
-  creditInvoice: any[]=[];
 
-  constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig, private modalService: DialogService) { }
+  constructor(private ref: DynamicDialogRef, public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
 
@@ -68,7 +63,7 @@ export class EditInvoiceComponent implements OnInit {
       { field: 'consultantName', header: 'Consultant name' },
       { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
       { field: 'oerpProjectCode', header: 'OERP project code' },
-      { field: 'nOfDays', header: 'N° of days' },
+      { field: 'nOfDaysToBeCredited', header: 'N° of days to be credited' },
       { field: 'salesPrice', header: 'Sales price' },
       { field: 'subtotal', header: 'Subtotal' },
     ];
@@ -77,7 +72,7 @@ export class EditInvoiceComponent implements OnInit {
       { field: 'consultantName', header: 'Consultant name' },
       { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
       { field: 'oerpProjectCode', header: 'OERP project code' },
-      { field: 'nOfDays', header: 'N° of days' },
+      { field: 'nOfDaysToBeCredited', header: 'N° of days to be credited' },
       { field: 'salesPrice', header: 'Sales price' },
       { field: 'subtotal', header: 'Subtotal' },
     ];
@@ -86,19 +81,15 @@ export class EditInvoiceComponent implements OnInit {
       { field: 'consultantName', header: 'Consultant name' },
       { field: 'profileLeveOnsiteCategory', header: 'Profile/leve/onsite/category' },
       { field: 'oerpProjectCode', header: 'OERP project code' },
-      { field: 'amount', header: 'Amount' },
+      { field: 'amountToBeCredited', header: 'Amount to be credited' },
     ];
-
-    this.creditInvoice =[
-      { name: 'Apply concesion'}
-    ]
   }
 
   initForm(data:any):void {
     this.addForm = new FormGroup({
       invoicingPeriodStart: new FormControl({value:data.invoicingPeriod.substring(0, 10), disabled: true}),
       invoicingPeriodEnd: new FormControl({value:data.invoicingPeriod.slice(-10), disabled: true}),
-      invoiceDate: new FormControl(data.invoiceDate,[Validators.required]),
+      creditNoteDate: new FormControl(data.creditNoteDate,[Validators.required]),
       client: new FormControl({value:data.client, disabled: true},[Validators.required]),
       nttDataEntity: new FormControl({value:data.nttDataEntity, disabled: true},[Validators.required]),
       clientPoNumber: new FormControl({value:data.clientPoNumber, disabled: true}),
@@ -106,8 +97,9 @@ export class EditInvoiceComponent implements OnInit {
       idDraft: new FormControl(data.idDraft),
       mfToBeDeducted: new FormControl({value:data.mfToBeDeducted, disabled: true}),
       totalAmount: new FormControl({value:data.totalAmount, disabled: true},[Validators.required]),
-      oerpInvAmount: new FormControl({value:data.oerpInvAmount, disabled: true}),
-      invoiceComment: new FormControl(data.invoiceComment),
+      oerpCnAmount: new FormControl({value:data.oerpCnAmount, disabled: true}),
+      oerpCustomerCode: new FormControl({value:data.oerpCustomerCode, disabled: true}),
+      creditNoteDescription: new FormControl(data.creditNoteDescription),
     });
   }
 
@@ -127,21 +119,4 @@ export class EditInvoiceComponent implements OnInit {
 
   }
 
-  generateCreditNote():void{
-    this.visible = true;
-  }
-
-  creditNote():void{
-    this.ref = this.modalService.open(CreditNoteComponent, {
-      header: 'Credit note',
-      style: { width: '90%', maxWidth: '900px' },
-      maskStyleClass: 'centred-header',
-      data: {
-        invoice: this.invoice
-      }
-    });
-    this.ref.onClose.subscribe(() => {
-      this.ngOnInit();
-    });
-  }
 }

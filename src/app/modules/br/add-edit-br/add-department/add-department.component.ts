@@ -34,7 +34,7 @@ import { DepartmentService } from '@services/department.service';
 })
 export class AddDepartmentComponent implements OnInit {
 
-  id!: number;
+  name!: string;
   addForm!: FormGroup;
   isSubmited: boolean = false;
   departments: Department[] = [];
@@ -65,7 +65,7 @@ export class AddDepartmentComponent implements OnInit {
     this.isSubmited = true;
     if (this.addForm.valid) {
         this.departmentService.addDepartment(new Department(
-          this.id || 0,
+          0,
           this.addForm.value.valueId,
           this.addForm.value.isActive || true )
         ).subscribe({

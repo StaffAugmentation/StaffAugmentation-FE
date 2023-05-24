@@ -17,8 +17,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { TableModule } from 'primeng/table';
-
-
+import { CompanyService } from '@services/company.service';
+import { RecruitmentService } from '@services/recruitment.service';
+import { SubcontractorService } from '@services/subcontractor.service';
+import { Recruitment } from '@models/recruitment';
+import { Company } from '@models/company';
+import { Subcontractor } from '@models/subcontractor';
 
 @Component({
   standalone: true,
@@ -47,11 +51,11 @@ export class AddEditCandidateComponent implements OnInit {
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   addEditForm!: FormGroup;
-  filteredRecruitments!: any[];
-  recruitments:any;
-  company!: any[];
+  filteredRecruitments: Recruitment[] = [];
+  recruitments: Recruitment[] = [];
+  company: Company[] = [];
   resourceType!: any[];
-  subconstractor!: any[];
+  subcontractor: Subcontractor[] = [];
   listFile!: any[];
   tableOptionsFile: any = {
     visibleCols: [],
@@ -65,15 +69,25 @@ export class AddEditCandidateComponent implements OnInit {
     exportLoading: false
   };
 
-  constructor(private ref: DynamicDialogRef, public toast: MessageService, private modalService: DialogService) { }
+  constructor(
+    private ref: DynamicDialogRef,
+    public toast: MessageService,
+    private modalService: DialogService,
+    private companyService: CompanyService,
+    private recruitmentService: RecruitmentService,
+    private subcontractorService: SubcontractorService,
+  ) { }
 
   ngOnInit(): void {
     this.initForm(null);
     this.tableOptionsFile.visibleCols = this.tableOptionsFile.cols;
     this.getFile();
+    this.getCompany();
+    this.getRecruitment();
+    this.getSubcontractor();
   }
   getFile(): void {
-    this.listFile = [ ];
+    this.listFile = [];
   };
   onSubmit() {
     this.isSubmited = true;
@@ -87,30 +101,67 @@ export class AddEditCandidateComponent implements OnInit {
       recruitment: new FormControl(null),
       resourceType: new FormControl(null),
       checked: new FormControl(null),
-      subconstractor: new FormControl({value: null, disabled: true}),
+      subcontractor: new FormControl({ value: null, disabled: true }),
       availabilityD: new FormControl(null),
-      foA: new FormControl({value: null, disabled: true}),
-      proposalC: new FormControl({value: null, disabled: true}),
-      draftA: new FormControl({value: null, disabled: true}),
+      foA: new FormControl({ value: null, disabled: true }),
+      proposalC: new FormControl({ value: null, disabled: true }),
+      draftA: new FormControl({ value: null, disabled: true }),
       detailI: new FormControl(null),
-      comment: new FormControl({value: null, disabled: true}),
+      comment: new FormControl({ value: null, disabled: true }),
     });
   }
-
+  getCompany(): void {
+    this.companyService.getAll().subscribe({
+      next: (res) => {
+        this.company = res;
+        this.company = this.company.map((company: any) => {
+          return { ...company, displayLabel: company.name };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+  getRecruitment(): void {
+    this.recruitmentService.getAll().subscribe({
+      next: (res) => {
+        this.recruitments = res;
+        this.recruitments = this.recruitments.map((recruitments: any) => {
+          return { ...recruitments, displayLabel: recruitments.name };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   filterRecruitment(event: { query: any; }) {
     let filtered: any[] = [];
     let query = event.query;
 
     for (let i = 0; i < this.recruitments.length; i++) {
-      let recruitment = this.recruitments[i];
-      if (recruitment.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(recruitment);
+      let recruitmentName : string = this.recruitments[i].name || "";
+      if (recruitmentName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(recruitmentName);
       }
     }
 
     this.filteredRecruitments = filtered;
   }
-
+  getSubcontractor(): void {
+    this.subcontractorService.getAll().subscribe({
+      next: (res) => {
+        this.subcontractor = res;
+        this.subcontractor = this.subcontractor.map((subcontractor: any) => {
+          return { ...subcontractor, displayLabel: subcontractor.valueId };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)
       return `${field} is required`;

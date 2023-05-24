@@ -225,7 +225,7 @@
     <p>What would you like to do ?</p>
     <p-dropdown appendTo="body" [options]="creditInvoice" optionLabel="name"></p-dropdown>
     <div class="mt-4">
-      <button pButton pRipple (click)="visible = false" label="Yes"
+      <button pButton pRipple (click)="visible = false" label="Yes" (click)="creditNote()"
         class="p-button-sm p-button-primary mr-2 w-3"></button>
       <button pButton pRipple (click)="visible = false" label="No" class="p-button-sm p-button-danger w-3"></button>
     </div>

@@ -1,15 +1,15 @@
 export class RequestFormStatus{
   id: number;
-  valueId: string;
+  value: string;
   isActive: boolean;
   constructor
       (
       id: number,
-      valueId: string,
+      value: string,
       isActive: boolean,
       ){
           this.id=id,
-          this.valueId=valueId,
+          this.value=value,
           this.isActive=isActive
       }
 }

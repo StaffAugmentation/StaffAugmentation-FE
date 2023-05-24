@@ -56,7 +56,7 @@
           </div>
           <div class="field col-12 md:col-3">
             <label for="openIntended" class="font-semibold">Open/Intended</label>
-            <p-dropdown [options]="openIntended" formControlName="openIntended"></p-dropdown>
+            <p-dropdown [options]="openIntended" optionLabel="displayLabel" formControlName="openIntended"></p-dropdown>
           </div>
           <div class="field col-12 md:col-3">
             <label for="comment" class="font-semibold">Comment</label>
@@ -64,21 +64,21 @@
           </div>
           <div class="field col-12 md:col-4">
             <label for="status" class="font-semibold">Status <span class="text-red-500">*</span></label>
-            <p-dropdown [options]="status" formControlName="status"
+            <p-dropdown [options]="status" optionLabel="displayLabel" formControlName="status"
               [class]="addEditForm.get('status')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('status')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('status', addEditForm.get('status')?.errors)"></p-message>
           </div>
           <div class="field col-12 md:col-4">
             <label for="serviceType" class="font-semibold">Service Type <span class="text-red-500">*</span></label>
-            <p-dropdown [options]="serviceType" formControlName="serviceType"
+            <p-dropdown [options]="serviceType" optionLabel="displayLabel" formControlName="serviceType"
               [class]="addEditForm.get('serviceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('serviceType')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('serviceType', addEditForm.get('serviceType')?.errors)"></p-message>
           </div>
           <div class="field col-12 md:col-6">
             <label for="source" class="font-semibold">Source <span class="text-red-500">*</span></label>
-            <p-dropdown [options]="source" formControlName="source"
+            <p-dropdown [options]="source" optionLabel="displayLabel" formControlName="source"
               [class]="addEditForm.get('source')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
             <p-message *ngIf="addEditForm.get('source')?.invalid && isSubmited" severity="error"
               [text]="getErrorMessage('source', addEditForm.get('source')?.errors)"></p-message>
@@ -176,7 +176,7 @@
           <div class="field col-12 md:col-6">
             <label for="placeOfDelivery" class="font-semibold">Place of delivery <span
                 class="text-red-500">*</span></label>
-            <p-dropdown [options]="placeOfDelivery" formControlName="placeOfDelivery"
+            <p-dropdown [options]="placeOfDelivery" optionLabel="displayLabel" formControlName="placeOfDelivery"
               [class]="addEditForm.get('placeOfDelivery')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             </p-dropdown>
             <p-message *ngIf="addEditForm.get('placeOfDelivery')?.invalid && isSubmited" severity="error"
@@ -616,7 +616,7 @@
                 </ng-container>
                 <p-cellEditor *ngIf="col.id=='docType'">
                   <ng-template pTemplate="input">
-                    <p-dropdown [options]="type" formControlName="File[col.id]"></p-dropdown>
+                    <p-dropdown [options]="docType" formControlName="File[col.id]"></p-dropdown>
                   </ng-template>
                   <ng-template pTemplate="output">
                     {{File[col.id]}}
