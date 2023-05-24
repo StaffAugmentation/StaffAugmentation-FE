@@ -23,6 +23,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Department } from '@models/department';
+import { DepartmentService } from '@services/department.service';
 import { BrSource } from '@models/br-source';
 import { BrType } from '@models/br-type';
 import { PlaceOfDelivery } from '@models/place-of-delivery';
@@ -74,7 +75,6 @@ import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
   ]
 })
 export class AddEditBrComponent implements OnInit {
-
   filteredDepartments: Department[] = [];
   departments: Department[] = [];
   source: BrSource[] = [];
@@ -183,6 +183,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+
   constructor(
     private modalDepartment: DynamicDialogRef,
     private modalEditProfile: DynamicDialogRef,
@@ -194,6 +195,7 @@ export class AddEditBrComponent implements OnInit {
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
+    private departmentService: DepartmentService,
     private modalService: DialogService,
     private typeService: TypeService,
     private statusBRService: StatusBRService,
@@ -226,7 +228,23 @@ export class AddEditBrComponent implements OnInit {
     this.getBrSource();
     this.getPlaceOfDelivery();
 
+    this.getDepartments();
+
   }
+  getDepartments(): void {
+    this.departmentService.getAll().subscribe({
+      next: (res) => {
+        this.departments = res;
+        this.departments = this.departments.map((dep: any) => {
+          return { ...dep, displayLabel: dep.value };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+
   getProfile(): void {
     this.listProfile = [
       { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
@@ -392,7 +410,10 @@ export class AddEditBrComponent implements OnInit {
       }
     });
     this.modalDepartment.onClose.subscribe(res => {
-
+      if (res) {
+        this.getDepartments();
+        this.addEditForm.get('department')!.setValue(res);
+      }
     });
   }
 
