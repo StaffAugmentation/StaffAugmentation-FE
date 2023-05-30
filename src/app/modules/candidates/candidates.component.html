@@ -1,0 +1,229 @@
+<div class="card">
+    <p-tabView orientation="left">
+        <p-tabPanel header="Consultant">
+            <div class="flex justify-content-between mb-3">
+                <div></div>
+                <span class="p-buttonset">
+                    <button (click)="edit()" pButton pRipple label="Edit" icon="pi pi-pencil" class="border-white"></button>
+                    <button pButton pRipple (click)="remove('consultant')" label="Remove" icon="pi pi-trash" class="border-white"></button>
+                    <button pButton pRipple (click)="refresh()" label="Refresh" icon="pi pi-refresh" class="border-white"></button>
+                    <button pButton pRipple (click)="history()" label="History" icon="pi pi-history" class="border-white"></button>
+                    <button pButton pRipple (click)="import()" label="Import" icon="pi pi-upload" class="border-white"></button>
+                    <button pButton pRipple (click)="exportExcel()" label="Export" icon="pi pi-download"
+                        class="bg-yellow-500 hover:bg-yellow-600 border-white" [loading]="tableOptions.exportLoading"></button>
+                </span>
+            </div>
+            <p-table #dtConsultant [value]="listConsultant" dataKey="id" [rows]="250" [loading]="tableOptions.loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="globalFilterFields" responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+                selectionMode="single" [(selection)]="selectedConsultant" 
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[250,500,1000]" [resizableColumns]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between">
+                        <div>
+                            <span class="p-input-icon-right">
+                                <input (change)="onGlobalFilter(dtConsultant,$event)" type="text" pInputText placeholder="Search" />
+                                <i class="pi pi-search"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <button pButton (click)="clearFilter(dtConsultant)" label="Clear" class="p-button-outlined"
+                                icon="pi pi-filter-slash"></button>
+                            <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2"
+                                icon="pi pi-bars"></button>
+                            <p-overlayPanel #opMenu [showCloseIcon]="true">
+                                <ng-template pTemplate>
+                                    <span class="p-float-label mt-4">
+                                        <p-multiSelect #msVisible [options]="tableOptions.cols"
+                                            [(ngModel)]="tableOptions.visibleCols" placeholder="select visible columns"
+                                            optionLabel="label" class="multiselect-custom"></p-multiSelect>
+                                        <label>Visible columns</label>
+                                    </span>
+                                </ng-template>
+                            </p-overlayPanel>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of tableOptions.visibleCols">
+                            <div class="flex justify-content-between align-items-center">
+                                {{col.label}}
+                                <p-columnFilter type="text" field="{{col.id}}" display="menu"
+                                    placeholder="Search by name"></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Consultant>
+                    <tr [pSelectableRow]="Consultant">
+                        <td *ngFor="let col of tableOptions.visibleCols">
+                            {{Consultant[col.id]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No consultant found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading consultant data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>  
+        <p-tabPanel header="NTT data candidate">
+            <div class="flex justify-content-between mb-3">
+                <div></div>
+                <span class="p-buttonset">
+                    <button pButton pRipple (click)="addEdit('add','candidate')" label="Add" icon="pi pi-plus" class="border-white"></button>
+                    <button pButton pRipple (click)="createAsConsultant('candidate')" label="Create as consultant" icon="pi pi-plus" class="border-white"></button>
+                    <button (click)="addEdit('edit','candidate')" pButton pRipple label="Edit" icon="pi pi-pencil" class="border-white"></button>
+                    <button pButton pRipple (click)="remove('candidate')" label="Remove" icon="pi pi-trash" class="border-white"></button>
+                    <button pButton pRipple (click)="refresh()" label="Refresh" icon="pi pi-refresh" class="border-white"></button>
+                    <button pButton pRipple (click)="exportExcelCandidate('candidate')" label="Export all" icon="pi pi-download"
+                        class="bg-yellow-500 hover:bg-yellow-600 border-white" [loading]="tableOptions.exportLoading"></button>
+                </span>
+            </div>
+            <p-table #dtCandidate [value]="listCandidate" dataKey="id" [rows]="250" [loading]="tableOptions.loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="globalFilterFieldsCandidate" responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+                selectionMode="single" [(selection)]="selectedCandidate" 
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[250,500,1000]" [resizableColumns]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between">
+                        <div>
+                            <span class="p-input-icon-right">
+                                <input (change)="onGlobalFilter(dtCandidate,$event)" type="text" pInputText placeholder="Search" />
+                                <i class="pi pi-search"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <button pButton (click)="clearFilter(dtCandidate)" label="Clear" class="p-button-outlined"
+                                icon="pi pi-filter-slash"></button>
+                            <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2"
+                                icon="pi pi-bars"></button>
+                            <p-overlayPanel #opMenu [showCloseIcon]="true">
+                                <ng-template pTemplate>
+                                    <span class="p-float-label mt-4">
+                                        <p-multiSelect #msVisible [options]="tableOptions.colsCandidate"
+                                            [(ngModel)]="tableOptions.colsCandidate" placeholder="select visible columns"
+                                            optionLabel="label" class="multiselect-custom"></p-multiSelect>
+                                        <label>Visible columns</label>
+                                    </span>
+                                </ng-template>
+                            </p-overlayPanel>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of tableOptions.colsCandidate">
+                            <div class="flex justify-content-between align-items-center">
+                                {{col.label}}
+                                <p-columnFilter type="text" field="{{col.id}}" display="menu"
+                                    placeholder="Search by name"></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Candidate>
+                    <tr [pSelectableRow]="Candidate">
+                        <td *ngFor="let col of tableOptions.colsCandidate">
+                            {{Candidate[col.id]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No Candidate found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading Candidate data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel> 
+        <p-tabPanel header="Candidate partner">
+            <div class="flex justify-content-between mb-3">
+                <div></div>
+                <span class="p-buttonset">
+                    <button pButton pRipple (click)="addEdit('add','candidatePartner')" label="Add" icon="pi pi-plus" class="border-white"></button>
+                    <button pButton pRipple (click)="createAsConsultant('candidatePartner')" label="Create as consultant" icon="pi pi-plus" class="border-white"></button>
+                    <button (click)="addEdit('edit','candidatePartner')" pButton pRipple label="Edit" icon="pi pi-pencil" class="border-white"></button>
+                    <button pButton pRipple (click)="remove('candidatePartner')" label="Remove" icon="pi pi-trash" class="border-white"></button>
+                    <button pButton pRipple (click)="refresh()" label="Refresh" icon="pi pi-refresh" class="border-white"></button>
+                    <button pButton pRipple (click)="exportExcelCandidate('candidatePartner')" label="Export all" icon="pi pi-download"
+                        class="bg-yellow-500 hover:bg-yellow-600 border-white" [loading]="tableOptions.exportLoading"></button>
+                </span>
+            </div>
+            <p-table #dtCandidatePartner [value]="listCandidatePartner" dataKey="id" [rows]="250" [loading]="tableOptions.loading" [rowHover]="true"
+                styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="globalFilterFieldsCandidatePartner" responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
+                selectionMode="single" [(selection)]="selectedCandidatePartner" 
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[250,500,1000]" [resizableColumns]="true">
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between">
+                        <div>
+                            <span class="p-input-icon-right">
+                                <input (change)="onGlobalFilter(dtCandidatePartner,$event)" type="text" pInputText placeholder="Search" />
+                                <i class="pi pi-search"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <button pButton (click)="clearFilter(dtCandidatePartner)" label="Clear" class="p-button-outlined"
+                                icon="pi pi-filter-slash"></button>
+                            <button pButton (click)="opMenu.toggle($event)" class="p-button-outlined ml-2"
+                                icon="pi pi-bars"></button>
+                            <p-overlayPanel #opMenu [showCloseIcon]="true">
+                                <ng-template pTemplate>
+                                    <span class="p-float-label mt-4">
+                                        <p-multiSelect #msVisible [options]="tableOptions.colsCandidate"
+                                            [(ngModel)]="tableOptions.colsCandidate" placeholder="select visible columns"
+                                            optionLabel="label" class="multiselect-custom"></p-multiSelect>
+                                        <label>Visible columns</label>
+                                    </span>
+                                </ng-template>
+                            </p-overlayPanel>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of tableOptions.colsCandidate">
+                            <div class="flex justify-content-between align-items-center">
+                                {{col.label}}
+                                <p-columnFilter type="text" field="{{col.id}}" display="menu"
+                                    placeholder="Search by name"></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-CandidatePartner>
+                    <tr [pSelectableRow]="CandidatePartner">
+                        <td *ngFor="let col of tableOptions.colsCandidate">
+                            {{CandidatePartner[col.id]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No Candidate found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">Loading Candidate data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel> 
+    </p-tabView>      
+</div>

@@ -15,6 +15,7 @@ const routes: Routes = [
           { path: 'PTM', loadComponent: () => import('@modules/sprint-contract/sprint-contract.component').then(c => c.SprintContractComponent)},
         ]
       },
+      { path: 'candidates', loadComponent: () => import('@modules/candidates/candidates.component').then(c => c.CandidatesComponent)},
       { path: 'company', loadComponent: () => import('@modules/settings/data-type/company/company.component').then(c => c.CompanyComponent) },
       { path: 'department', loadComponent: () => import('@modules/settings/data-type/department/department.component').then(c => c.DepartmentComponent) },
       { path: 'approver', loadComponent: () => import('@modules/settings/data-type/approver/approver.component').then(c => c.ApproverComponent) },
@@ -34,7 +35,6 @@ const routes: Routes = [
       { path: 'role-management', loadComponent: () => import('@modules/settings/role-management/role-management.component').then(c => c.RoleManagementComponent)},
       { path: 'app-parameter', loadComponent: () => import('@modules/settings/app-parameter/app-parameter.component').then(c => c.AppParameterComponent)},
       { path: 'oerp-code', loadComponent: () => import('@modules/settings/data-type/oerp-code/oerp-code.component').then(c => c.OERPCodeComponent)},
-      { path: 'country', loadComponent: () => import('@modules/settings/data-type/country/country.component').then(c => c.CountryComponent)},
     ]
   }
 ];

@@ -1,0 +1,80 @@
+<form [formGroup]="addEditForm" class="mb-3">
+    <p-tabView orientation="left">
+        <p-tabPanel header="Candidate" class="p-fluid m-0">
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">First name <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="firstName" placeholder="First name"
+                        [class]="addEditForm.get('firstName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="addEditForm.get('firstName')?.invalid && isSubmited" severity="error"
+                            text="First name is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Last name <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="lastName" placeholder="Last name"
+                        [class]="addEditForm.get('lastName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="addEditForm.get('lastName')?.invalid && isSubmited" severity="error"
+                            text="Last name is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Resource type  <span class="text-red-500">*</span></label>
+                    <p-dropdown [options]="resourceType" optionLabel="field" formControlName="resourceType" 
+                        [class]="addEditForm.get('resourceType')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                    <p-message *ngIf="addEditForm.get('resourceType')?.invalid && isSubmited" severity="error"
+                            text="Resource type  is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Legal entity name</label>
+                    <input type="text" pInputText formControlName="legalEntityName"  placeholder="Legal entity name">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">VAT number</label>
+                    <input type="text" pInputText formControlName="vatNumber" placeholder="VAT number">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">ID number</label>
+                    <input type="text" pInputText formControlName="idNumber" placeholder="ID number">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Payment terms</label>
+                    <p-dropdown [options]="paymentTerms" optionLabel="field" formControlName="paymentTerms"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Type of cost</label>
+                    <p-dropdown [options]="TypeOfCost" optionLabel="field" formControlName="TypeOfCost"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">IBAN Number</label>
+                    <input type="text" pInputText formControlName="ibanNumber" placeholder="Cand BA">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">BIC/SWIFT</label>
+                    <input type="text" pInputText formControlName="bicSwift">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">VAT rate</label>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText formControlName="vatRate" placeholder="VAT rate">
+                        <span class="p-inputgroup-addon">%</span>
+                    </div>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Approver</label>
+                    <p-dropdown formControlName="approver"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-12">
+                    <label class="font-semibold">Legal entity adress</label>
+                    <input type="text" pInputText formControlName="legalEntityAddress" placeholder="Legal entity adress">
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+    <div class="footer">
+        <div class="flex">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
+                label="Create" [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
+                label="Close"></button>
+        </div>
+    </div>
+</form>

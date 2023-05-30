@@ -141,7 +141,7 @@ export class AddEditCandidateComponent implements OnInit {
     let query = event.query;
 
     for (let i = 0; i < this.recruitments.length; i++) {
-      let recruitment = this.recruitments[i];
+      let recruitment:any = this.recruitments[i];
       if (recruitment.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(recruitment);
       }
