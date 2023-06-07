@@ -9,8 +9,8 @@
                     <button pButton pRipple (click)="refresh()" label="Refresh" icon="pi pi-refresh" class="border-white"></button>
                     <button pButton pRipple (click)="history()" label="History" icon="pi pi-history" class="border-white"></button>
                     <button pButton pRipple (click)="import()" label="Import" icon="pi pi-upload" class="border-white"></button>
-                    <button pButton pRipple (click)="exportExcel()" label="Export" icon="pi pi-download"
-                        class="bg-yellow-500 hover:bg-yellow-600 border-white" [loading]="tableOptions.exportLoading"></button>
+                    <p-splitButton label="Export" icon="pi pi-download" [model]="export" (onClick)="exportExcel()"
+                        styleClass="p-button-warning"></p-splitButton>
                 </span>
             </div>
             <p-table #dtConsultant [value]="listConsultant" dataKey="id" [rows]="250" [loading]="tableOptions.loading" [rowHover]="true"

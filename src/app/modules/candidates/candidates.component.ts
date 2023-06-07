@@ -18,6 +18,7 @@ import { EditConsultantComponent } from './edit-consultant/edit-consultant.compo
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { CreateAsCandidateComponent } from './create-as-candidate/create-as-candidate.component';
 import { HistoryComponent } from './history/history.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @Component({
   standalone: true,
@@ -36,11 +37,13 @@ import { HistoryComponent } from './history/history.component';
     DropdownModule,
     AutoCompleteModule,
     CommonModule,
-    TabViewModule
+    TabViewModule,
+    SplitButtonModule
   ]
 })
 export class CandidatesComponent implements OnInit {
 
+  export: any[]=[];
   listConsultant: any[] = [
     {id:'1', consultantName:'6431 Robertino GHINDAR', typeOfContract:'Employee'},
   ];
@@ -88,12 +91,18 @@ export class CandidatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.export = [
+      { label: 'All consultants' },
+      { label: 'Active consultants'} ,
+      { label: 'Employee list'},
+      { label: 'Subcontractor list'}
+    ];
   }
 
   edit(): void {
     if(this.selectedConsultant?.id){
       this.modalAddEdit = this.modalService.open(EditConsultantComponent, {
-        header: 'Edit consultant',
+        header: 'Edit consultant '+this.selectedConsultant.consultantName,
         width: '90%',
         height: '85%',
         data: {
@@ -154,7 +163,7 @@ export class CandidatesComponent implements OnInit {
   history(){
     if(this.selectedConsultant?.id){
       this.modalAddEdit = this.modalService.open(HistoryComponent, {
-        header: 'Edit consultant',
+        header: 'History Consultant Management\n'+this.selectedConsultant.consultantName,
         width: '90%',
         height: '85%',
         data: {
