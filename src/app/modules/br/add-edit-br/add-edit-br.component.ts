@@ -21,7 +21,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
-import { RequestFormStatusService } from '@services/request-form-status.service';
+import { Department } from '@models/department';
+import { DepartmentService } from '@services/department.service';
+import { BrSource } from '@models/br-source';
+import { BrType } from '@models/br-type';
+import { PlaceOfDelivery } from '@models/place-of-delivery';
+import { Type } from '@models/type';
+import { StatusBR } from '@models/status-br';
+import { TypeService } from '@services/type.service';
+import { StatusBRService } from '@services/status-br.service';
 import { BrTypeService } from '@services/br-type.service';
 import { BrSourceService } from '@services/br-source.service';
 import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
@@ -34,6 +42,7 @@ import { EditConsultantComponent } from './edit-consultant/edit-consultant.compo
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
 import { TabView } from 'primeng/tabview';
+
 
 
 @Component({
@@ -65,24 +74,23 @@ import { TabView } from 'primeng/tabview';
   ]
 })
 export class AddEditBrComponent implements OnInit {
-
-  @ViewChild('tabView', { static: false }) tabView!: TabView;
-  activeTabIndex = 0;
-  filteredDepartments!: any[];
-  departments: any;
-  source!: any[];
-  status!: any[];
+@ViewChild('tabView', { static: false }) tabView!: TabView;
+activeTabIndex = 0;
+  filteredDepartments: Department[] = [];
+  departments: Department[] = [];
+  source: BrSource[] = [];
+  status: StatusBR[] = [];
   addEditForm!: FormGroup;
   isSubmited: boolean = false;
   actionLoading: boolean = false;
   frameworkContract!: [];
   cascade!: [];
-  type!: any[];
-  serviceType!: any[];
+  docType!: any[];
+  serviceType: BrType[] = [];
   subscription!: Subscription;
   id: any;
   selectedDepartment: any;
-  openIntended!: any[];
+  openIntended: Type[] = [];
   listProfile!: any[];
   tableOptionsProfile: any = {
     visibleCols: [],
@@ -95,7 +103,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
-  placeOfDelivery!: any[];
+  placeOfDelivery: PlaceOfDelivery[] = [];
   listBrProfile!: any[];
   tableOptionsBrProfile: any = {
     visibleCols: [],
@@ -176,6 +184,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+
   constructor(
     private modalDepartment: DynamicDialogRef,
     private modalEditProfile: DynamicDialogRef,
@@ -187,8 +196,10 @@ export class AddEditBrComponent implements OnInit {
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
+    private departmentService: DepartmentService,
     private modalService: DialogService,
-    private requestFormStatusService: RequestFormStatusService,
+    private typeService: TypeService,
+    private statusBRService: StatusBRService,
     private brTypeService: BrTypeService,
     private brSourceService: BrSourceService,
     private placeOfDeliveryService: PlaceOfDeliveryService,
@@ -217,6 +228,13 @@ export class AddEditBrComponent implements OnInit {
     this.getPartner();
     this.getPenalty();
     this.getFile();
+    this.getTypes();
+    this.getStatus();
+    this.getBrType();
+    this.getBrSource();
+    this.getPlaceOfDelivery();
+
+    this.getDepartments();
 
   }
   nextTab() {
@@ -225,6 +243,20 @@ export class AddEditBrComponent implements OnInit {
   prevTab() {
     this.activeTabIndex = (this.activeTabIndex - 1 + this.tabView.tabs.length) % this.tabView.tabs.length;
   }
+  getDepartments(): void {
+    this.departmentService.getAll().subscribe({
+      next: (res) => {
+        this.departments = res;
+        this.departments = this.departments.map((dep: any) => {
+          return { ...dep, displayLabel: dep.value };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+
   getProfile(): void {
     this.listProfile = [
       { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
@@ -273,20 +305,31 @@ export class AddEditBrComponent implements OnInit {
 
     for (let i = 0; i < this.departments.length; i++) {
       let department = this.departments[i];
-      if (department.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (department.valueId.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(department);
       }
     }
 
     this.filteredDepartments = filtered;
   }
-
+  getTypes(): void {
+    this.typeService.getAll().subscribe({
+      next: (res) => {
+        this.openIntended = res;
+        this.openIntended = this.openIntended.map((openIntended: any) => {
+          return { ...openIntended, displayLabel: openIntended.valueId}; });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
   getStatus(): void {
-    this.requestFormStatusService.getAll().subscribe({
+    this.statusBRService.getAll().subscribe({
       next: (res) => {
         this.status = res;
         this.status = this.status.map((status: any) => {
-          return { ...status, displayLabel: status.value}; });
+          return { ...status, displayLabel: status.valueId}; });
       },
       error: (err: any) => {
         this.toast.add({ severity: 'error', summary: err.error });
@@ -373,10 +416,16 @@ export class AddEditBrComponent implements OnInit {
     this.modalDepartment = this.modalService.open(AddDepartmentComponent, {
       header: `Add department`,
       style: { width: '90%', maxWidth: '500px' },
-      maskStyleClass: 'centred-header'
+      maskStyleClass: 'centred-header',
+      data: {
+        name: 'Department'
+      }
     });
     this.modalDepartment.onClose.subscribe(res => {
-
+      if (res) {
+        this.getDepartments();
+        this.addEditForm.get('department')!.setValue(res);
+      }
     });
   }
 

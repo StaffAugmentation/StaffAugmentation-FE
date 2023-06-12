@@ -3,7 +3,7 @@
         <p-tabView orientation="left">
             <p-tabPanel header="Business request" class="p-fluid m-0">
                 <div class="field">
-                    <label for="requestNumber" class="font-semibold">Request number <span
+                    <label class="font-semibold">Request number <span
                             class="text-red-500">*</span></label>
                     <input type="text" pInputText
                         [class]="addEditForm.get('requestNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"
@@ -13,52 +13,52 @@
                 </div>
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-3">
-                        <label for="requestOrExtension" class="font-semibold">Source</label>
+                        <label class="font-semibold">Source</label>
                         <input type="text" pInputText placeholder="Source" formControlName="requestOrExtension">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="scNumber" class="font-semibold">SC Number</label>
+                        <label class="font-semibold">SC Number</label>
                         <input type="text" pInputText placeholder="SC Number" formControlName="scNumber">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="department" class="font-semibold">Department</label>
+                        <label class="font-semibold">Department</label>
                         <input type="text" pInputText placeholder="Department" formControlName="department">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="placeOfDelivery" class="font-semibold">Place of delivery</label>
+                        <label class="font-semibold">Place of delivery</label>
                         <input type="text" pInputText placeholder="Place of delivery" formControlName="placeOfDelivery">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="frameworkContract" class="font-semibold">Framework contract</label>
+                        <label class="font-semibold">Framework contract</label>
                         <input type="text" pInputText placeholder="Framework contract"
                             formControlName="frameworkContract">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="signatureDate" class="font-semibold">Signature date</label>
+                        <label class="font-semibold">Signature date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="signatureDate"></p-calendar>
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="maximumEndDate" class="font-semibold">Maximum end date</label>
+                        <label class="font-semibold">Maximum end date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="maximumEndDate"></p-calendar>
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="specificClientCode" class="font-semibold">Specific client code</label>
+                        <label class="font-semibold">Specific client code</label>
                         <input type="text" pInputText placeholder="Specific client code"
                             formControlName="specificClientCode">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="projectStartDate" class="font-semibold">Project start date</label>
+                        <label class="font-semibold">Project start date</label>
                         <p-calendar [showIcon]="true" [readonlyInput]="true"
                             formControlName="projectStartDate"></p-calendar>
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="contractStatus" class="font-semibold">Contract status</label>
+                        <label class="font-semibold">Contract status</label>
                         <input type="text" pInputText placeholder="Contract status" formControlName="contractStatus">
                     </div>
                     <div class="field col-12 md:col-3">
-                        <label for="totalPrice" class="font-semibold">Total price</label>
+                        <label class="font-semibold">Total price</label>
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">CHF</span>
                             <input decimal type="text" pInputText placeholder="Total price"
@@ -75,17 +75,17 @@
                 <div class="formgrid grid">
                     <div class="col formgrid grid">
                         <div class="field col-12 md:col-3">
-                            <label for="numberOfDays" class="font-semibold">Number of days</label>
+                            <label class="font-semibold">Number of days</label>
                             <input type="text" decimal pInputText placeholder="Number of days"
                                 formControlName="numberOfDays">
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="nDaysTransformed" class="font-semibold">N days transformed</label>
+                            <label class="font-semibold">N days transformed</label>
                             <input type="text" decimal pInputText placeholder="N days transformed"
                                 formControlName="nDaysTransformed">
                         </div>
                         <div class="field col-12 md:col-3">
-                            <label for="managementFee" class="font-semibold">Management fee</label>
+                            <label class="font-semibold">Management fee</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon">CHF</span>
                                 <input decimal type="text" pInputText placeholder="Management fee"
@@ -97,7 +97,7 @@
                                 styleClass="p-button-sm w-auto md:w-fit p-button-primary mt-5"></p-splitButton>
                         </div>
                         <div class="field col-12 md:col-4">
-                            <label for="maximumCost" class="font-semibold">Maximum cost</label>
+                            <label class="font-semibold">Maximum cost</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon">€</span>
                                 <input type="text" decimal pInputText placeholder="Maximum cost"
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="field col-12 md:col-4">
-                            <label for="additionalBudget" class="font-semibold">Additional budget</label>
+                            <label class="font-semibold">Additional budget</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon"></span>
                                 <input type="text" decimal pInputText placeholder="Additional budget"
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="field col-12 md:col-4">
-                            <label for="mfInvoiced" class="mt-2" class="font-semibold">MF invoiced Y/N</label>
+                            <label class="mt-2" class="font-semibold">MF invoiced Y/N</label>
                             <div class="mt-2">
                                 <p-radioButton name="mfInvoiced" class="mr-2" [value]="true" label="Yes"
                                     formControlName="mfInvoiced"></p-radioButton>
@@ -125,7 +125,7 @@
                     <div class="field col-12 md:col-4 flex flex-column">
                         <div class="flex">
                             <div class="field">
-                                <label for="oerpProjectCode" class="font-semibold">OERP project code<span
+                                <label class="font-semibold">OERP project code<span
                                         class="text-red-500">*</span></label>
                                 <input type="text" pInputText placeholder="OERP project code"
                                     formControlName="oerpProjectCode"
@@ -411,7 +411,7 @@
                     </div>
                 </div>
                 <div>
-                    <p-table #dtRole [value]="missions" [(selection)]="selectedMissions" dataKey="id" [rowHover]="true"
+                    <p-table #dtMission [value]="missions" [(selection)]="selectedMissions" dataKey="id" [rowHover]="true"
                         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [scrollable]="true"
                         scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll"
                         styleClass="p-datatable-gridlines" [resizableColumns]="true">
@@ -439,7 +439,7 @@
                                         styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
                                     <p-button icon="pi pi-credit-card"
                                         styleClass="p-button-info p-button-text p-button-sm p-0"></p-button>
-                                    <p-button icon="pi pi-file-pdf" 
+                                    <p-button icon="pi pi-file-pdf" (click)="exportPDF(mission)" 
                                         styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>
                                     <p-button icon="pi pi-file-excel"
                                         styleClass="p-button-secondary p-button-text p-button-sm p-0"></p-button>    
@@ -465,7 +465,7 @@
             <p-tabPanel header="Invoicing">
                 <div class="col formgrid grid">
                     <div class="field col-12 md:col-2 mt-3">
-                        <label for="maximumCost" class="font-semibold">Remaining amount</label>
+                        <label class="font-semibold">Remaining amount</label>
                     </div>
                     <div class="field col-12 md:col-2">
                         <div class="p-inputgroup">
@@ -475,20 +475,21 @@
                     </div>
                 </div>
                 <div>
-                    <p-table #dtInvoice [value]="invoices" dataKey="id" styleClass="p-datatable-gridlines"
-                        responsiveLayout="scroll" scrollDirection="both" [scrollable]="true" scrollHeight="400px"
-                        [resizableColumns]="true">
-                        <ng-template pTemplate="header">
+                    <p-treeTable [value]="invoices" [lazy]="true" [columns]="colsInvoice" responsiveLayout="scroll" 
+                        scrollDirection="both" [scrollable]="true" scrollHeight="400px" 
+                        styleClass="p-treetable-gridlines" expandedIcon="null" collapsedIcon="null">
+                        <ng-template pTemplate="header" let-columns>
                             <tr>
-                                <th *ngFor="let col of colsInvoice">
+                                <th *ngFor="let col of columns">
                                     {{ col.header }}
                                 </th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-invoice>
-                            <tr (dblclick)="editInvoice(invoice)">
-                                <td *ngFor="let col of colsInvoice">
-                                    {{invoice[col.field]}}
+                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                            <tr (dblclick)="editInvoice(rowData)">
+                                <td *ngFor="let col of columns; let i = index">
+                                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" ></p-treeTableToggler>
+                                    {{ rowData[col.field] }}
                                 </td>
                             </tr>
                         </ng-template>
@@ -502,7 +503,7 @@
                                 <td colspan="8">Loading data. Please wait.</td>
                             </tr>
                         </ng-template>
-                    </p-table>
+                    </p-treeTable>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Payment" class="p-fluid m-0">
@@ -535,20 +536,21 @@
                             </div>
                         </div>
                         <div>
-                            <p-table #dtPayment [value]="payments" dataKey="id" styleClass="p-datatable-gridlines"
+                            <p-treeTable [value]="payments" [lazy]="true" [columns]="colsPayment" styleClass="p-treetable-gridlines"
                                 responsiveLayout="scroll" scrollDirection="both" [scrollable]="true"
-                                scrollHeight="400px" [resizableColumns]="true">
-                                <ng-template pTemplate="header">
+                                scrollHeight="400px" [resizableColumns]="true"expandedIcon="null" collapsedIcon="null">
+                                <ng-template pTemplate="header" let-columns>
                                     <tr>
-                                        <th *ngFor="let col of colsPayment">
+                                        <th *ngFor="let col of columns">
                                             {{ col.header }}
                                         </th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-payment>
-                                    <tr (dblclick)="editPayment(payment)">
-                                        <td *ngFor="let col of colsPayment">
-                                            {{payment[col.field]}}
+                                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                                    <tr (dblclick)="editPayment(rowData)">
+                                        <td *ngFor="let col of columns; let i = index">
+                                            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" ></p-treeTableToggler>
+                                            {{ rowData[col.field] }}
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -562,7 +564,7 @@
                                         <td colspan="8">Loading data. Please wait.</td>
                                     </tr>
                                 </ng-template>
-                            </p-table>
+                            </p-treeTable>
                         </div>
                     </p-tabPanel>
                 </p-tabView>
