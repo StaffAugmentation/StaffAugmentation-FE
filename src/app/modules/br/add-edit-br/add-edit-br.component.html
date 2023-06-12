@@ -1,5 +1,5 @@
 <form class="navigation mt-3 mb-3" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <p-tabView>
+  <p-tabView #tabView [activeIndex]="activeTabIndex">
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="field">
@@ -638,6 +638,10 @@
   <div class="footer-filled">
     <button type="button" pButton pRipple class="p-button-outlined bg-white">Communicate to partners <i
         class="ml-2 pi pi-envelope"></i></button>
+        <div class="p-d-flex p-jc-center p-ai-center">
+          <button pButton type="button" (click)="prevTab()" label="Previous"></button>
+          <button pButton type="button" (click)="nextTab()" label="Next"></button>
+        </div>
     <div>
       <button type="submit" pButton pRipple class="p-button-sm p-button-primary" label="Save"
         [loading]="actionLoading"></button>
