@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { MessageModule } from 'primeng/message';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators,  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
@@ -42,7 +41,7 @@ import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-pro
 import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
-
+import { TabView } from 'primeng/tabview';
 
 
 
@@ -75,6 +74,8 @@ import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
   ]
 })
 export class AddEditBrComponent implements OnInit {
+@ViewChild('tabView', { static: false }) tabView!: TabView;
+activeTabIndex = 0;
   filteredDepartments: Department[] = [];
   departments: Department[] = [];
   source: BrSource[] = [];
@@ -203,8 +204,13 @@ export class AddEditBrComponent implements OnInit {
     private brSourceService: BrSourceService,
     private placeOfDeliveryService: PlaceOfDeliveryService,
 
-    ) { }
+    ) {
+      this.getStatus();
+      this.getBrType();
+      this.getBrSource();
+      this.getPlaceOfDelivery();
 
+    }
   ngOnInit(): void {
     this.initForm(null);
 
@@ -230,6 +236,12 @@ export class AddEditBrComponent implements OnInit {
 
     this.getDepartments();
 
+  }
+  nextTab() {
+    this.activeTabIndex = (this.activeTabIndex + 1) % this.tabView.tabs.length;
+  }
+  prevTab() {
+    this.activeTabIndex = (this.activeTabIndex - 1 + this.tabView.tabs.length) % this.tabView.tabs.length;
   }
   getDepartments(): void {
     this.departmentService.getAll().subscribe({
