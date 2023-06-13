@@ -16,6 +16,7 @@ $gutter: 1rem; //for primeflex grid system
     justify-content: center;
     border-top: 5px solid var(--primary-color);
     height: 6rem;
+
     .p-dialog-title {
         font-weight: 600;
         font-size: 1.5rem;
@@ -31,6 +32,7 @@ $gutter: 1rem; //for primeflex grid system
     border-bottom: 1px solid var(--primary-color);
     border-top: 0;
     height: unset;
+
     .p-dialog-title {
         font-weight: 600;
         font-size: 1rem;
@@ -41,13 +43,27 @@ $gutter: 1rem; //for primeflex grid system
 .grouped button {
     border-radius: 0 !important;
 }
-.grouped-select{
-    input{
+
+.grouped-select {
+    input {
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
     }
-    .p-dropdown{
+
+    .p-dropdown {
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
     }
+}
+
+//Fix ButtonSet with splittedButton
+.sa__candidates .p-buttonset p-splitbutton .p-button {
+    //border-radius: 0px!important; 
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-color: white;
+}
+
+.sa__candidates .p-buttonset>button:last-of-type {
+    border-radius: 0px !important;
 }

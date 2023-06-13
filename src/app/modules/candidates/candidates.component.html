@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card sa__candidates">
     <p-tabView orientation="left">
         <p-tabPanel header="Consultant">
             <div class="flex justify-content-between mb-3">
@@ -9,8 +9,7 @@
                     <button pButton pRipple (click)="refresh()" label="Refresh" icon="pi pi-refresh" class="border-white"></button>
                     <button pButton pRipple (click)="history()" label="History" icon="pi pi-history" class="border-white"></button>
                     <button pButton pRipple (click)="import()" label="Import" icon="pi pi-upload" class="border-white"></button>
-                    <p-splitButton label="Export" icon="pi pi-download" [model]="export" (onClick)="exportExcel()"
-                        styleClass="p-button-warning"></p-splitButton>
+                    <p-splitButton label="Export" icon="pi pi-download" [model]="export" styleClass="p-button-warning"></p-splitButton>
                 </span>
             </div>
             <p-table #dtConsultant [value]="listConsultant" dataKey="id" [rows]="250" [loading]="tableOptions.loading" [rowHover]="true"

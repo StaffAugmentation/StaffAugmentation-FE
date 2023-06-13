@@ -92,7 +92,7 @@ export class CandidatesComponent implements OnInit {
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
     this.export = [
-      { label: 'All consultants' },
+      { label: 'All consultants', command: () => this.exportExcel()  },
       { label: 'Active consultants'} ,
       { label: 'Employee list'},
       { label: 'Subcontractor list'}
