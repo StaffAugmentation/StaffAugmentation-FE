@@ -1,5 +1,9 @@
 <form class="navigation mt-3 mb-3" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
-  <p-tabView #tabView [activeIndex]="activeTabIndex">
+<div class="position">
+<h3  *ngIf="action == 'add'">Add Business Request</h3>
+<p class="clickable-link" *ngIf="action == 'add'" (click)="action === 'add' && chooseAndImportFile()">Import from excel</p>
+</div>  
+ <p-tabView #tabView [activeIndex]="activeTabIndex">
     <p-tabPanel header="General information" class="p-fluid m-0">
       <div class="p-fluid p-2 mb-4">
         <div class="field">

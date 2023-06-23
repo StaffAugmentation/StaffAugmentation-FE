@@ -33,8 +33,6 @@ import { StatusBRService } from '@services/status-br.service';
 import { BrTypeService } from '@services/br-type.service';
 import { BrSourceService } from '@services/br-source.service';
 import { PlaceOfDeliveryService } from '@services/place-of-delivery.service';
-
-
 import { AddDepartmentComponent } from './add-department/add-department.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-profile.component';
@@ -42,7 +40,7 @@ import { EditConsultantComponent } from './edit-consultant/edit-consultant.compo
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
 import { TabView } from 'primeng/tabview';
-
+import { FileExporterService } from '@services/file-exporter.service';
 
 
 @Component({
@@ -50,7 +48,6 @@ import { TabView } from 'primeng/tabview';
   selector: 'app-add-edit-br',
   templateUrl: './add-edit-br.component.html',
   styleUrls: ['./add-edit-br.component.css'],
-  providers: [MessageService],
   imports: [
     CommonModule,
     FormsModule,
@@ -74,8 +71,11 @@ import { TabView } from 'primeng/tabview';
   ]
 })
 export class AddEditBrComponent implements OnInit {
+
+  file: File | undefined;
 @ViewChild('tabView', { static: false }) tabView!: TabView;
-activeTabIndex = 0;
+  action: any;
+  activeTabIndex = 0;
   filteredDepartments: Department[] = [];
   departments: Department[] = [];
   source: BrSource[] = [];
@@ -203,6 +203,8 @@ activeTabIndex = 0;
     private brTypeService: BrTypeService,
     private brSourceService: BrSourceService,
     private placeOfDeliveryService: PlaceOfDeliveryService,
+    private fileExporterService: FileExporterService,
+    private config: DynamicDialogConfig,
 
     ) {
       this.getStatus();
@@ -211,9 +213,31 @@ activeTabIndex = 0;
       this.getPlaceOfDelivery();
 
     }
+  
+    chooseAndImportFile() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.xlsx, .xls';
+      input.addEventListener('change', (event: any) => {
+        const file = event.target.files[0];
+        if (file) {
+          this.importFile(file);
+        }
+      });
+      input.click();
+    }
+    async importFile(file: File) {
+      try {
+        const jsonData = await this.fileExporterService.importExcel(file);
+        this.toast.add({ severity: 'success', summary: "Importing Excel file" });
+      } catch (error) {
+        this.toast.add({ severity: 'warning', summary: "Error importing Excel file" });
+      }
+    }
+
   ngOnInit(): void {
     this.initForm(null);
-
+    this.action = this.config.data?.action;
     this.tableOptionsProfile.visibleCols = this.tableOptionsProfile.cols;
     this.tableOptionsBrProfile.visibleCols = this.tableOptionsBrProfile.cols;
     this.tableOptionsConsultant.visibleCols = this.tableOptionsConsultant.cols;
