@@ -10,7 +10,10 @@ import { TabViewModule } from 'primeng/tabview';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedModule } from '@modules/shared/shared.module'
+import { SharedModule } from '@modules/shared/shared.module';
+import { Department } from '@models/department';
+import { DepartmentService } from '@services/department.service';
+
 
 @Component({
   standalone:true,
@@ -34,21 +37,48 @@ export class AddDepartmentComponent implements OnInit {
   name!: string;
   addForm!: FormGroup;
   isSubmited: boolean = false;
-  constructor(private ref: DynamicDialogRef, private toast: MessageService,) { }
+  departments: Department[] = [];
+
+  constructor(private ref: DynamicDialogRef, private toast: MessageService,private departmentService: DepartmentService) { }
 
   ngOnInit(): void {
-
     this.addForm = new FormGroup({
-      department: new FormControl(null, [Validators.required]),
+      valueId: new FormControl(null, [Validators.required]),
+      isActive: new FormControl(true),
     });
-
+  }
+  getDepartments(): void {
+    this.departmentService.getAll().subscribe({
+      next: (res) => {
+        this.departments = res;
+        this.departments = this.departments.map((dep: any) => {
+          return { ...dep, displayLabel: dep.value };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
   }
 
   onSubmit() {
     this.isSubmited = true;
     if (this.addForm.valid) {
-      this.addForm.value.department
+        this.departmentService.addDepartment(new Department(
+          0,
+          this.addForm.value.valueId,
+          this.addForm.value.isActive || true )
+        ).subscribe({
+          next: (res) => {
+            this.toast.add({ severity: 'success', summary: "Department added successfuly" });
+            this.ref.close(res);
+          },
+          error: (err: any) => {
+            this.toast.add({ severity: 'error', summary: err.error });
+          }
+        });
     }
+
   }
   getErrorMessage(field: string, error: any): string {
     if (error?.required)

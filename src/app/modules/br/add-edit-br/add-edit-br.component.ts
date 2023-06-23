@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FieldsetModule } from 'primeng/fieldset';
 import { MessageModule } from 'primeng/message';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators,  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from '@modules/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
@@ -23,6 +22,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { Department } from '@models/department';
+import { DepartmentService } from '@services/department.service';
 import { BrSource } from '@models/br-source';
 import { BrType } from '@models/br-type';
 import { PlaceOfDelivery } from '@models/place-of-delivery';
@@ -41,7 +41,7 @@ import { AddEditBrProfileComponent } from './add-edit-br-profile/add-edit-br-pro
 import { EditConsultantComponent } from './edit-consultant/edit-consultant.component';
 import { AddEditCandidateComponent } from './add-edit-candidate/add-edit-candidate.component';
 import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
-
+import { TabView } from 'primeng/tabview';
 
 
 
@@ -74,7 +74,8 @@ import { EditPenaltyComponent } from './edit-penalty/edit-penalty.component';
   ]
 })
 export class AddEditBrComponent implements OnInit {
-
+@ViewChild('tabView', { static: false }) tabView!: TabView;
+activeTabIndex = 0;
   filteredDepartments: Department[] = [];
   departments: Department[] = [];
   source: BrSource[] = [];
@@ -183,6 +184,7 @@ export class AddEditBrComponent implements OnInit {
     loading: false,
     exportLoading: false
   };
+
   constructor(
     private modalDepartment: DynamicDialogRef,
     private modalEditProfile: DynamicDialogRef,
@@ -194,6 +196,7 @@ export class AddEditBrComponent implements OnInit {
     private ref: DynamicDialogRef,
     public toast: MessageService,
     private confirmationService: ConfirmationService,
+    private departmentService: DepartmentService,
     private modalService: DialogService,
     private typeService: TypeService,
     private statusBRService: StatusBRService,
@@ -201,8 +204,13 @@ export class AddEditBrComponent implements OnInit {
     private brSourceService: BrSourceService,
     private placeOfDeliveryService: PlaceOfDeliveryService,
 
-    ) { }
+    ) {
+      this.getStatus();
+      this.getBrType();
+      this.getBrSource();
+      this.getPlaceOfDelivery();
 
+    }
   ngOnInit(): void {
     this.initForm(null);
 
@@ -226,7 +234,29 @@ export class AddEditBrComponent implements OnInit {
     this.getBrSource();
     this.getPlaceOfDelivery();
 
+    this.getDepartments();
+
   }
+  nextTab() {
+    this.activeTabIndex = (this.activeTabIndex + 1) % this.tabView.tabs.length;
+  }
+  prevTab() {
+    this.activeTabIndex = (this.activeTabIndex - 1 + this.tabView.tabs.length) % this.tabView.tabs.length;
+  }
+  getDepartments(): void {
+    this.departmentService.getAll().subscribe({
+      next: (res) => {
+        this.departments = res;
+        this.departments = this.departments.map((dep: any) => {
+          return { ...dep, displayLabel: dep.value };
+        });
+      },
+      error: (err: any) => {
+        this.toast.add({ severity: 'error', summary: err.error });
+      }
+    });
+  }
+
   getProfile(): void {
     this.listProfile = [
       { profileN: 21002, plcOnsite: 'AA;Junio;On site', consultantName: '', requestFS: 'Acknowledged receipt' }
@@ -392,7 +422,10 @@ export class AddEditBrComponent implements OnInit {
       }
     });
     this.modalDepartment.onClose.subscribe(res => {
-
+      if (res) {
+        this.getDepartments();
+        this.addEditForm.get('department')!.setValue(res);
+      }
     });
   }
 

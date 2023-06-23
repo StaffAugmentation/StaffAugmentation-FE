@@ -144,6 +144,9 @@ export class AddEditCandidateComponent implements OnInit {
       let recruitment:any = this.recruitments[i];
       if (recruitment.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(recruitment);
+      let recruitmentName : string = this.recruitments[i].name || "";
+      if (recruitmentName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(recruitmentName);
       }
     }
 
