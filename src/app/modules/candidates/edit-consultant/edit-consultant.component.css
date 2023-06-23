@@ -1,0 +1,21 @@
+/* Side-tabview  */
+:host ::ng-deep .side-tabview .p-tabview {
+    display: flex;
+    align-items: normal;
+  
+  }
+  :host ::ng-deep .side-tabview .p-tabview .p-tabview-panels {
+    padding: 0;
+    width: 100%;
+  }
+  :host ::ng-deep .side-tabview .p-tabview .p-tabview-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    border-color: transparent;
+  }
+  :host ::ng-deep .side-tabview .p-tabview .p-tabview-nav .p-tabview-nav-link {
+    margin: 0 15px 10px;
+    padding: 1.25rem;
+  }

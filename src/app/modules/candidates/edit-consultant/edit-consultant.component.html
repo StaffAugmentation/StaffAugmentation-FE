@@ -1,0 +1,498 @@
+<form [formGroup]="editForm" class="mb-3">
+    <p-tabView orientation="left">
+        <p-tabPanel header="Consultant" class="p-fluid m-0">
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Consultant name <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="consultantName" 
+                        [class]="editForm.get('consultantName')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="editForm.get('consultantName')?.invalid && isSubmited" severity="error"
+                            text="Consultant name is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Consultant surname <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="consultantSurname" 
+                        [class]="editForm.get('consultantSurname')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="editForm.get('consultantSurname')?.invalid && isSubmited" severity="error"
+                            text="Consultant surname is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Role</label>
+                    <input type="text" pInputText formControlName="role">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Resource phone</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon">+</span>
+                        <input type="text" pInputText formControlName="resourcePhone">
+                    </div>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Resource email</label>
+                    <input type="text" pInputText formControlName="resourceEmail">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">ID Number</label>
+                    <input type="text" pInputText formControlName="idNumber">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Nationality</label>
+                    <input type="text" pInputText formControlName="nationality">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Legal entity name</label>
+                    <input type="text" pInputText formControlName="legalEntityName">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">VAT number</label>
+                    <input type="text" pInputText formControlName="vatNumber">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Earliest start date <span class="text-red-500">*</span></label>
+                    <p-calendar [disabledDays]="[0,6]" [showIcon]="true" [readonlyInput]="true" formControlName="earliestStartDate" 
+                        [class]="editForm.get('earliestStartDate')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                    <p-message *ngIf="editForm.get('earliestStartDate')?.invalid && isSubmited" severity="error"
+                            text="Earliest start date is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Birthdate</label>
+                    <p-calendar [maxDate]="maxDate" [showIcon]="true" [readonlyInput]="true" formControlName="birthdate"></p-calendar>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Cost</label>
+                    <input type="text" pInputText formControlName="cost">
+                </div>
+                <div class="field col-12 md:col-1 pt-5">
+                    <p-dropdown [options]="currency" optionLabel="field" formControlName="costCurrency"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Third party rate</label>
+                    <input type="text" pInputText formControlName="thirdPartyRate">
+                </div>
+                <div class="field col-12 md:col-1 pt-5">
+                    <p-dropdown [options]="currency" optionLabel="field" formControlName="rateCurrency"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Company registration number</label>
+                    <input type="text" pInputText formControlName="companyRegistrationNumber">
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Legal entity country</label>
+                    <p-dropdown formControlName="legalEntityCountry"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Type of contract <span class="text-red-500">*</span></label>
+                    <p-dropdown [options]="contract" optionLabel="field" formControlName="typeOfContract" 
+                        [class]="editForm.get('typeOfContract')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                    <p-message *ngIf="editForm.get('typeOfContract')?.invalid && isSubmited" severity="error"
+                            text="Type of contract is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">VAT</label>
+                    <div class="p-inputgroup">
+                        <input type="text" pInputText formControlName="vat">
+                        <span class="p-inputgroup-addon">%</span>
+                    </div>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">SAP vendor <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="sapVendor" 
+                        [class]="editForm.get('sapVendor')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="editForm.get('sapVendor')?.invalid && isSubmited" severity="error"
+                            text="SAP vendor is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Highest degree <span class="text-red-500">*</span></label>
+                    <p-dropdown formControlName="highestDegree" 
+                        [class]="editForm.get('highestDegree')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-dropdown>
+                    <p-message *ngIf="editForm.get('highestDegree')?.invalid && isSubmited" severity="error"
+                            text="Highest degree is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Date IT career started <span class="text-red-500">*</span></label>
+                    <p-calendar [disabledDays]="[0,6]" [showIcon]="true" [readonlyInput]="true" formControlName="dateItCareerStarted" 
+                        [class]="editForm.get('dateItCareerStarted')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                    <p-message *ngIf="editForm.get('dateItCareerStarted')?.invalid && isSubmited" severity="error"
+                            text="Date IT career started is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <label class="font-semibold">Employee number <span class="text-red-500">*</span></label>
+                    <input type="text" pInputText formControlName="employeeNumber" 
+                        [class]="editForm.get('employeeNumber')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
+                    <p-message *ngIf="editForm.get('employeeNumber')?.invalid && isSubmited" severity="error"
+                        text="Employee number is required"></p-message>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Legal entity address</label>
+                    <textarea pInputTextarea formControlName="legalEntityAddress"></textarea>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Comment</label>
+                    <textarea pInputTextarea formControlName="comment"></textarea>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Payment terms" class="p-fluid m-0">
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-5">
+                    <label class="font-semibold">Payment terms</label>
+                    <p-dropdown formControlName="paymentTerms"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-3">
+                    <p-checkbox class="font-semibold mt-5" formControlName="acceleratePayments" value="true" label="Accelerate payments"></p-checkbox>
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label class="font-semibold">Number payment</label>
+                    <input type="text" pInputText formControlName="numberPayment">
+                </div>
+                <div class="field col-12 md:col-2">
+                    <label class="font-semibold">Payment accelerated</label>
+                    <input type="text" pInputText formControlName="paymentAccelerated">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Project code</label>
+                    <input type="text" pInputText formControlName="projectCode">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">IBAN Number</label>
+                    <input type="text" pInputText formControlName="ibanNumber">
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label class="font-semibold">Type of cost</label>
+                    <p-dropdown formControlName="typeOfCost"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">BIC/SWIFT</label>
+                    <input type="text" pInputText formControlName="bicSwift">
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Approver</label>
+                    <p-dropdown formControlName="approver"></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Client project manager</label>
+                    <input type="text" pInputText formControlName="clientProjectManager">
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold">Client project manager contact</label>
+                    <input type="text" pInputText formControlName="clientProjectManagerContact">
+                </div>
+            </div>    
+        </p-tabPanel>
+        <p-tabPanel header="Departure" class="p-fluid m-0">
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-6">
+                    <p-checkbox class="font-semibold mb-4" formControlName="riskOfDeparture" value="true" label="Risk Of departure"></p-checkbox>
+                    <input type="text" pInputText formControlName="riskDeparture">
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label class="font-semibold mb-4">Planned leave date</label>
+                    <p-calendar [disabledDays]="[0,6]" [showIcon]="true" [readonlyInput]="true" formControlName="plannedLeaveDate"></p-calendar>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Interview fees" class="p-fluid m-0">
+            <form [formGroup]="addForm">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-3">
+                        <label class="font-semibold">Date <span class="text-red-500">*</span></label>
+                        <p-calendar [disabledDays]="[0,6]" [showIcon]="true" [readonlyInput]="true" formControlName="date" 
+                            [class]="addForm.get('date')?.invalid && isSubmited2 ? 'ng-dirty ng-invalid' : ''"></p-calendar>
+                        <p-message *ngIf="addForm.get('date')?.invalid && isSubmited2" severity="error"
+                                text="Date is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="font-semibold">Cost <span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="interviewCost"
+                            [class]="addForm.get('interviewCost')?.invalid && isSubmited2 ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addForm.get('interviewCost')?.invalid && isSubmited2" severity="error"
+                            text="Cost is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-1 pt-5">
+                        <p-dropdown [options]="currency" optionLabel="field" formControlName="currency"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="font-semibold">Comment</label>
+                        <input type="text" pInputText formControlName="comment">
+                    </div>
+                    <div class="field col-12 md:col-1 pt-5">
+                        <button (click)="add()" type="button" pButton class="p-button-sm p-button-outlined p-button-primary"
+                            label="Add"></button>
+                    </div>
+                    <div class="field col-12 md:col-2">
+                        <button (click)="processForPayment()" type="button" pButton class="p-button-sm p-button-primary"
+                            label="Process for payment"></button>
+                    </div>
+                    <div class="field col-12 md:col-12">
+                        <p-treeTable #dtInterview [value]="interviews" [lazy]="true" [columns]="colsInterview" [(selection)]="selectedInterviews" 
+                            selectionMode="multiple" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                            [scrollable]="true" scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll" styleClass="p-treetable-gridlines" 
+                            [resizableColumns]="true">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 4rem"></th>
+                                    <th style="width: 4rem"></th>
+                                    <th *ngFor="let col of columns">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                                <tr>
+                                    <td style="width: 4rem">
+                                        <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                                    </td>
+                                    <td style="width: 4rem">
+                                        
+                                    </td>
+                                    <td *ngFor="let col of columns; let i = index">
+                                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                                        {{ rowData[col.field] }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No data found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading interviews data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-treeTable>
+                    </div>
+                </div>
+            </form>
+        </p-tabPanel>
+        <p-tabPanel header="Referral/Recruitment fees" class="p-fluid m-0">
+            <form [formGroup]="addReferralForm">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-3">
+                        <label class="font-semibold">Proposed by <span class="text-red-500">*</span></label>
+                    </div>
+                    <div class="field col-12 md:col-9">
+                        <p-radioButton name="proposedBy" class=" mr-2" [value]="true" label="Consultant"
+                            formControlName="proposedBy" [class]="addReferralForm.get('proposedBy')?.invalid && isSubmitedReferral ? 'ng-dirty ng-invalid' : ''"></p-radioButton>
+                        <p-radioButton name="proposedBy" class=" mr-2" [value]="false" label="Company"
+                            formControlName="proposedBy" [class]="addReferralForm.get('proposedBy')?.invalid && isSubmitedReferral ? 'ng-dirty ng-invalid' : ''"></p-radioButton>
+                        <p-message *ngIf="addReferralForm.get('proposedBy')?.invalid && isSubmitedReferral" severity="error"
+                            text="Proposed by is required"></p-message>    
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="font-semibold">Referent <span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="referent"
+                            [class]="addReferralForm.get('referent')?.invalid && isSubmitedReferral ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addReferralForm.get('referent')?.invalid && isSubmitedReferral" severity="error"
+                            text="Referent is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label class="font-semibold">Date <span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="referralDate"
+                            [class]="addReferralForm.get('referralDate')?.invalid && isSubmitedReferral ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addReferralForm.get('referralDate')?.invalid && isSubmitedReferral" severity="error"
+                            text="Date is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-3">
+                        <label class="font-semibold">Cost <span class="text-red-500">*</span></label>
+                        <input type="text" pInputText formControlName="referralCost"
+                            [class]="addReferralForm.get('referralCost')?.invalid && isSubmitedReferral ? 'ng-dirty ng-invalid' : ''">
+                        <p-message *ngIf="addReferralForm.get('referralCost')?.invalid && isSubmitedReferral" severity="error"
+                            text="Cost is required"></p-message>
+                    </div>
+                    <div class="field col-12 md:col-1 pt-5">
+                        <p-dropdown [options]="currency" optionLabel="field" formControlName="referralCurrency"></p-dropdown>
+                    </div>
+                    <div class="field col-12 md:col-11">
+                        <label class="font-semibold">Comment</label>
+                        <input type="text" pInputText formControlName="referralComment">
+                    </div>
+                    <div class="field col-12 md:col-1 pt-5">
+                        <button (click)="addReferral()" type="button" pButton class="p-button-sm p-button-outlined p-button-primary"
+                            label="Add"></button>
+                    </div>
+                    <div class="field col-12 md:col-2">
+                        <button (click)="processForPayment()" type="button" pButton class="p-button-sm p-button-primary"
+                            label="Process for payment"></button>
+                    </div>
+                    
+                    <div class="field col-12 md:col-12">
+                        <p-treeTable #dtInterview [value]="referrals" [lazy]="true" [columns]="colsReferral" [(selection)]="selectedReferral" 
+                            selectionMode="multiple" (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"
+                            [scrollable]="true" scrollDirection="both" scrollHeight="400px" responsiveLayout="scroll" styleClass="p-treetable-gridlines" 
+                            [resizableColumns]="true">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 4rem"></th>
+                                    <th style="width: 4rem"></th>
+                                    <th *ngFor="let col of columns">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                                <tr>
+                                    <td style="width: 4rem">
+                                        <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                                    </td>
+                                    <td style="width: 4rem">
+                                        
+                                    </td>
+                                    <td *ngFor="let col of columns; let i = index">
+                                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+                                        {{ rowData[col.field] }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No data found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading referral data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-treeTable>
+                    </div>
+                </div>
+            </form>            
+        </p-tabPanel>
+        <p-tabPanel header="Payment" class="p-fluid m-0">
+            <p-tabView class="side-tabview">
+                <p-tabPanel header="Interview fees" class="p-fluid m-0">
+                    <div class="field col-12 md:col-12">
+                        <p-table #dtInterviewFees [value]="interviewFees" [(selection)]="selectedInterviewFees" dataKey="id" 
+                            [rowHover]="true" styleClass="p-datatable-gridlines" [resizableColumns]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 4rem">
+                                    </th>
+                                    <th *ngFor="let col of colsInterviewFees">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-interviewFees>
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="interviewFees"></p-tableCheckbox>
+                                    </td>
+                                    <td *ngFor="let col of colsInterviewFees">
+                                        {{interviewFees[col.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No data found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Referral fees" class="p-fluid m-0">
+                    <div class="field col-12 md:col-12">
+                        <p-table #dtReferralFees [value]="referralFees" [(selection)]="selectedReferralFees" dataKey="id" 
+                            [rowHover]="true" styleClass="p-datatable-gridlines" [resizableColumns]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 4rem">
+                                    </th>
+                                    <th *ngFor="let col of colsReferralFees">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-referralFees>
+                                <tr>
+                                    <td>
+                                        <p-tableCheckbox [value]="referralFees"></p-tableCheckbox>
+                                    </td>
+                                    <td *ngFor="let col of colsReferralFees">
+                                        {{interviewFees[col.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="8">No data found.</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="loadingbody">
+                                <tr>
+                                    <td colspan="8">Loading data. Please wait.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>        
+        </p-tabPanel>
+        <p-tabPanel header="History" class="p-fluid m-0">
+            <div class="field col-12 md:col-12">
+                <p-table #dtHistory [value]="history" [(selection)]="selectedHistory" dataKey="id" 
+                    [rowHover]="true" styleClass="p-datatable-gridlines" [resizableColumns]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th *ngFor="let col of colsHistory">
+                                {{ col.header }}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-history>
+                        <tr>
+                            <td *ngFor="let col of colsHistory">
+                                {{history[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="10">No data found.</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr>
+                            <td colspan="8">Loading data. Please wait.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+    <div class="footer-filled">
+        <div class="flex">
+            <button pButton pRipple (click)="contactRecruitment()" class="p-button-sm p-button-outlined p-button-primary "
+                label="Contact recruitment" icon="pi pi-envelope" iconPos="right"></button>
+            <button pButton pRipple (click)="downloadAll()" icon="pi pi-download" label="Download all"
+                class="p-button-sm p-button-warning ml-2"></button>
+        </div>
+        <div class="flex">
+            <button type="submit" pButton (click)="onSubmit()" class="p-button-sm p-button-primary mr-2"
+                label="Save" [loading]="actionLoading"></button>
+            <button (click)="close()" type="button" pButton class="p-button-sm p-button-secondary"
+                label="Close"></button>
+        </div>
+    </div>
+</form>
+<p-dialog [(visible)]="visible" [style]="{ width: '30vw' }">
+    <div class="text-center">
+      <p class="pi pi-exclamation-circle text-yellow-500 text-6xl font-semibold"></p>
+      <p class="text-4xl font-semibold">Are you sure?</p>
+      <p>Do you want to send mail to :</p>
+      <p-dropdown appendTo="body" [options]="contactRec" optionLabel="name"></p-dropdown>
+      <div class="mt-4">
+        <button pButton pRipple (click)="visible = false" label="Yes"
+          class="p-button-sm p-button-primary mr-2 w-3"></button>
+        <button pButton pRipple (click)="visible = false" label="No" class="p-button-sm p-button-danger w-3"></button>
+      </div>
+    </div>
+</p-dialog>

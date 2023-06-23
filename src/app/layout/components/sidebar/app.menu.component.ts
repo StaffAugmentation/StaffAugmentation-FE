@@ -25,6 +25,7 @@ export class AppMenuComponent implements OnInit {
                             { label: 'PTM Control', icon: 'pi pi-fw pi-bookmark', routerLink: ['/sprint-contract/PTM'] },
                         ]
                     },
+                    { label : 'Candidates', icon: 'pi pi-fw pi-users', routerLink:['/candidates']},
                     {
                         label: 'Settings', icon: 'pi pi-fw pi-cog',
                         items: [
