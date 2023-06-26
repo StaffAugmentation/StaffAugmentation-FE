@@ -43,31 +43,3 @@
   margin: 0 15px 10px;
   padding: 1.25rem;
 }
-
-:host ::ng-deep .clickable-link {
-  color: blue;
-  cursor: pointer;
-  text-decoration: underline;
-  
-} 
-
-:host ::ng-deep .position {
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1rem;
-  top: 8%;
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-}
-
-:host ::ng-deep .position h3 {
-  margin: 0;
-}
-
-:host ::ng-deep .position p {
-  padding-left: 25px;
-}
