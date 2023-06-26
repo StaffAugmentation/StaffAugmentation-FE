@@ -14,6 +14,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CommonModule } from '@angular/common';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CardModule } from 'primeng/card';
+
 import { BusinessRequestService } from 'src/app/services/business-request.service';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -62,6 +63,7 @@ import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dy
   ]
 })
 export class BrComponent implements OnInit {
+
   advancedSearch: any = {
     requestNumber: '',
     status: [],
@@ -95,7 +97,7 @@ export class BrComponent implements OnInit {
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
   }
-  
+
   search(): void {
     this.isCollapsed.advancedSearch = true;
     this.isCollapsed.list = false;
@@ -116,10 +118,11 @@ export class BrComponent implements OnInit {
   addEdit(action: string): void {
     if(action == 'add'){
       this.modalAddEdit = this.modalService.open(AddEditBrComponent, {
+        header: `Add Business Request`,
         width: '80%',
         height: '90%',
         data: {
-          action: 'add'
+          businessRequest: {}
         }
       });
       this.modalAddEdit.onClose.subscribe(res => {
