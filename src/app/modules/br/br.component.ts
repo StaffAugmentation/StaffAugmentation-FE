@@ -94,8 +94,27 @@ export class BrComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableOptions.visibleCols = this.tableOptions.cols;
+    this.getBr();
   }
   
+  getBr(): void {
+    this.tableOptions.loading = true;
+
+    this.brService.get().subscribe({
+      next: (res) => {
+        this.listBR = res;
+        this.tableOptions.loading = false;
+      },
+      error: (err: any) => {
+        let errMessage: string = err.error;
+        if (err.status != 400) {
+          errMessage = 'Something went wrong with the server !';
+        }
+        this.toast.add({ severity: 'error', summary: errMessage });
+      }
+    });
+  }
+
   search(): void {
     this.isCollapsed.advancedSearch = true;
     this.isCollapsed.list = false;

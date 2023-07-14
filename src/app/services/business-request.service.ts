@@ -12,4 +12,9 @@ export class BusinessRequestService {
   getAll(): Observable<any[]> {
     return this.http.get<any[]>('https://localhost:7011/api/BusinessRequest');
   }
+
+  get(): Observable<any[]> {
+    return this.http.get<any[]>('assets/business-request.json');
+  }
+  
 }
