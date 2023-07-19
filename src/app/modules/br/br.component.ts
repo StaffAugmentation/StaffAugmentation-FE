@@ -78,8 +78,8 @@ export class BrComponent implements OnInit {
   tableOptions: any = {
     visibleCols: [],
     cols: [
-      { id: 'requestNumber', label: 'Request Number' },
-      { id: 'statusId', label: 'Status' },
+      { id: 'Request_number', label: 'Request Number' },
+      { id: 'Status', label: 'Status'},
     ],
     loading: false,
     exportLoading: false
@@ -102,7 +102,7 @@ export class BrComponent implements OnInit {
 
     this.brService.get().subscribe({
       next: (res) => {
-        this.listBR = res;
+        this.listBR = [res];
         this.tableOptions.loading = false;
       },
       error: (err: any) => {
@@ -180,10 +180,83 @@ export class BrComponent implements OnInit {
 
   exportExcel(): void {
     this.tableOptions.exportLoading = true;
-    // let data = this.listBR.filter(br => br)
-    setTimeout(()=>{
-      this.fileExporter.exportExcel(this.listBR,'BusinessRequest').finally(()=> this.tableOptions.exportLoading = false);
-    },50);
+    if (!Array.isArray(this.listBR)) {
+      this.listBR = [this.listBR];
+    }
+
+    this.fileExporter.exportExcelBR(this.listBR.map(br => {
+      let appr: any = { 
+      'Request number' : br.Request_number,
+      'Status' : br.Status,
+      'Department' : br.Department,
+      'Next action' :br.NextActionDate,
+      'Service type': br.TypeBR,
+      'Department email':br.DG_Email,
+      'Contact name':br.Contact_Name,
+      'Open/Intended':br.OpenIntendedComment,
+      'Request form status':br.DataProfile.filter((obj: { RequestFormStatus: string | null }) => obj && obj.RequestFormStatus !== null)
+      .map((obj: { RequestFormStatus: string | null }) => obj.RequestFormStatus)
+      .join(';'),
+      'Technical contact':br.TechnicalContact,
+      'Framework contract':br.TypeOfContract,
+      'Source':br.SourceBR,
+      'Date RF received':br.dt_RFReceived,
+      'Acknowledgement':br.dt_Acknowledgement,
+      'Acknowledgement deadline':br.dt_AcknowledgementDeadline,
+      'Yes/No sent to customer':br.DataProfile.filter((obj: { dt_SentToCustomer: string | null }) => obj && obj.dt_SentToCustomer !== null)
+      .map((obj: { dt_SentToCustomer: string | null }) => obj.dt_SentToCustomer)
+      .join(';'),
+      'Proposal (Deadline)':br.dt_ProposalDeadline,
+      'Date proposal is submitted to customer':br.DataProfile.filter((obj: { dt_Proposal_Is_Submitted_To_Customer: string | null }) => obj && obj.dt_Proposal_Is_Submitted_To_Customer !== null)
+      .map((obj: { dt_Proposal_Is_Submitted_To_Customer: string | null }) => obj.dt_Proposal_Is_Submitted_To_Customer)
+      .join(';'),
+      'Date FO is submitted to customer':br.DataProfile.filter((obj: { dt_FO_Is_Submitted_To_Customer: string | null }) => obj && obj.dt_FO_Is_Submitted_To_Customer !== null)
+      .map((obj: { dt_FO_Is_Submitted_To_Customer: string | null }) => obj.dt_FO_Is_Submitted_To_Customer)
+      .join(';'),
+      'Proximity':br.Proximity,
+      'Company':br.DataProfile.filter((obj: { CompanyName: string | null }) => obj && obj.CompanyName !== null)
+      .map((obj: { CompanyName: string | null }) => obj.CompanyName)
+      .join(';'),
+      'Place of delivery':br.PlaceOfDelivery,
+      'Profile':br.DataProfile.filter((obj: { Profile: string | null }) => obj && obj.Profile !== null)
+      .map((obj: { Profile: string | null }) => obj.Profile)
+      .join(';'),
+      'Category':br.DataProfile.filter((obj: { Category: string | null }) => obj && obj.Category !== null)
+      .map((obj: { Category: string | null }) => obj.Category)
+      .join(';'),
+      'Level':br.DataProfile.filter((obj: { Level: string | null }) => obj && obj.Level !== null)
+      .map((obj: { Level: string | null }) => obj.Level)
+      .join(';'),
+      'Service level category':br.DataProfile.filter((obj: { Service_Level_Category: string | null }) => obj && obj.Service_Level_Category !== null)
+      .map((obj: { Service_Level_Category: string | null }) => obj.Service_Level_Category)
+      .join(';'),
+      'Expected project start date':br.Expected_Project_Start_Date,
+      'TOTAL man days | TOTAL man hours':br.TOTAL_man_days,
+      'Other expertise required':br.DataProfile.filter((obj: { Other_Expertise_Required: string | null }) => obj && obj.Other_Expertise_Required !== null)
+      .map((obj: { Other_Expertise_Required: string | null }) => obj.Other_Expertise_Required)
+      .join(';'),
+      'Date SC is received':br.dt_SC_Is_Received,
+      'Date SC is signed':br.dt_SC_Is_signed,
+      'Project start date':br.Project_Start_Date,
+      'Maximum end date':br.Max_End_Date,
+      'Ext max end date':br.Ext_Max_End_Date,
+      'Number of days | Number of  hours':br.Number_Of_Days,
+      'IBAN Number':br.DataProfile.filter((obj: { Bank_Account: string | null }) => obj && obj.Bank_Account !== null)
+      .map((obj: { Bank_Account: string | null }) => obj.Bank_Account)
+      .join(';'),
+      'Validity date':br.DataProfile.filter((obj: { Validity_Date: string | null }) => obj && obj.Validity_Date !== null)
+      .map((obj: { Validity_Date: string | null }) => obj.Validity_Date)
+      .join(';'),
+      'Sales price':br.DataProfile.filter((obj: { Daily_Price: string | null }) => obj && obj.Daily_Price !== null)
+      .map((obj: { Daily_Price: string | null }) => obj.Daily_Price)
+      .join(';'),
+      'Total price':br.Total_Price,
+      'Consultant':Object.values(br.Consultant).join(';'),
+      'SC created':br.isSCCreated,
+      'General comment':br.GeneralComment,
+    };
+      return appr;
+    }), 'BusinessRequest').finally(() => this.tableOptions.exportLoading = false);
   }
 
 }
