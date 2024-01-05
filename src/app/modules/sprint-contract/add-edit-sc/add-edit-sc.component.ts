@@ -144,7 +144,7 @@ export class AddEditScComponent implements OnInit {
     { id: '1', oerpProjectCode: 'EXT-024662-00139' }
   ];
   consultant: any[] = [
-    { id: '1', consultantName: 'Anthony Asanka', profileLeveOnsiteCategory: 'consultant ; Unique ; Far site', company: 'NTT data SWISS', nOfDays: '65.00' }
+    { id: '1', consultantName: 'Anthony Asanka', profileLeveOnsiteCategory: 'consultant ; Unique ; Far site', company: 'STAFF SWISS', nOfDays: '65.00' }
   ];
   documentations: any[] = [];
   colsDocumentation: any[] = [];
@@ -331,7 +331,7 @@ export class AddEditScComponent implements OnInit {
   }
   generateNTTDataContract(): void {
     this.modalEdit = this.modalService.open(GenerateNttDataContractComponent, {
-      header: 'NTT data contract details',
+      header: 'STAFF contract details',
       style: { width: '90%', maxWidth: '800px' },
       maskStyleClass: 'centred-header',
       data: {

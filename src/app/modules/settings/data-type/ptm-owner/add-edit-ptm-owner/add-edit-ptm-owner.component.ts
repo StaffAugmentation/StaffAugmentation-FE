@@ -94,7 +94,7 @@ export class AddEditPTMOwnerComponent implements OnInit {
           this.addEditForm.value.bA,
           this.addEditForm.value.bicsw,
           this.addEditForm.value.vatRate,
-          this.addEditForm.value.isEveris,
+          this.addEditForm.value.isStaff,
           this.addEditForm.value.vatNumber,
           this.addEditForm.value.approver)
         ).subscribe({
@@ -120,7 +120,7 @@ export class AddEditPTMOwnerComponent implements OnInit {
           this.addEditForm.value.bA,
           this.addEditForm.value.bicsw,
           this.addEditForm.value.vatRate,
-          this.addEditForm.value.isEveris,
+          this.addEditForm.value.isStaff,
           this.addEditForm.value.vatNumber,
           this.addEditForm.value.approver)
         ).subscribe({
@@ -150,7 +150,7 @@ export class AddEditPTMOwnerComponent implements OnInit {
       bicsw: new FormControl(data ? data.bicsw : null),
       approver: new FormControl(data ? data.approver : null),
       vatRate: new FormControl(data ? data.vatRate : null),
-      isEveris: new FormControl(data ? data.isEveris : false),
+      isStaff: new FormControl(data ? data.isStaff : false),
     });
   }
 

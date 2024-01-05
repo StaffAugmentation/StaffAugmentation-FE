@@ -6,7 +6,7 @@ export class PTMOwner{
   ba?: string;
   bicsw?: string;
   vatRate?: number;
-  isEveris: boolean;
+  isStaff: boolean;
   vatNumber?: string;
   approver?: Approvers;
   constructor
@@ -16,7 +16,7 @@ export class PTMOwner{
         ba: string,
         bicsw: string,
         vatRate: number,
-        isEveris: boolean,
+        isStaff: boolean,
         vatNumber: string,
         approver: Approvers,
       ){
@@ -25,7 +25,7 @@ export class PTMOwner{
           this.ba=ba,
           this.bicsw=bicsw,
           this.vatRate=vatRate,
-          this.isEveris=isEveris,
+          this.isStaff=isStaff,
           this.vatNumber=vatNumber,
           this.approver=approver
       }

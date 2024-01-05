@@ -5,7 +5,7 @@ export class Company{
     name: string;
     bankAccount?: string;
     isDeleted: boolean;
-    isEveris: boolean;
+    isStaff: boolean;
     vatlegalEntity?: string;
     bicsw?: string;
     vatRate?: 0;
@@ -15,7 +15,7 @@ export class Company{
         name: string,
         bankAccount: string,
         isDeleted: boolean,
-        isEveris: boolean,
+        isStaff: boolean,
         vatlegalEntity: string,
         bicsw: string,
         vatRate: 0,
@@ -26,7 +26,7 @@ export class Company{
             this.name=name,
             this.bankAccount=bankAccount,
             this.isDeleted=isDeleted,
-            this.isEveris=isEveris,
+            this.isStaff=isStaff,
             this.vatlegalEntity=vatlegalEntity,
             this.bicsw=bicsw,
             this.vatRate=vatRate,

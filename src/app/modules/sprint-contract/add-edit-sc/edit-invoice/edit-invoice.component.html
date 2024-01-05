@@ -26,11 +26,11 @@
               text="Client is required"></p-message>
           </div>
           <div class="field col-12 md:col-4">
-            <label class="font-semibold">Ntt data entity<span class="text-red-500">*</span></label>
+            <label class="font-semibold">STAFF entity<span class="text-red-500">*</span></label>
             <input type="text" pInputText formControlName="nttDataEntity"
               [class]="addForm.get('nttDataEntity')?.invalid && isSubmited ? 'ng-dirty ng-invalid' : ''">
             <p-message *ngIf="addForm.get('nttDataEntity')?.invalid && isSubmited" severity="error"
-              text="Ntt data entity is required"></p-message>
+              text="STAFF entity is required"></p-message>
           </div>
           <div class="field col-12 md:col-4">
             <label class="font-semibold">Client/PO number</label>

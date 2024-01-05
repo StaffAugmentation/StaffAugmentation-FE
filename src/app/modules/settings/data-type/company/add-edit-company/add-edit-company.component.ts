@@ -155,7 +155,7 @@ export class AddEditCompanyComponent implements OnInit {
       bic: new FormControl(data ? data.bicsw : null),
       approver: new FormControl(data ? data.approver : null),
       vatRate: new FormControl(data ? data.vatRate : null),
-      isNTTData: new FormControl(data ? data.isEveris : false),
+      isNTTData: new FormControl(data ? data.isStaff : false),
     });
   }
 
